@@ -261,7 +261,7 @@ ol {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 0.35rem 1.5rem;
-  padding: 0.55rem 0;
+  padding: 0.55rem 1.5rem;
 }
 
 /* Left: discount / announcement message */
