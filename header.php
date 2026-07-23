@@ -1,132 +1,198 @@
 <?php
+
 /**
  * The header for our theme.
  *
  * @package HVAC
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
 	exit;
 }
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
+
 <head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>">
+	<meta charset="<?php bloginfo('charset'); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<?php wp_head(); ?>
 </head>
 
 <body <?php body_class(); ?>>
-<?php wp_body_open(); ?>
+	<?php wp_body_open(); ?>
 
-<div id="page" class="site">
+	<div id="page" class="site">
 
-	<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'hvac' ); ?></a>
+		<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e('Skip to content', 'hvac'); ?></a>
 
-	<?php
-	// Header content is managed under Theme Options > Header (ACF). Fall back to
-	// sensible defaults so the header renders even if ACF is inactive.
-	$hvac_acf            = function_exists( 'get_field' );
-	$hvac_show_topbar    = $hvac_acf ? get_field( 'header_show_topbar', 'option' ) : true;
-	$hvac_topbar_message = $hvac_acf ? get_field( 'header_topbar_message', 'option' ) : __( 'HVAC Services Available Across the USA', 'hvac' );
-	$hvac_topbar_rating  = $hvac_acf ? get_field( 'header_topbar_rating', 'option' ) : __( '4.9 Google Rating', 'hvac' );
-	$hvac_topbar_hl      = $hvac_acf ? get_field( 'header_topbar_highlight', 'option' ) : __( '24/7 Emergency', 'hvac' );
-	$hvac_header_phone   = $hvac_acf ? get_field( 'header_phone', 'option' ) : '(512) 555-0199';
-	$hvac_cta_label      = $hvac_acf ? get_field( 'header_cta_label', 'option' ) : __( 'Call', 'hvac' );
+		<?php
+		// Header content is managed under Theme Options > Header (ACF). Fall back to
+		// sensible Figma defaults so the header renders even if ACF is inactive.
+		$hvac_acf            = function_exists('get_field');
 
-	// Rating star icon (repeated five times below).
-	$hvac_star_svg = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.72289 1.33875C6.74845 1.2871 6.78794 1.24363 6.8369 1.21323C6.88586 1.18284 6.94234 1.16673 6.99997 1.16673C7.0576 1.16673 7.11408 1.18284 7.16304 1.21323C7.212 1.24363 7.25149 1.2871 7.27705 1.33875L8.62455 4.06817C8.71332 4.24781 8.84436 4.40324 9.00642 4.5211C9.16848 4.63896 9.35671 4.71573 9.55497 4.74483L12.5685 5.18583C12.6256 5.19411 12.6792 5.21819 12.7233 5.25537C12.7675 5.29254 12.8003 5.34132 12.8181 5.39619C12.836 5.45105 12.8381 5.50982 12.8243 5.56584C12.8105 5.62186 12.7813 5.67289 12.74 5.71317L10.5606 7.83533C10.4169 7.97539 10.3094 8.14828 10.2473 8.33912C10.1852 8.52995 10.1704 8.73302 10.2042 8.93083L10.7187 11.9292C10.7288 11.9862 10.7226 12.045 10.7009 12.0987C10.6792 12.1525 10.6428 12.199 10.596 12.2331C10.5491 12.2671 10.4935 12.2873 10.4357 12.2914C10.3779 12.2954 10.3201 12.2831 10.269 12.2558L7.57514 10.8395C7.39764 10.7463 7.20016 10.6976 6.99968 10.6976C6.7992 10.6976 6.60172 10.7463 6.42422 10.8395L3.73097 12.2558C3.67983 12.2829 3.62212 12.2951 3.5644 12.291C3.50668 12.2869 3.45127 12.2667 3.40448 12.2326C3.35768 12.1986 3.32137 12.1521 3.29969 12.0985C3.278 12.0448 3.27181 11.9862 3.2818 11.9292L3.79572 8.93142C3.82967 8.73351 3.81496 8.53032 3.75287 8.33936C3.69078 8.14841 3.58316 7.97542 3.4393 7.83533L1.25997 5.71375C1.21832 5.67352 1.1888 5.6224 1.17478 5.56621C1.16077 5.51002 1.16281 5.45103 1.18068 5.39594C1.19856 5.34086 1.23154 5.29191 1.27588 5.25466C1.32022 5.21741 1.37413 5.19336 1.43147 5.18525L4.44439 4.74483C4.64287 4.71596 4.83136 4.63928 4.99365 4.52141C5.15593 4.40353 5.28713 4.24799 5.37597 4.06817L6.72289 1.33875Z" fill="#FD7933" stroke="#FD7933" stroke-width="1.16667" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-	?>
+		// Top utility bar.
+		$hvac_show_topbar    = $hvac_acf ? get_field('header_show_topbar', 'option') : true;
+		$hvac_topbar_message = $hvac_acf ? get_field('header_topbar_message', 'option') : __('Get a discount of up to 50% for use our service this month!', 'hvac');
+		$hvac_topbar_email   = $hvac_acf ? get_field('header_topbar_email', 'option') : 'support@hvacreliablepro.com';
+		$hvac_topbar_phone   = $hvac_acf ? get_field('header_topbar_phone', 'option') : '+62 864 6444 2222';
+		$hvac_topbar_socials = $hvac_acf ? get_field('header_topbar_socials', 'option') : array();
 
-	<header id="masthead" class="site-header">
+		// Main navigation actions.
+		$hvac_call_label     = $hvac_acf ? get_field('header_hours_label', 'option') : __('Open Hours', 'hvac');
+		$hvac_header_hours   = $hvac_acf ? get_field('header_hvac_hours', 'option') : 'Monday-Saturday 9AM - 6PM';
+		$hvac_book_label     = $hvac_acf ? get_field('header_book_label', 'option') : __('Book Now', 'hvac');
+		$hvac_book_link      = $hvac_acf ? get_field('header_book_link', 'option') : '';
 
-		<?php if ( $hvac_show_topbar && ( $hvac_topbar_message || $hvac_topbar_rating || $hvac_topbar_hl ) ) : ?>
-			<div class="site-topbar">
-				<div class="container site-topbar-inner">
-					<?php if ( $hvac_topbar_message ) : ?>
-						<p class="topbar-message">
-							<span class="topbar-message-icon" aria-hidden="true">
-								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-							</span>
-							<?php echo esc_html( $hvac_topbar_message ); ?>
-						</p>
-					<?php endif; ?>
+		if (! is_array($hvac_topbar_socials)) {
+			$hvac_topbar_socials = array();
+		}
+		?>
 
-					<?php if ( $hvac_topbar_rating || $hvac_topbar_hl ) : ?>
-						<div class="topbar-meta">
-							<?php if ( $hvac_topbar_rating ) : ?>
-								<span class="topbar-rating">
-									<span class="topbar-stars" aria-hidden="true"><?php echo str_repeat( $hvac_star_svg, 5 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG. ?></span>
-									<?php echo esc_html( $hvac_topbar_rating ); ?>
+		<header id="masthead" class="site-header<?php echo ( function_exists( 'hvac_is_transparent_header' ) && hvac_is_transparent_header() ) ? ' is-transparent' : ''; ?>">
+
+			<?php if ($hvac_show_topbar && ($hvac_topbar_message || $hvac_topbar_email || $hvac_topbar_phone || $hvac_topbar_socials)) : ?>
+				<div class="site-topbar">
+					<div class="container site-topbar-inner">
+						<?php if ($hvac_topbar_message) : ?>
+							<p class="topbar-message">
+								<span class="topbar-message-icon" aria-hidden="true">
+									<svg width="19" height="16" viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M12.1289 0.351562L16.5938 4.88672C18.457 6.75 18.457 9.73828 16.5938 11.6016L12.6562 15.5742C12.3398 15.9258 11.8125 15.9258 11.4609 15.6094C11.1445 15.2578 11.1445 14.7305 11.4609 14.4141L15.3984 10.4062C16.5938 9.21094 16.5938 7.27734 15.3984 6.08203L10.8984 1.51172C10.582 1.19531 10.582 0.667969 10.9336 0.316406C11.25 0 11.7773 0 12.1289 0.351562ZM0 7.03125V1.75781C0 0.84375 0.738281 0.0703125 1.6875 0.0703125H6.92578C7.52344 0.0703125 8.08594 0.316406 8.50781 0.738281L14.4141 6.64453C15.293 7.52344 15.293 8.96484 14.4141 9.84375L9.73828 14.5195C8.85938 15.3984 7.41797 15.3984 6.53906 14.5195L0.632812 8.61328C0.210938 8.19141 0 7.62891 0 7.03125ZM5.0625 4.00781C5.0625 3.41016 4.53516 2.88281 3.9375 2.88281C3.30469 2.88281 2.8125 3.41016 2.8125 4.00781C2.8125 4.64062 3.30469 5.13281 3.9375 5.13281C4.53516 5.13281 5.0625 4.64062 5.0625 4.00781Z" fill="#FAFAFA" />
+									</svg>
+
 								</span>
-							<?php endif; ?>
-							<?php if ( $hvac_topbar_hl ) : ?>
-								<span class="topbar-highlight"><?php echo esc_html( $hvac_topbar_hl ); ?></span>
-							<?php endif; ?>
-						</div>
-					<?php endif; ?>
-				</div>
-			</div>
-		<?php endif; ?>
-
-		<div class="container site-header-inner">
-
-			<div class="site-branding">
-				<?php
-				if ( has_custom_logo() ) {
-					the_custom_logo();
-				} else {
-					?>
-					<div class="site-title-wrap">
-						<?php if ( is_front_page() && is_home() ) : ?>
-							<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-						<?php else : ?>
-							<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
+								<?php echo esc_html($hvac_topbar_message); ?>
+							</p>
 						<?php endif; ?>
-						<?php
-						$hvac_description = get_bloginfo( 'description', 'display' );
-						if ( $hvac_description || is_customize_preview() ) :
-							?>
-							<p class="site-description"><?php echo $hvac_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+
+						<?php if ($hvac_topbar_email || $hvac_topbar_phone || $hvac_topbar_socials) : ?>
+							<div class="topbar-meta">
+
+								<?php if (! empty($hvac_topbar_socials)) : ?>
+									<ul class="topbar-socials">
+										<?php foreach ($hvac_topbar_socials as $hvac_social) : ?>
+											<?php
+											$hvac_social_link = isset($hvac_social['link']) ? $hvac_social['link'] : array();
+											if (empty($hvac_social_link['url'])) {
+												continue;
+											}
+											$hvac_icon          = hvac_social_icon($hvac_social['network']);
+											$hvac_social_target = ! empty($hvac_social_link['target']) ? $hvac_social_link['target'] : '_blank';
+											?>
+											<li>
+												<a href="<?php echo esc_url($hvac_social_link['url']); ?>" <?php echo hvac_link_target_attrs($hvac_social_target); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- controlled attribute string. 
+																											?> aria-label="<?php echo esc_attr(ucfirst((string) $hvac_social['network'])); ?>">
+													<?php echo $hvac_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG. 
+													?>
+												</a>
+											</li>
+										<?php endforeach; ?>
+									</ul>
+								<?php endif; ?>
+
+								<?php if (($hvac_topbar_email || $hvac_topbar_phone) && ! empty($hvac_topbar_socials)) : ?>
+									<span class="topbar-divider" aria-hidden="true"></span>
+								<?php endif; ?>
+
+								<?php if ($hvac_topbar_email || $hvac_topbar_phone) : ?>
+									<div class="topbar-contact">
+										<?php if ($hvac_topbar_email) : ?>
+											<a href="mailto:<?php echo esc_attr($hvac_topbar_email); ?>">
+												<svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<path d="M1.6875 0H16.3125C17.2266 0 18 0.773438 18 1.6875C18 2.25 17.7188 2.74219 17.2969 3.05859L9.66797 8.78906C9.24609 9.10547 8.71875 9.10547 8.29688 8.78906L0.667969 3.05859C0.246094 2.74219 0 2.25 0 1.6875C0 0.773438 0.738281 0 1.6875 0ZM0 3.9375L7.62891 9.70312C8.4375 10.3008 9.52734 10.3008 10.3359 9.70312L18 3.9375V11.25C18 12.5156 16.9805 13.5 15.75 13.5H2.25C0.984375 13.5 0 12.5156 0 11.25V3.9375Z" fill="#FAFAFA" />
+												</svg>
+
+												<?php echo esc_html($hvac_topbar_email); ?>
+											</a>
+										<?php endif; ?>
+										<?php if ($hvac_topbar_phone) : ?>
+											<?php $hvac_tb_tel = preg_replace('/[^0-9+]/', '', $hvac_topbar_phone); ?>
+											<a href="tel:<?php echo esc_attr($hvac_tb_tel); ?>">
+												<svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<path d="M5.76562 0.984375L7.17188 4.35938C7.41797 4.92188 7.27734 5.58984 6.78516 5.97656L5.0625 7.41797C6.22266 9.87891 8.22656 11.8828 10.6875 13.043L12.1289 11.3203C12.5156 10.8281 13.1836 10.6875 13.7461 10.9336L17.1211 12.3398C17.7891 12.5859 18.1055 13.3242 17.9297 13.9922L17.0859 17.0859C16.9102 17.6836 16.3828 18.1055 15.75 18.1055C7.03125 18.1055 0 11.0742 0 2.35547C0 1.72266 0.421875 1.19531 1.01953 1.01953L4.11328 0.175781C4.78125 0 5.51953 0.316406 5.76562 0.984375Z" fill="#FAFAFA" />
+												</svg>
+
+												<?php echo esc_html($hvac_topbar_phone); ?>
+											</a>
+										<?php endif; ?>
+									</div>
+								<?php endif; ?>
+							</div>
 						<?php endif; ?>
 					</div>
+				</div>
+			<?php endif; ?>
+
+			<div class="container site-header-inner">
+
+				<div class="site-branding">
 					<?php
-				}
-				?>
+					if (has_custom_logo()) {
+						the_custom_logo();
+					} else {
+					?>
+						<div class="site-title-wrap">
+							<?php if (is_front_page() && is_home()) : ?>
+								<h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home"><?php bloginfo('name'); ?></a></h1>
+							<?php else : ?>
+								<p class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home"><?php bloginfo('name'); ?></a></p>
+							<?php endif; ?>
+							<?php
+							$hvac_description = get_bloginfo('description', 'display');
+							if ($hvac_description || is_customize_preview()) :
+							?>
+								<p class="site-description"><?php echo $hvac_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+															?></p>
+							<?php endif; ?>
+						</div>
+					<?php
+					}
+					?>
+				</div>
+
+				<nav id="site-navigation" class="main-navigation" aria-label="<?php esc_attr_e('Primary', 'hvac'); ?>">
+					<?php
+					wp_nav_menu(
+						array(
+							'theme_location' => 'primary',
+							'menu_id'        => 'primary-menu',
+							'container'      => false,
+							'fallback_cb'    => false,
+						)
+					);
+					?>
+				</nav>
+
+				<div class="header-actions">
+					<?php if ($hvac_header_hours) : ?>
+						<div class="header-open-hours">
+
+							<?php if ($hvac_call_label) : ?>
+								<h5 class="header-call-label"><?php echo esc_html($hvac_call_label); ?></h5>
+							<?php endif; ?>
+							<h6 class="header-call-number"><?php echo esc_html($hvac_header_hours); ?></h6>
+						</div>
+					<?php endif; ?>
+
+					<?php
+					if ($hvac_book_label) :
+						$hvac_book_url    = ! empty($hvac_book_link['url']) ? $hvac_book_link['url'] : '#';
+						$hvac_book_target = ! empty($hvac_book_link['target']) ? $hvac_book_link['target'] : '';
+					?>
+						<a class="header-book" href="<?php echo esc_url($hvac_book_url); ?>" <?php echo hvac_link_target_attrs($hvac_book_target); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- controlled attribute string. 
+																								?>>
+							<?php echo esc_html($hvac_book_label); ?>
+						</a>
+					<?php endif; ?>
+
+					<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+						<span class="screen-reader-text"><?php esc_html_e('Menu', 'hvac'); ?></span>
+						<span class="menu-toggle-icon" aria-hidden="true"></span>
+					</button>
+				</div>
+
 			</div>
+		</header>
 
-			<nav id="site-navigation" class="main-navigation" aria-label="<?php esc_attr_e( 'Primary', 'hvac' ); ?>">
-				<?php
-				wp_nav_menu(
-					array(
-						'theme_location' => 'primary',
-						'menu_id'        => 'primary-menu',
-						'container'      => false,
-						'fallback_cb'    => false,
-					)
-				);
-				?>
-			</nav>
-
-			<div class="header-actions">
-				<?php if ( $hvac_header_phone ) : ?>
-					<?php $hvac_tel = preg_replace( '/[^0-9+]/', '', $hvac_header_phone ); ?>
-					<a class="header-cta" href="tel:<?php echo esc_attr( $hvac_tel ); ?>">
-						<span class="header-cta-icon" aria-hidden="true">
-							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-						</span>
-						<span class="header-cta-text"><?php echo esc_html( trim( $hvac_cta_label . ' ' . $hvac_header_phone ) ); ?></span>
-					</a>
-				<?php endif; ?>
-
-				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
-					<span class="screen-reader-text"><?php esc_html_e( 'Menu', 'hvac' ); ?></span>
-					<span class="menu-toggle-icon" aria-hidden="true"></span>
-				</button>
-			</div>
-
-		</div>
-	</header>
-
-	<div id="content" class="site-content">
+		<div id="content" class="site-content">

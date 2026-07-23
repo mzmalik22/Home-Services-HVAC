@@ -28,6 +28,45 @@
 } )();
 
 /**
+ * Transparent header: turn solid and stick to the top once the visitor scrolls
+ * past the threshold. Only runs when a page opted into the transparent header.
+ */
+( function () {
+	'use strict';
+
+	var header = document.querySelector( '.site-header.is-transparent' );
+
+	if ( ! header ) {
+		return;
+	}
+
+	var threshold = 60;
+	var ticking = false;
+
+	function update() {
+		if ( window.pageYOffset > threshold ) {
+			header.classList.add( 'is-stuck' );
+		} else {
+			header.classList.remove( 'is-stuck' );
+		}
+		ticking = false;
+	}
+
+	window.addEventListener(
+		'scroll',
+		function () {
+			if ( ! ticking ) {
+				window.requestAnimationFrame( update );
+				ticking = true;
+			}
+		},
+		{ passive: true }
+	);
+
+	update();
+} )();
+
+/**
  * Blog slider: non-infinite horizontal scroller with prev/next controls.
  * Prev is disabled at the start, next at the end.
  */

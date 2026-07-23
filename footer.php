@@ -57,23 +57,82 @@ $hvac_acf = function_exists('get_field');
 
 // Brand.
 $hvac_footer_logo     = $hvac_acf ? get_field('footer_logo', 'option') : false;
+$hvac_footer_heading  = $hvac_acf ? get_field('footer_heading', 'option') : '';
 $hvac_footer_tagline  = $hvac_acf ? get_field('footer_tagline', 'option') : '';
-$hvac_footer_phone    = $hvac_acf ? get_field('footer_phone', 'option') : '';
-$hvac_footer_email    = $hvac_acf ? get_field('footer_email', 'option') : '';
-$hvac_footer_location = $hvac_acf ? get_field('footer_location', 'option') : '';
+$hvac_contact_raw     = $hvac_acf ? get_field('footer_contact_items', 'option') : array();
 $hvac_footer_socials  = $hvac_acf ? get_field('footer_socials', 'option') : array();
 
+// Subscribe / newsletter.
+$hvac_sub_show        = $hvac_acf ? get_field('footer_subscribe_show', 'option') : true;
+$hvac_sub_heading     = $hvac_acf ? get_field('footer_subscribe_heading', 'option') : '';
+$hvac_sub_placeholder = $hvac_acf ? get_field('footer_subscribe_placeholder', 'option') : '';
+$hvac_sub_button      = $hvac_acf ? get_field('footer_subscribe_button', 'option') : '';
+$hvac_sub_action      = $hvac_acf ? get_field('footer_subscribe_action', 'option') : '';
+
+if (! $hvac_footer_heading) {
+	$hvac_footer_heading = __('ensure your cooling system', 'hvac');
+}
 if (! $hvac_footer_tagline) {
-	$hvac_footer_tagline = __('Trusted HVAC solutions for homeowners across the USA — from heating and cooling repairs to emergency response and complete system replacements.', 'hvac');
+	$hvac_footer_tagline = __("Stay comfortable and worry-free with Frost Flow's fast, professional service at your convenience.", 'hvac');
 }
-if (! $hvac_footer_phone) {
-	$hvac_footer_phone = '(512) 555-0199';
+// Normalise contact items (repeater rows) into a render-ready list.
+$hvac_contact_items = array();
+if (! empty($hvac_contact_raw) && is_array($hvac_contact_raw)) {
+	foreach ($hvac_contact_raw as $hvac_ci) {
+		$hvac_ci_text = isset($hvac_ci['text']) ? $hvac_ci['text'] : '';
+		$hvac_ci_link = isset($hvac_ci['link']) ? $hvac_ci['link'] : '';
+		$hvac_ci_icon = isset($hvac_ci['icon']) ? $hvac_ci['icon'] : array();
+		$hvac_icon_html = '';
+		if (! empty($hvac_ci_icon['url'])) {
+			$hvac_icon_html = sprintf(
+				'<img src="%1$s" alt="%2$s" width="16" height="16" />',
+				esc_url($hvac_ci_icon['url']),
+				esc_attr(! empty($hvac_ci_icon['alt']) ? $hvac_ci_icon['alt'] : '')
+			);
+		}
+		if ('' === $hvac_ci_text && '' === $hvac_icon_html) {
+			continue;
+		}
+		$hvac_contact_items[] = array(
+			'icon_html' => $hvac_icon_html,
+			'text'      => $hvac_ci_text,
+			'link'      => $hvac_ci_link,
+		);
+	}
 }
-if (! $hvac_footer_email) {
-	$hvac_footer_email = 'hello@hvacreliefpros.com';
+if (empty($hvac_contact_items)) {
+	$hvac_svg_open  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
+	$hvac_contact_items = array(
+		array(
+			'icon_html' => $hvac_svg_open . '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
+			'text'      => '+62 864 6444 2222',
+			'link'      => 'tel:+6286464442222',
+		),
+		array(
+			'icon_html' => $hvac_svg_open . '<path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>',
+			'text'      => 'support@hvacreliablepro.com',
+			'link'      => 'mailto:support@hvacreliablepro.com',
+		),
+		array(
+			'icon_html' => $hvac_svg_open . '<path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>',
+			'text'      => __('24/7 Customer Support', 'hvac'),
+			'link'      => '',
+		),
+		array(
+			'icon_html' => $hvac_svg_open . '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+			'text'      => __('United States', 'hvac'),
+			'link'      => '',
+		),
+	);
 }
-if (! $hvac_footer_location) {
-	$hvac_footer_location = __('Serving Homeowners Nationwide, USA', 'hvac');
+if (! $hvac_sub_heading) {
+	$hvac_sub_heading = __('Get Up to $100 Off Your First Stay When You Sign Up for Emails!', 'hvac');
+}
+if (! $hvac_sub_placeholder) {
+	$hvac_sub_placeholder = __('Enter your email', 'hvac');
+}
+if (! $hvac_sub_button) {
+	$hvac_sub_button = __('Subscribe', 'hvac');
 }
 
 // Link columns — normalise ACF rows or fall back to Figma defaults.
@@ -118,41 +177,26 @@ if (empty($hvac_columns)) {
 	};
 	$hvac_columns = array(
 		array(
-			'title' => __('HVAC Services', 'hvac'),
+			'title' => __('Menu', 'hvac'),
+			'links' => $hvac_make_links(
+				array(
+					__('About Us', 'hvac'),
+					__('Careers', 'hvac'),
+					__('News & Article', 'hvac'),
+					__('Legal Notice', 'hvac'),
+					__('Global Network', 'hvac'),
+				)
+			),
+		),
+		array(
+			'title' => __('Services', 'hvac'),
 			'links' => $hvac_make_links(
 				array(
 					__('AC Repair', 'hvac'),
-					__('Heating Repair', 'hvac'),
+					__('AC Installation', 'hvac'),
+					__('AC Maintenance', 'hvac'),
+					__('Indoor Air Quality', 'hvac'),
 					__('Furnace Installation', 'hvac'),
-					__('Emergency HVAC Service', 'hvac'),
-					__('Commercial HVAC', 'hvac'),
-					__('HVAC Maintenance', 'hvac'),
-				)
-			),
-		),
-		array(
-			'title' => __('Service Areas', 'hvac'),
-			'links' => $hvac_make_links(
-				array(
-					__('Austin', 'hvac'),
-					__('Round Rock', 'hvac'),
-					__('Cedar Park', 'hvac'),
-					__('Georgetown', 'hvac'),
-					__('Pflugerville', 'hvac'),
-					__('View All Areas', 'hvac'),
-				)
-			),
-		),
-		array(
-			'title' => __('Company', 'hvac'),
-			'links' => $hvac_make_links(
-				array(
-					__('About', 'hvac'),
-					__('Reviews', 'hvac'),
-					__('Projects', 'hvac'),
-					__('Financing', 'hvac'),
-					__('Blog', 'hvac'),
-					__('Contact', 'hvac'),
 				)
 			),
 		),
@@ -163,7 +207,7 @@ if (empty($hvac_columns)) {
 $hvac_copyright = $hvac_acf ? get_field('footer_copyright', 'option') : '';
 if (! $hvac_copyright) {
 	/* translators: default footer copyright line. */
-	$hvac_copyright = __('© {year} Sample HVAC Co. | Licensed & Insured', 'hvac');
+	$hvac_copyright = __('{year} © HVAC Reliable Pro. All Rights Reserved.', 'hvac');
 }
 $hvac_copyright = str_replace('{year}', gmdate('Y'), $hvac_copyright);
 
@@ -185,19 +229,23 @@ if (! empty($hvac_bottom_raw) && is_array($hvac_bottom_raw)) {
 if (empty($hvac_bottom_links)) {
 	$hvac_bottom_links = array(
 		array(
-			'label'  => __('Privacy', 'hvac'),
+			'label'  => __('Privacy Policy', 'hvac'),
 			'url'    => '#',
 			'target' => '',
 		),
 		array(
-			'label'  => __('Terms', 'hvac'),
+			'label'  => __('Terms & Condition', 'hvac'),
+			'url'    => '#',
+			'target' => '',
+		),
+		array(
+			'label'  => __('Do not share or sell my information', 'hvac'),
 			'url'    => '#',
 			'target' => '',
 		),
 	);
 }
 
-$hvac_tel = preg_replace('/[^0-9+]/', '', $hvac_footer_phone);
 ?>
 </div><!-- #content -->
 
@@ -227,45 +275,80 @@ $hvac_tel = preg_replace('/[^0-9+]/', '', $hvac_footer_phone);
 						?>
 					</div>
 
-					<?php if ($hvac_footer_tagline) : ?>
-						<p class="footer-tagline"><?php echo esc_html($hvac_footer_tagline); ?></p>
+					<?php if ($hvac_footer_heading) : ?>
+						<h2 class="footer-heading"><?php echo esc_html($hvac_footer_heading); ?></h2>
 					<?php endif; ?>
 
 					<ul class="footer-contact">
-						<?php if ($hvac_footer_phone) : ?>
+						<?php foreach ($hvac_contact_items as $hvac_ci) : ?>
+							<?php if (empty($hvac_ci['text']) && empty($hvac_ci['icon_html'])) : continue;
+							endif; ?>
 							<li>
-								<span class="footer-contact-icon" aria-hidden="true">
-									<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-										<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
-									</svg>
-								</span>
-								<a href="tel:<?php echo esc_attr($hvac_tel); ?>"><?php echo esc_html($hvac_footer_phone); ?></a>
+
+								<?php if (! empty($hvac_ci['link'])) : ?>
+									<a href="<?php echo esc_url($hvac_ci['link']); ?>"> <?php if (! empty($hvac_ci['icon_html'])) : ?>
+											<span class="footer-contact-icon" aria-hidden="true"><?php echo $hvac_ci['icon_html']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+																									?></span>
+										<?php endif; ?> <?php echo esc_html($hvac_ci['text']); ?></a>
+								<?php else : ?>
+									<p class="border-button-hvac"><span class="footer-contact-icon" aria-hidden="true"><?php echo $hvac_ci['icon_html']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+																														?></span> <?php echo esc_html($hvac_ci['text']); ?></p>
+								<?php endif; ?>
 							</li>
-						<?php endif; ?>
-						<?php if ($hvac_footer_email) : ?>
-							<li>
-								<span class="footer-contact-icon" aria-hidden="true">
-									<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-										<path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" />
-										<polyline points="22,6 12,13 2,6" />
-									</svg>
-								</span>
-								<a href="mailto:<?php echo esc_attr($hvac_footer_email); ?>"><?php echo esc_html($hvac_footer_email); ?></a>
-							</li>
-						<?php endif; ?>
-						<?php if ($hvac_footer_location) : ?>
-							<li>
-								<span class="footer-contact-icon" aria-hidden="true">
-									<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-										<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-										<circle cx="12" cy="10" r="3" />
-									</svg>
-								</span>
-								<span><?php echo esc_html($hvac_footer_location); ?></span>
-							</li>
-						<?php endif; ?>
+						<?php endforeach; ?>
 					</ul>
 
+					<?php if ($hvac_footer_tagline) : ?>
+						<p class="footer-tagline"><?php echo esc_html($hvac_footer_tagline); ?></p>
+					<?php endif; ?>
+				</div>
+
+				<div class="footer-links-col-wrapper">
+
+					<div class="footer-links-wrapper">
+						<?php foreach ($hvac_columns as $hvac_column) : ?>
+							<div class="footer-col">
+								<?php if (! empty($hvac_column['title'])) : ?>
+									<h3 class="footer-col-title"><?php echo esc_html($hvac_column['title']); ?></h3>
+								<?php endif; ?>
+								<?php if (! empty($hvac_column['links'])) : ?>
+									<ul class="footer-links">
+										<?php foreach ($hvac_column['links'] as $hvac_link) : ?>
+											<?php if (empty($hvac_link['label'])) : continue;
+											endif; ?>
+											<li>
+												<a href="<?php echo esc_url(! empty($hvac_link['url']) ? $hvac_link['url'] : '#'); ?>" <?php echo hvac_link_target_attrs(isset($hvac_link['target']) ? $hvac_link['target'] : ''); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- controlled attribute string. 
+																																		?>><?php echo esc_html($hvac_link['label']); ?></a>
+											</li>
+										<?php endforeach; ?>
+									</ul>
+								<?php endif; ?>
+							</div>
+						<?php endforeach; ?>
+					</div>
+
+					<?php if ($hvac_sub_show) : ?>
+						<div class="footer-subscribe">
+							<?php if ($hvac_sub_heading) : ?>
+								<p class="footer-subscribe-title"><?php echo esc_html($hvac_sub_heading); ?></p>
+							<?php endif; ?>
+							<form class="footer-subscribe-form" action="<?php echo esc_url($hvac_sub_action ? $hvac_sub_action : '#'); ?>" method="post">
+								<label class="screen-reader-text" for="footer-subscribe-email"><?php echo esc_html($hvac_sub_placeholder); ?></label>
+								<input type="email" id="footer-subscribe-email" name="email" placeholder="<?php echo esc_attr($hvac_sub_placeholder); ?>" required />
+								<button type="submit" class="btn"><?php echo esc_html($hvac_sub_button); ?></button>
+							</form>
+						</div>
+					<?php endif; ?>
+				</div>
+
+			</div>
+		</div><!-- .footer-top -->
+	</div>
+
+	<div class="footer-bottom-wrapper">
+		<div class="container">
+			<div class="footer-bottom">
+				<div class="footer-bottom-left">
 					<?php if (! empty($hvac_footer_socials) && is_array($hvac_footer_socials)) : ?>
 						<ul class="footer-socials">
 							<?php foreach ($hvac_footer_socials as $hvac_social) : ?>
@@ -278,59 +361,31 @@ $hvac_tel = preg_replace('/[^0-9+]/', '', $hvac_footer_phone);
 								$hvac_social_target = ! empty($hvac_social_link['target']) ? $hvac_social_link['target'] : '_blank';
 								?>
 								<li>
-									<a href="<?php echo esc_url($hvac_social_link['url']); ?>" <?php echo hvac_link_target_attrs($hvac_social_target); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- controlled attribute string. 
-																									?> aria-label="<?php echo esc_attr(ucfirst((string) $hvac_social['network'])); ?>">
-										<?php echo $hvac_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG. 
+									<a href="<?php echo esc_url($hvac_social_link['url']); ?>" <?php echo hvac_link_target_attrs($hvac_social_target); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+																								?> aria-label="<?php echo esc_attr(ucfirst((string) $hvac_social['network'])); ?>">
+										<?php echo $hvac_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
 										?>
 									</a>
 								</li>
 							<?php endforeach; ?>
 						</ul>
 					<?php endif; ?>
+
+					<?php if (! empty($hvac_bottom_links) && is_array($hvac_bottom_links)) : ?>
+						<ul class="footer-bottom-links">
+							<?php foreach ($hvac_bottom_links as $hvac_blink) : ?>
+								<?php if (empty($hvac_blink['label'])) : continue;
+								endif; ?>
+								<li>
+									<a href="<?php echo esc_url(! empty($hvac_blink['url']) ? $hvac_blink['url'] : '#'); ?>" <?php echo hvac_link_target_attrs(isset($hvac_blink['target']) ? $hvac_blink['target'] : ''); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+																																?>><?php echo esc_html($hvac_blink['label']); ?></a>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+					<?php endif; ?>
 				</div>
 
-				<?php foreach ($hvac_columns as $hvac_column) : ?>
-					<div class="footer-col">
-						<?php if (! empty($hvac_column['title'])) : ?>
-							<h3 class="footer-col-title"><?php echo esc_html($hvac_column['title']); ?></h3>
-						<?php endif; ?>
-						<?php if (! empty($hvac_column['links'])) : ?>
-							<ul class="footer-links">
-								<?php foreach ($hvac_column['links'] as $hvac_link) : ?>
-									<?php if (empty($hvac_link['label'])) : continue;
-									endif; ?>
-									<li>
-										<a href="<?php echo esc_url(! empty($hvac_link['url']) ? $hvac_link['url'] : '#'); ?>" <?php echo hvac_link_target_attrs(isset($hvac_link['target']) ? $hvac_link['target'] : ''); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- controlled attribute string. 
-																																		?>><?php echo esc_html($hvac_link['label']); ?></a>
-									</li>
-								<?php endforeach; ?>
-							</ul>
-						<?php endif; ?>
-					</div>
-				<?php endforeach; ?>
-
-			</div>
-		</div><!-- .footer-top -->
-	</div>
-
-	<div class="footer-bottom-wrapper">
-		<div class="container">
-			<div class="footer-bottom">
-
 				<p class="site-info"><?php echo esc_html($hvac_copyright); ?></p>
-
-				<?php if (! empty($hvac_bottom_links) && is_array($hvac_bottom_links)) : ?>
-					<ul class="footer-bottom-links">
-						<?php foreach ($hvac_bottom_links as $hvac_blink) : ?>
-							<?php if (empty($hvac_blink['label'])) : continue;
-							endif; ?>
-							<li>
-								<a href="<?php echo esc_url(! empty($hvac_blink['url']) ? $hvac_blink['url'] : '#'); ?>" <?php echo hvac_link_target_attrs(isset($hvac_blink['target']) ? $hvac_blink['target'] : ''); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- controlled attribute string. 
-																																?>><?php echo esc_html($hvac_blink['label']); ?></a>
-							</li>
-						<?php endforeach; ?>
-					</ul>
-				<?php endif; ?>
 			</div>
 		</div><!-- .footer-bottom -->
 	</div>

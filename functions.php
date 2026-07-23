@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Disallow direct access.
 }
 
-define( 'HVAC_VERSION', '1.3.0' );
+define( 'HVAC_VERSION', '1.6.0' );
 
 /**
  * Theme setup.
@@ -113,10 +113,10 @@ add_action( 'widgets_init', 'hvac_widgets_init' );
  * Enqueue scripts and styles.
  */
 function hvac_scripts() {
-	// Google Fonts — Inter (matches Figma design system).
+	// Google Fonts — Inter, Mulish, Lato, Manrope (see CSS font-family variables).
 	wp_enqueue_style(
 		'hvac-fonts',
-		'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
+		'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Mulish:wght@400;500;600;700;800&family=Lato:wght@300;400;700;900&family=Manrope:wght@400;500;600;700;800&display=swap',
 		array(),
 		null
 	);
@@ -186,3 +186,8 @@ require get_template_directory() . '/inc/media-support.php';
  * Secure Custom Fields for the "Home Page" template.
  */
 require get_template_directory() . '/inc/home-page-fields.php';
+
+/**
+ * Per-page settings (transparent header toggle).
+ */
+require get_template_directory() . '/inc/page-settings.php';
