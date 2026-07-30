@@ -532,8 +532,9 @@ ol {
   white-space: nowrap;
 }
 .main-navigation .sub-menu a:hover,
-.main-navigation .sub-menu a:focus {
-  color: var(--color-secondary);
+.main-navigation .sub-menu a:focus,
+.main-navigation .sub-menu a:active {
+  color: var(--color-accent);
   background: var(--color-light);
 }
 /* Nested (third-level) submenus open to the side */
