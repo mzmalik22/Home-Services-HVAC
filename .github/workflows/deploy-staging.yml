@@ -20,21 +20,23 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -p "${{ secrets.SSH_PORT }}" -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null
+          ssh-keyscan -p "${{ secrets.SSH_PORT }}" -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null || true
+          chmod 644 ~/.ssh/known_hosts
 
       - name: Deploy via rsync
         run: |
-          rsync -avz --delete \
-            -e "ssh -p ${{ secrets.SSH_PORT }} -i ~/.ssh/id_ed25519" \
-            --exclude='.git' \
-            --exclude='.github' \
-            --exclude='.gitignore' \
-            --exclude='node_modules' \
-            --exclude='src' \
-            --exclude='*.md' \
-            --exclude='package*.json' \
-            ./ "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.STAGING_PATH }}"
-
-      - name: Clean up
-        if: always()
-        run: rm -f ~/.ssh/id_ed25519
+          for i in 1 2 3 4 5; do
+            rsync -avz --delete \
+              --timeout=30 \
+              -e "ssh -p ${{ secrets.SSH_PORT }} -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new -o ConnectTimeout=20" \
+              --exclude='.git' \
+              --exclude='.github' \
+              --exclude='.gitignore' \
+              --exclude='node_modules' \
+              --exclude='src' \
+              --exclude='*.md' \
+              --exclude='package*.json' \
+              ./ "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.STAGING_PATH }}" && break
+            echo "Attempt $i failed, retrying in 15s..."
+            sleep 15
+          done
