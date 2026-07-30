@@ -34,8 +34,22 @@ $pv_updated = $hvac_acf ? get_field('privacy_updated') : '';
 if (! $pv_updated) {
 	$pv_updated = gmdate('F Y');
 }
-$pv_intro   = $hvac_acf ? get_field('privacy_intro') : '';
-$pv_content = $hvac_acf ? get_field('privacy_content') : '';
+$pv_intro    = $hvac_acf ? get_field('privacy_intro') : '';
+$pv_show_toc = $hvac_acf ? (bool) get_field('privacy_show_toc') : true;
+
+// Titled sections entered by the admin (each: title + HTML content).
+$sections = array();
+if ($hvac_acf && have_rows('privacy_sections')) {
+	while (have_rows('privacy_sections')) {
+		the_row();
+		$s_t = get_sub_field('section_title');
+		$s_c = get_sub_field('section_content');
+		if (! $s_t && ! $s_c) {
+			continue;
+		}
+		$sections[] = array('title' => $s_t, 'body' => $s_c);
+	}
+}
 
 $pv_email = ($hvac_acf ? get_field('footer_email', 'option') : '') ?: 'support@hvacreliablepro.com';
 $pv_phone = ($hvac_acf ? get_field('footer_phone', 'option') : '') ?: '+62 864 6444 2222';
@@ -44,9 +58,9 @@ if (! $pv_intro) {
 	$pv_intro = __('This Privacy Policy explains how we collect, use, share and protect your information when you visit our website or request our heating and cooling services. Please read it carefully. By using our website, you agree to the practices described below.', 'hvac');
 }
 
-/* Default policy (mirrors a standard 12-section policy)- rendered only when
-   the WYSIWYG field is empty. */
-if (! $pv_content) {
+/* Default policy (12 titled sections) - used only when the admin has not
+   entered any sections above. */
+if (empty($sections)) {
 	$e_email    = esc_html($pv_email);
 	$e_phone    = esc_html($pv_phone);
 	$mailto     = esc_attr($pv_email);
@@ -116,17 +130,27 @@ if (! $pv_content) {
 		),
 	);
 
-	// Build the "on this page" TOC + the numbered sections.
-	$toc  = '<nav class="legal-toc" aria-label="' . esc_attr__('On this page', 'hvac') . '"><p class="legal-toc-title">' . esc_html__('On this page', 'hvac') . '</p><ol>';
-	$body = '';
-	foreach ($sections as $i => $sec) {
-		$anchor = 'pp-section-' . ($i + 1);
-		$toc   .= '<li><a href="#' . $anchor . '">' . esc_html($sec['title']) . '</a></li>';
-		$body  .= '<h2 id="' . $anchor . '">' . esc_html($sec['title']) . '</h2>' . $sec['body'];
-	}
-	$toc     .= '</ol></nav>';
-	$pv_content = $toc . $body;
 }
+
+/* Build the "on this page" TOC and the anchored sections from $sections
+   (whether they came from the repeater or the default set). */
+$pv_toc_items = '';
+$pv_body      = '';
+$pv_has_titles = false;
+foreach ($sections as $i => $sec) {
+	$s_title = isset($sec['title']) ? $sec['title'] : '';
+	$s_body  = isset($sec['body']) ? $sec['body'] : '';
+	$anchor  = 'pp-section-' . ($i + 1);
+	if ($s_title) {
+		$pv_has_titles = true;
+		$pv_toc_items .= '<li><a href="#' . esc_attr($anchor) . '">' . esc_html($s_title) . '</a></li>';
+		$pv_body      .= '<h2 id="' . esc_attr($anchor) . '">' . esc_html($s_title) . '</h2>';
+	}
+	$pv_body .= wp_kses_post($s_body);
+}
+$pv_toc_html = ($pv_show_toc && $pv_has_titles)
+	? '<nav class="legal-toc" aria-label="' . esc_attr__('On this page', 'hvac') . '"><p class="legal-toc-title">' . esc_html__('On this page', 'hvac') . '</p><ol>' . $pv_toc_items . '</ol></nav>'
+	: '';
 ?>
 
 <section class="page-hero">
@@ -145,7 +169,8 @@ if (! $pv_content) {
 			<?php if ($pv_updated) : ?>
 				<p class="legal-updated"><?php printf(esc_html__('Last updated: %s', 'hvac'), esc_html($pv_updated)); ?></p>
 			<?php endif; ?>
-			<?php echo wp_kses_post($pv_content); ?>
+			<?php echo $pv_toc_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<?php echo $pv_body; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</div>
 	</div>
 </section>

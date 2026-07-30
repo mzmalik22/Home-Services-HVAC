@@ -109,7 +109,7 @@ function hvac_contact_page_fields()
 					'label'         => esc_html__('Hours', 'hvac'),
 					'name'          => 'contact_hours',
 					'type'          => 'text',
-					'default_value' => 'Mon–Sun: 24/7 Emergency Service',
+					'default_value' => 'Mon-Sun: 24/7 Emergency Service',
 				),
 				array(
 					'key'          => 'field_hvac_ct_socials',

@@ -2983,6 +2983,10 @@ a.contact-info-value:hover {
   justify-content: center;
   margin-top: 3rem;
 }
+.blog-listing-section .entry-thumbnail img{
+  height: 250px;
+  object-fit: cover;
+}
 .blog-empty {
   text-align: center;
   color: var(--color-text-light-dark);

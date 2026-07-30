@@ -43,7 +43,7 @@ $ct_info_text = hvac_ct('contact_info_text', __('Reach us any time- we\'re here 
 $ct_phone     = hvac_ct('contact_phone', '+62 864 6444 2222');
 $ct_email     = hvac_ct('contact_email', 'support@hvacreliablepro.com');
 $ct_address   = hvac_ct('contact_address', __('United States', 'hvac'));
-$ct_hours     = hvac_ct('contact_hours', __('Mon–Sun: 24/7 Emergency Service', 'hvac'));
+$ct_hours     = hvac_ct('contact_hours', __('Mon-Sun: 24/7 Emergency Service', 'hvac'));
 $ct_socials   = ($hvac_acf && have_rows('contact_socials')) ? get_field('contact_socials') : array();
 $ct_tel       = $ct_phone ? preg_replace('/[^0-9+]/', '', $ct_phone) : '';
 
