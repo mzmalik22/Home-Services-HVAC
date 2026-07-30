@@ -2610,3 +2610,148 @@ a.contact-info-value:hover {
     grid-template-columns: 1fr;
   }
 }
+
+/* =========================================================
+   19. LOCATION PAGE (page-location.php)
+   ========================================================= */
+/* Hero badges + checklist (reuses .home-hero) */
+.location-badges {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1.25rem;
+  padding: 0;
+}
+.location-hero .booking-form{
+  position: relative;
+  bottom: unset;
+}
+.location-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.location-badge:first-child {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-accent-text);
+}
+.location-checklist {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+.location-checklist li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 500;
+}
+.location-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(77, 255, 244, 0.15);
+  color: var(--color-secondary);
+}
+.location-check svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Intro stats */
+.location-stats {
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+.location-stats li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-right: 1rem;
+  border-right: 1px solid var(--color-border);
+}
+.location-stats li:last-child {
+  border-right: 0;
+}
+.location-stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.1;
+}
+.location-stat-label {
+  font-size: 0.85rem;
+  color: var(--color-text-light-dark);
+}
+@media (max-width: 600px) {
+  .location-stats {
+    grid-template-columns: 1fr;
+  }
+  .location-stats li {
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border);
+    padding: 0 0 0.75rem;
+  }
+  .location-stats li:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* Projects gallery */
+.location-projects {
+  padding: 5rem 0;
+}
+.location-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+@media (min-width: 768px) {
+  .location-gallery {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.gallery-item {
+  border-radius: var(--radius-base);
+  overflow: hidden;
+}
+.gallery-image,
+.gallery-item .img-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition-base);
+}
+.gallery-item:hover .gallery-image {
+  transform: scale(1.05);
+}
+
+/* CTA text block (banner) */
+.location-cta-text {
+  max-width: 760px;
+}
+.location-cta-sub {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0.75rem 0 0;
+}
