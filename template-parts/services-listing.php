@@ -154,7 +154,7 @@ $benefits  = ($hvac_acf && have_rows('services_benefits', $hvac_ctx)) ? get_fiel
 if (empty($benefits)) {
 	$benefits = array(
 		array('title' => __('Certified Technicians', 'hvac'), 'text' => __('Licensed, insured, and experienced professionals on every job.', 'hvac')),
-		array('title' => __('24/7 Emergency Service', 'hvac'), 'text' => __('Fast response whenever you need us — day or night.', 'hvac')),
+		array('title' => __('24/7 Emergency Service', 'hvac'), 'text' => __('Fast response whenever you need us- day or night.', 'hvac')),
 		array('title' => __('Upfront Pricing', 'hvac'), 'text' => __('Clear, honest quotes with no hidden fees or surprises.', 'hvac')),
 		array('title' => __('Satisfaction Guaranteed', 'hvac'), 'text' => __('We stand behind the quality of every service we complete.', 'hvac')),
 	);

@@ -111,7 +111,7 @@ function hvac_home_page_fields()
 					'name'          => 'hero_form_services',
 					'type'          => 'textarea',
 					'rows'          => 5,
-					'instructions'  => esc_html__('Options for the "Choose services" dropdown — one per line.', 'hvac'),
+					'instructions'  => esc_html__('Options for the "Choose services" dropdown- one per line.', 'hvac'),
 					'default_value' => "AC Repair\nAC Installation\nAC Maintenance\nEmergency Service\nDuct Cleaning",
 				),
 				array(
@@ -506,7 +506,7 @@ function hvac_home_page_fields()
 					'name'          => 'cta_heading',
 					'type'          => 'textarea',
 					'rows'          => 3,
-					'default_value' => "Experience Unmatched Comfort With Frost Flow's Expert AC Services — Your Professional Air Conditioning Care",
+					'default_value' => "Experience Unmatched Comfort With Frost Flow's Expert AC Services- Your Professional Air Conditioning Care",
 				),
 				array(
 					'key'           => 'field_home_cta_button',

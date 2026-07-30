@@ -74,7 +74,7 @@ function hvac_location_page_fields()
 				array('key' => 'field_hvac_lc_services_tab', 'label' => esc_html__('Services', 'hvac'), 'type' => 'tab'),
 				array('key' => 'field_hvac_lc_services_eyebrow', 'label' => esc_html__('Eyebrow', 'hvac'), 'name' => 'loc_services_eyebrow', 'type' => 'text', 'default_value' => 'What We Offer'),
 				array('key' => 'field_hvac_lc_services_heading', 'label' => esc_html__('Heading', 'hvac'), 'name' => 'loc_services_heading', 'type' => 'text', 'default_value' => 'Complete AC Services in California'),
-				array('key' => 'field_hvac_lc_services_subtext', 'label' => esc_html__('Subtext', 'hvac'), 'name' => 'loc_services_subtext', 'type' => 'textarea', 'rows' => 2, 'default_value' => 'Whatever your system needs, our local California team has you covered — for homes and businesses alike.'),
+				array('key' => 'field_hvac_lc_services_subtext', 'label' => esc_html__('Subtext', 'hvac'), 'name' => 'loc_services_subtext', 'type' => 'textarea', 'rows' => 2, 'default_value' => 'Whatever your system needs, our local California team has you covered- for homes and businesses alike.'),
 				array(
 					'key' => 'field_hvac_lc_services_selected', 'label' => esc_html__('Services to Show', 'hvac'), 'name' => 'loc_services_selected',
 					'type' => 'relationship', 'post_type' => array('service'), 'filters' => array('search'), 'return_format' => 'id',

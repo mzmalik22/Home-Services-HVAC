@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Disallow direct access.
 }
 
-define( 'HVAC_VERSION', '1.14.0' );
+define( 'HVAC_VERSION', '1.16.0' );
 
 /**
  * Theme setup.
@@ -113,7 +113,7 @@ add_action( 'widgets_init', 'hvac_widgets_init' );
  * Enqueue scripts and styles.
  */
 function hvac_scripts() {
-	// Google Fonts — Inter, Mulish, Lato, Manrope (see CSS font-family variables).
+	// Google Fonts- Inter, Mulish, Lato, Manrope (see CSS font-family variables).
 	wp_enqueue_style(
 		'hvac-fonts',
 		'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Mulish:wght@400;500;600;700;800&family=Lato:wght@300;400;700;900&family=Manrope:wght@400;500;600;700;800&display=swap',
@@ -206,3 +206,23 @@ require get_template_directory() . '/inc/contact-fields.php';
  * Location page template fields.
  */
 require get_template_directory() . '/inc/location-fields.php';
+
+/**
+ * Privacy Policy page template fields.
+ */
+require get_template_directory() . '/inc/privacy-fields.php';
+
+/**
+ * FAQ page template fields.
+ */
+require get_template_directory() . '/inc/faq-fields.php';
+
+/**
+ * Blog page template fields.
+ */
+require get_template_directory() . '/inc/blog-fields.php';
+
+/**
+ * About Us page template fields.
+ */
+require get_template_directory() . '/inc/about-fields.php';

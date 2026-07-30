@@ -81,7 +81,7 @@ function hvac_contact_page_fields()
 					'name'          => 'contact_info_text',
 					'type'          => 'textarea',
 					'rows'          => 3,
-					'default_value' => 'Reach us any time — we\'re here to help with repairs, installations, and emergency service.',
+					'default_value' => 'Reach us any time- we\'re here to help with repairs, installations, and emergency service.',
 				),
 				array(
 					'key'           => 'field_hvac_ct_phone',

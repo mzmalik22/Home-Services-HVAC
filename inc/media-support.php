@@ -24,7 +24,7 @@ function hvac_allow_mime_types( $mimes ) {
 	// WebP images.
 	$mimes['webp'] = 'image/webp';
 
-	// SVG — administrators only, for security.
+	// SVG- administrators only, for security.
 	if ( current_user_can( 'manage_options' ) ) {
 		$mimes['svg']  = 'image/svg+xml';
 		$mimes['svgz'] = 'image/svg+xml';

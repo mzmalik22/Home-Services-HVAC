@@ -39,7 +39,7 @@ $ct_subtext = hvac_ct('contact_hero_subtext', __('Have a question or need a quot
 $ct_bg      = $hvac_acf ? get_field('contact_hero_bg') : false;
 
 $ct_info_head = hvac_ct('contact_info_heading', __('Contact Information', 'hvac'));
-$ct_info_text = hvac_ct('contact_info_text', __('Reach us any time — we\'re here to help with repairs, installations, and emergency service.', 'hvac'));
+$ct_info_text = hvac_ct('contact_info_text', __('Reach us any time- we\'re here to help with repairs, installations, and emergency service.', 'hvac'));
 $ct_phone     = hvac_ct('contact_phone', '+62 864 6444 2222');
 $ct_email     = hvac_ct('contact_email', 'support@hvacreliablepro.com');
 $ct_address   = hvac_ct('contact_address', __('United States', 'hvac'));

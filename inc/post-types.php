@@ -180,7 +180,7 @@ function hvac_service_detail_fields()
 					'type'          => 'image',
 					'return_format' => 'array',
 					'preview_size'  => 'medium',
-					'instructions'  => esc_html__('Image shown beside the overview text. Upload one here — the featured image is no longer used for this section.', 'hvac'),
+					'instructions'  => esc_html__('Image shown beside the overview text. Upload one here- the featured image is no longer used for this section.', 'hvac'),
 				),
 
 				// --- Highlights / what you get ---
@@ -476,7 +476,7 @@ function hvac_service_detail_fields()
 add_action('acf/init', 'hvac_service_detail_fields');
 
 /**
- * "Services Page" options subpage (under Theme Options) — controls the extra
+ * "Services Page" options subpage (under Theme Options)- controls the extra
  * sections on the services listing page (archive-service.php).
  */
 function hvac_services_page_options()

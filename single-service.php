@@ -56,7 +56,7 @@ while (have_posts()) :
 	$sd_archive = get_post_type_archive_link('service');
 
 	/*
-	 * Fallback content — used only when the admin hasn't entered a value, so a
+	 * Fallback content- used only when the admin hasn't entered a value, so a
 	 * new service page looks complete out of the box. Anything entered in the
 	 * "Service Detail Page" fields overrides these.
 	 */
@@ -64,7 +64,7 @@ while (have_posts()) :
 
 	if (! $sd_intro) {
 		/* translators: %s: service name (lowercased). */
-		$sd_intro = sprintf(__('Fast, reliable %s from certified technicians — honest diagnostics, upfront pricing, and lasting results that keep your home comfortable.', 'hvac'), strtolower($sd_title));
+		$sd_intro = sprintf(__('Fast, reliable %s from certified technicians- honest diagnostics, upfront pricing, and lasting results that keep your home comfortable.', 'hvac'), strtolower($sd_title));
 	}
 	if (empty($sd_cta['url'])) {
 		$sd_cta = array(
@@ -103,12 +103,12 @@ while (have_posts()) :
 		$sd_wy_head = __('Why Homeowners Choose Us', 'hvac');
 	}
 	if (! $sd_wy_text) {
-		$sd_wy_text = wpautop(__('We diagnose the real problem, explain it in plain language, and fix it right the first time — with honest, upfront pricing and no surprise fees.', 'hvac'));
+		$sd_wy_text = wpautop(__('We diagnose the real problem, explain it in plain language, and fix it right the first time- with honest, upfront pricing and no surprise fees.', 'hvac'));
 	}
 	if (empty($sd_wy_points)) {
 		$sd_wy_points = array(
 			array('title' => __('Certified & Insured Technicians', 'hvac'), 'text' => __('Licensed pros who respect your home and get the job done right the first time.', 'hvac')),
-			array('title' => __('Upfront, Honest Pricing', 'hvac'), 'text' => __('Clear quotes with no hidden fees or surprise charges — ever.', 'hvac')),
+			array('title' => __('Upfront, Honest Pricing', 'hvac'), 'text' => __('Clear quotes with no hidden fees or surprise charges- ever.', 'hvac')),
 			array('title' => __('Fast, Same-Day Service', 'hvac'), 'text' => __('Rapid response when you need it most, often on the very same day.', 'hvac')),
 			array('title' => __('Satisfaction Guaranteed', 'hvac'), 'text' => __('Every job is backed by our workmanship and satisfaction guarantee.', 'hvac')),
 		);
@@ -117,7 +117,7 @@ while (have_posts()) :
 		$sd_pr_head = __('How It Works', 'hvac');
 	}
 	if (! $sd_pr_sub) {
-		$sd_pr_sub = __('Getting your service booked and done is simple — here is what to expect from start to finish.', 'hvac');
+		$sd_pr_sub = __('Getting your service booked and done is simple- here is what to expect from start to finish.', 'hvac');
 	}
 	if (empty($sd_pr_steps)) {
 		$sd_pr_steps = array(
@@ -376,7 +376,7 @@ while (have_posts()) :
 	<?php endif; ?>
 
 	<?php
-	// Related services — other services, newest first.
+	// Related services- other services, newest first.
 	$sd_related = new WP_Query(
 		array(
 			'post_type'           => 'service',
@@ -436,7 +436,7 @@ while (have_posts()) :
 	<?php endif; ?>
 
 	<?php
-	// CTA banner — per-service, falling back to the global Services Page CTA.
+	// CTA banner- per-service, falling back to the global Services Page CTA.
 	$sd_cta_heading = $hvac_acf ? get_field('detail_cta_heading') : '';
 	if (! $sd_cta_heading && $hvac_acf) {
 		$sd_cta_heading = get_field('services_cta_heading', 'option');

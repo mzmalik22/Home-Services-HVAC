@@ -572,7 +572,7 @@ if (! function_exists('hvac_news_image')) {
 
 <?php
 /* =============================== CTA BANNER =============================== */
-$cta_heading = hvac_hf('cta_heading', 'Experience Unmatched Comfort With Frost Flow\'s Expert AC Services — Your Professional Air Conditioning Care');
+$cta_heading = hvac_hf('cta_heading', 'Experience Unmatched Comfort With Frost Flow\'s Expert AC Services- Your Professional Air Conditioning Care');
 $cta_button  = $hvac_acf ? get_field('cta_button') : false;
 $cta_bg      = $hvac_acf ? get_field('cta_background_image') : false;
 $cta_btn_url = ! empty($cta_button['url']) ? $cta_button['url'] : '#';

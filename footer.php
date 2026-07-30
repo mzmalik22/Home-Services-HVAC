@@ -135,7 +135,7 @@ if (! $hvac_sub_button) {
 	$hvac_sub_button = __('Subscribe', 'hvac');
 }
 
-// Link columns — normalise ACF rows or fall back to Figma defaults.
+// Link columns- normalise ACF rows or fall back to Figma defaults.
 $hvac_columns = array();
 if ($hvac_acf && have_rows('footer_columns', 'option')) {
 	while (have_rows('footer_columns', 'option')) {

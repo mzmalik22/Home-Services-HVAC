@@ -1,35 +1,37 @@
 <?php
+
 /**
  * The template for displaying archive pages (category, tag, author, date).
+ *
+ * Uses the same layout as the Blog page template: a page hero followed by the
+ * post-card grid and pagination.
  *
  * @package HVAC
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
 	exit;
 }
 
 get_header();
 ?>
 
-<div class="site-main-inner <?php echo is_active_sidebar( 'sidebar-1' ) ? 'has-sidebar' : ''; ?>">
+<section class="page-hero">
+	<div class="container page-hero-inner">
+		<span class="section-eyebrow section-eyebrow-light"><?php echo hvac_wave_icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php esc_html_e('Blog & News', 'hvac'); ?></span>
+		<?php the_archive_title('<h1 class="page-hero-heading">', '</h1>'); ?>
+		<?php the_archive_description('<div class="page-hero-subtext">', '</div>'); ?>
+	</div>
+</section>
 
-	<main id="primary" class="content-area">
-
-		<?php if ( have_posts() ) : ?>
-
-			<header class="page-header archive-header">
-				<?php
-				the_archive_title( '<h1 class="page-title">', '</h1>' );
-				the_archive_description( '<div class="archive-description">', '</div>' );
-				?>
-			</header>
-
+<section class="blog-listing-section">
+	<div class="container">
+		<?php if (have_posts()) : ?>
 			<div class="post-cards">
 				<?php
-				while ( have_posts() ) :
+				while (have_posts()) :
 					the_post();
-					get_template_part( 'template-parts/content', get_post_type() );
+					get_template_part('template-parts/content', get_post_type());
 				endwhile;
 				?>
 			</div>
@@ -37,16 +39,10 @@ get_header();
 			<?php hvac_pagination(); ?>
 
 		<?php else : ?>
-
-			<?php get_template_part( 'template-parts/content', 'none' ); ?>
-
+			<?php get_template_part('template-parts/content', 'none'); ?>
 		<?php endif; ?>
-
-	</main>
-
-	<?php get_sidebar(); ?>
-
-</div>
+	</div>
+</section>
 
 <?php
 get_footer();

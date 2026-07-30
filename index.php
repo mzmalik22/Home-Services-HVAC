@@ -1,6 +1,6 @@
 <?php
 /**
- * The main template file — fallback for all other templates.
+ * The main template file- fallback for all other templates.
  *
  * @package HVAC
  */

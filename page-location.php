@@ -58,7 +58,7 @@ $lc_form_opts = array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', (strin
 
 $lc_in_eyebrow = hvac_lc('loc_intro_eyebrow', __('AC Services in California', 'hvac'));
 $lc_in_heading = hvac_lc('loc_intro_heading', __('Dependable Heating & Cooling in California', 'hvac'));
-$lc_in_text    = hvac_lc('loc_intro_text', wpautop(__('For years, California homeowners and businesses have trusted our team for reliable residential and commercial HVAC. As a local company, we know exactly how California\'s climate affects your system — and we service every job to stand up to it. From your first free estimate to the final check, we treat your home like our own and back our work with a solid warranty.', 'hvac')));
+$lc_in_text    = hvac_lc('loc_intro_text', wpautop(__('For years, California homeowners and businesses have trusted our team for reliable residential and commercial HVAC. As a local company, we know exactly how California\'s climate affects your system- and we service every job to stand up to it. From your first free estimate to the final check, we treat your home like our own and back our work with a solid warranty.', 'hvac')));
 $lc_in_image   = $hvac_acf ? get_field('loc_intro_image') : false;
 $lc_stats      = hvac_lc_rows('loc_stats');
 if (empty($lc_stats)) {
@@ -67,7 +67,7 @@ if (empty($lc_stats)) {
 
 $lc_sv_eyebrow = hvac_lc('loc_services_eyebrow', __('What We Offer', 'hvac'));
 $lc_sv_heading = hvac_lc('loc_services_heading', __('Complete AC Services in California', 'hvac'));
-$lc_sv_subtext = hvac_lc('loc_services_subtext', __('Whatever your system needs, our local California team has you covered — for homes and businesses alike.', 'hvac'));
+$lc_sv_subtext = hvac_lc('loc_services_subtext', __('Whatever your system needs, our local California team has you covered- for homes and businesses alike.', 'hvac'));
 // Services are pulled from the "Service" CPT. An optional relationship curates
 // which services show (and order); otherwise the latest N are shown.
 $lc_sv_selected = $hvac_acf ? get_field('loc_services_selected') : array();
@@ -109,7 +109,7 @@ if (empty($lc_why)) {
 		array('title' => __('25+ Years of Local Experience', 'hvac'), 'text' => __('Decades of HVAC work right here in California means we know exactly what your home needs.', 'hvac')),
 		array('title' => __('Certified & Insured Technicians', 'hvac'), 'text' => __('Manufacturer-certified crews who meet the highest standards for quality and reliability.', 'hvac')),
 		array('title' => __('Hundreds of 5-Star Reviews', 'hvac'), 'text' => __('California homeowners consistently rate our workmanship, honesty, and service five stars.', 'hvac')),
-		array('title' => __('Free, Honest Estimates', 'hvac'), 'text' => __('Straightforward recommendations with no pressure and no obligation — always free.', 'hvac')),
+		array('title' => __('Free, Honest Estimates', 'hvac'), 'text' => __('Straightforward recommendations with no pressure and no obligation- always free.', 'hvac')),
 	);
 }
 
