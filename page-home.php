@@ -228,36 +228,31 @@ if (! $about_text) {
 $services_eyebrow = hvac_hf('services_eyebrow', 'Our Services');
 $services_heading = hvac_hf('services_heading', 'Professional AC Services for Ultimate Comfort');
 $services_subtext = hvac_hf('services_subtext', 'At Frost Flow, we provide expert AC repair, maintenance, and installation services to ensure your home or business stays cool and comfortable all year round.');
-$services = ($hvac_acf && have_rows('services')) ? get_field('services') : array();
-if (empty($services)) {
-	$services = array(
-		array('badge' => __('Professional Setup', 'hvac'), 'title' => __('AC Repair & Troubleshooting', 'hvac'), 'text' => __('Get fast and reliable repairs for any AC issue, from cooling problems to unusual noises.', 'hvac')),
-		array('badge' => __('24/7 Support', 'hvac'), 'title' => __('Emergency AC Services', 'hvac'), 'text' => __('24/7 fast-response service to fix urgent AC problems and restore comfort.', 'hvac')),
-		array('badge' => __('Eco-Friendly Cooling', 'hvac'), 'title' => __('Energy Efficiency Optimization', 'hvac'), 'text' => __('Reduce energy costs with expert adjustments to enhance your AC\'s efficiency.', 'hvac')),
-		array('badge' => __('Prolonged Life', 'hvac'), 'title' => __('AC Installation & Replacement', 'hvac'), 'text' => __('Professional installation of new AC units with expert guidance for maximum efficiency.', 'hvac')),
-		array('badge' => __('Clean Air Guarantee', 'hvac'), 'title' => __('Air Duct Cleaning & Sanitization', 'hvac'), 'text' => __('Improve air quality and AC performance with deep cleaning and sanitization of air ducts.', 'hvac')),
-		array('badge' => __('Fast & Reliable', 'hvac'), 'title' => __('Preventive AC Maintenance', 'hvac'), 'text' => __('Extend the lifespan of your AC with regular check-ups, cleaning, and tune-ups.', 'hvac')),
-	);
-}
-?>
-<section class="home-services">
-	<div class="container">
-		<div class="section-head section-head-center">
-			<?php if ($services_eyebrow) : ?><span class="section-eyebrow"><?php echo hvac_wave_icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
-																			?><?php echo esc_html($services_eyebrow); ?></span><?php endif; ?>
-			<h2 class="section-heading"><?php echo esc_html($services_heading); ?></h2>
-			<?php if ($services_subtext) : ?><p class="section-subtext"><?php echo esc_html($services_subtext); ?></p><?php endif; ?>
-		</div>
 
-		<div class="services-grid">
-			<?php foreach ($services as $svc) : ?>
-				<article class="service-card">
-					<div class="service-card-media">
-						<?php hvac_acf_image(isset($svc['image']) ? $svc['image'] : false, 'large', 'service-card-image'); ?>
-						<?php if (! empty($svc['badge'])) : ?>
-							<span class="service-card-badge">
-								<span class="service-card-badge-icon" aria-hidden="true">
-									<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+// Services now come from the "Service" CPT. An optional relationship curates
+// which services show (and their order); otherwise the latest N are shown.
+$svc_selected = $hvac_acf ? get_field('home_services_selected') : array();
+$svc_selected = is_array($svc_selected) ? array_map('intval', array_filter($svc_selected)) : array();
+$svc_count    = (int) hvac_hf('services_count', 6);
+if ($svc_count < 1) {
+	$svc_count = 6;
+}
+$svc_args = array(
+	'post_type'           => 'service',
+	'ignore_sticky_posts' => true,
+	'no_found_rows'       => true,
+);
+if (! empty($svc_selected)) {
+	$svc_args['post__in']       = $svc_selected;
+	$svc_args['orderby']        = 'post__in';
+	$svc_args['posts_per_page'] = count($svc_selected);
+} else {
+	$svc_args['posts_per_page'] = $svc_count;
+}
+$svc_q = new WP_Query($svc_args);
+
+// Decorative icon shown inside each service badge.
+$hvac_badge_icon = '<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<rect width="40" height="40" rx="12" fill="#002B2C" />
 										<path d="M20 22.85C21.574 22.85 22.85 21.574 22.85 20C22.85 18.426 21.574 17.15 20 17.15C18.426 17.15 17.15 18.426 17.15 20C17.15 21.574 18.426 22.85 20 22.85Z" fill="#4DFFF4" />
 										<path d="M20 23.85C19 23.85 18 23.45 17.3 22.75C16.6 22.05 16.2 21.05 16.2 20.05C16.2 19.05 16.6 18.05 17.3 17.35C18 16.65 19 16.25 20 16.25C21 16.25 22 16.65 22.7 17.35C23.4 18.05 23.8 19.05 23.8 20.05C23.8 21.05 23.4 22.05 22.7 22.75C22 23.45 21 23.85 20 23.85ZM20 18.15C19.5 18.15 19.05 18.35 18.7 18.7C18.35 19.05 18.15 19.5 18.15 20C18.15 20.5 18.35 20.95 18.7 21.3C19.4 22 20.6 22 21.3 21.3C21.65 20.95 21.85 20.5 21.85 20C21.85 19.5 21.65 19.05 21.3 18.7C20.95 18.35 20.5 18.15 20 18.15Z" fill="#4DFFF4" />
@@ -277,19 +272,73 @@ if (empty($services)) {
 										<path d="M17.15 21H11.85C11.3 21 10.85 20.55 10.85 20C10.85 19.45 11.3 19 11.85 19H17.2C17.75 19 18.2 19.45 18.2 20C18.2 20.55 17.7 21 17.15 21Z" fill="#4DFFF4" />
 										<path d="M25.8 26.8C25.55 26.8 25.3 26.7 25.1 26.5L21.3 22.7C20.9 22.3 20.9 21.7 21.3 21.3C21.7 20.9 22.3 20.9 22.7 21.3L26.5 25.1C26.9 25.5 26.9 26.1 26.5 26.5C26.3 26.7 26.05 26.8 25.8 26.8Z" fill="#4DFFF4" />
 										<path d="M18 19C17.75 19 17.5 18.9 17.3 18.7L13.5 14.9C13.1 14.5 13.1 13.9 13.5 13.5C13.9 13.1 14.5 13.1 14.9 13.5L18.7 17.3C19.1 17.7 19.1 18.3 18.7 18.7C18.5 18.9 18.25 19 18 19Z" fill="#4DFFF4" />
-									</svg>
+									</svg>';
 
+// Fallback demo cards shown only when no Service posts exist yet.
+$svc_fallback = array(
+	array('badge' => __('Professional Setup', 'hvac'), 'title' => __('AC Repair & Troubleshooting', 'hvac'), 'text' => __('Get fast and reliable repairs for any AC issue, from cooling problems to unusual noises.', 'hvac')),
+	array('badge' => __('24/7 Support', 'hvac'), 'title' => __('Emergency AC Services', 'hvac'), 'text' => __('24/7 fast-response service to fix urgent AC problems and restore comfort.', 'hvac')),
+	array('badge' => __('Eco-Friendly Cooling', 'hvac'), 'title' => __('Energy Efficiency Optimization', 'hvac'), 'text' => __('Reduce energy costs with expert adjustments to enhance your AC\'s efficiency.', 'hvac')),
+	array('badge' => __('Prolonged Life', 'hvac'), 'title' => __('AC Installation & Replacement', 'hvac'), 'text' => __('Professional installation of new AC units with expert guidance for maximum efficiency.', 'hvac')),
+	array('badge' => __('Clean Air Guarantee', 'hvac'), 'title' => __('Air Duct Cleaning & Sanitization', 'hvac'), 'text' => __('Improve air quality and AC performance with deep cleaning and sanitization of air ducts.', 'hvac')),
+	array('badge' => __('Fast & Reliable', 'hvac'), 'title' => __('Preventive AC Maintenance', 'hvac'), 'text' => __('Extend the lifespan of your AC with regular check-ups, cleaning, and tune-ups.', 'hvac')),
+);
+?>
+<section class="home-services">
+	<div class="container">
+		<div class="section-head section-head-center">
+			<?php if ($services_eyebrow) : ?><span class="section-eyebrow"><?php echo hvac_wave_icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html($services_eyebrow); ?></span><?php endif; ?>
+			<h2 class="section-heading"><?php echo esc_html($services_heading); ?></h2>
+			<?php if ($services_subtext) : ?><p class="section-subtext"><?php echo esc_html($services_subtext); ?></p><?php endif; ?>
+		</div>
+
+		<div class="services-grid">
+			<?php if ($svc_q->have_posts()) : ?>
+				<?php while ($svc_q->have_posts()) : $svc_q->the_post(); ?>
+					<?php $badge = $hvac_acf ? get_field('service_badge') : ''; ?>
+					<article class="service-card">
+						<a class="service-card-media" href="<?php the_permalink(); ?>">
+							<?php
+							if (has_post_thumbnail()) {
+								the_post_thumbnail('large', array('class' => 'service-card-image'));
+							} else {
+								echo '<span class="img-placeholder service-card-image" aria-hidden="true"></span>';
+							}
+							?>
+							<?php if ($badge) : ?>
+								<span class="service-card-badge">
+									<span class="service-card-badge-icon" aria-hidden="true"><?php echo $hvac_badge_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+									<?php echo esc_html($badge); ?>
 								</span>
-								<?php echo esc_html($svc['badge']); ?>
-							</span>
-						<?php endif; ?>
-					</div>
-					<div class="service-card-body">
-						<?php if (! empty($svc['title'])) : ?><h3 class="service-card-title"><?php echo esc_html($svc['title']); ?></h3><?php endif; ?>
-						<?php if (! empty($svc['text'])) : ?><p class="service-card-text"><?php echo esc_html($svc['text']); ?></p><?php endif; ?>
-					</div>
-				</article>
-			<?php endforeach; ?>
+							<?php endif; ?>
+						</a>
+						<div class="service-card-body">
+							<h3 class="service-card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+							<?php $svc_excerpt = get_the_excerpt(); ?>
+							<?php if ($svc_excerpt) : ?><p class="service-card-text"><?php echo esc_html(wp_trim_words($svc_excerpt, 20)); ?></p><?php endif; ?>
+						</div>
+					</article>
+				<?php endwhile;
+				wp_reset_postdata(); ?>
+			<?php else : ?>
+				<?php foreach ($svc_fallback as $svc) : ?>
+					<article class="service-card">
+						<div class="service-card-media">
+							<span class="img-placeholder service-card-image" aria-hidden="true"></span>
+							<?php if (! empty($svc['badge'])) : ?>
+								<span class="service-card-badge">
+									<span class="service-card-badge-icon" aria-hidden="true"><?php echo $hvac_badge_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+									<?php echo esc_html($svc['badge']); ?>
+								</span>
+							<?php endif; ?>
+						</div>
+						<div class="service-card-body">
+							<h3 class="service-card-title"><?php echo esc_html($svc['title']); ?></h3>
+							<p class="service-card-text"><?php echo esc_html($svc['text']); ?></p>
+						</div>
+					</article>
+				<?php endforeach; ?>
+			<?php endif; ?>
 		</div>
 	</div>
 </section>

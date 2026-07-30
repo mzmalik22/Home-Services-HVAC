@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Disallow direct access.
 }
 
-define( 'HVAC_VERSION', '1.8.0' );
+define( 'HVAC_VERSION', '1.9.0' );
 
 /**
  * Theme setup.
@@ -191,3 +191,8 @@ require get_template_directory() . '/inc/home-page-fields.php';
  * Per-page settings (transparent header toggle).
  */
 require get_template_directory() . '/inc/page-settings.php';
+
+/**
+ * Custom post types (Service) and their fields.
+ */
+require get_template_directory() . '/inc/post-types.php';
