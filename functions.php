@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Disallow direct access.
 }
 
-define( 'HVAC_VERSION', '1.9.0' );
+define( 'HVAC_VERSION', '1.10.0' );
 
 /**
  * Theme setup.
@@ -196,3 +196,8 @@ require get_template_directory() . '/inc/page-settings.php';
  * Custom post types (Service) and their fields.
  */
 require get_template_directory() . '/inc/post-types.php';
+
+/**
+ * Contact Us page template fields.
+ */
+require get_template_directory() . '/inc/contact-fields.php';
