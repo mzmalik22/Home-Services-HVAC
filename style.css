@@ -4,7 +4,7 @@ Theme URI: https://www.nesl-it.com/
 Author: Nesl IT
 Author URI: https://www.nesl-it.com/
 Description: A basic, easy-to-customize WordPress theme for HVAC and home service businesses. All colors and fonts are controlled via CSS variables in :root for quick rebranding.
-Version: 1.1.0
+Version: 1.2.0
 Requires at least: 6.0
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
@@ -175,6 +175,20 @@ a {
 a:hover,
 a:focus {
   color: var(--color-secondary);
+}
+
+/* Inline links inside body copy (WYSIWYG/rich-text paragraphs)- given their
+   own color + underline so they read as links rather than blending into the
+   surrounding text. Works on both light and dark section backgrounds. */
+p a {
+  color: var(--color-header-bar);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+p a:hover,
+p a:focus {
+  text-decoration-thickness: 2px;
 }
 
 h1,
@@ -798,6 +812,14 @@ ol {
 @media (max-width: 1024px) {
   .footer-top {
     flex-wrap: wrap;
+  }
+}
+@media (min-width: 1025px) {
+  .footer-links-col-wrapper {
+    max-width: 820px;
+  }
+  .footer-links-wrapper {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -1837,11 +1859,16 @@ textarea {
   display: grid;
   grid-template-columns: 1fr;
   gap: 3rem;
-  align-items: center;
+  align-items: start;
 }
 @media (min-width: 992px) {
   .home-how-inner {
     grid-template-columns: 1fr 1fr;
+  }
+  .home-how-media {
+    position: sticky;
+    top: 130px;
+    align-self: start;
   }
 }
 .home-how-image,
@@ -1850,6 +1877,15 @@ textarea {
   width: 100%;
   aspect-ratio: 3 / 4;
   object-fit: cover;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+.home-how-media .img-placeholder {
+  background: linear-gradient(
+    135deg,
+    rgba(77, 255, 244, 0.14),
+    rgba(255, 255, 255, 0.04)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 .home-how .section-heading {
   color: #fff;
@@ -2343,12 +2379,17 @@ textarea {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2.5rem;
-  align-items: center;
+  align-items: start;
 }
 @media (min-width: 992px) {
   .service-overview-inner {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 0.95fr 1.05fr;
     gap: 3.5rem;
+  }
+  .service-overview-media {
+    position: sticky;
+    top: 130px;
+    align-self: start;
   }
 }
 .service-overview-text {
@@ -2358,8 +2399,24 @@ textarea {
 .service-overview-text h3 {
   color: var(--color-heading);
 }
+.service-overview-text h3 {
+  font-size: 1.25rem;
+  margin: 1.75rem 0 0.6rem;
+}
+.service-overview-text h3:first-child {
+  margin-top: 0;
+}
 .service-overview-text p {
   margin: 0 0 1rem;
+}
+.service-overview-text ul,
+.service-overview-text ol {
+  margin: 0 0 1.25rem;
+  padding-left: 1.25rem;
+}
+.service-overview-text ul li,
+.service-overview-text ol li {
+  margin-bottom: 0.4rem;
 }
 .service-overview-image,
 .service-overview-media .img-placeholder {
@@ -2367,6 +2424,7 @@ textarea {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
 }
 
 /* Highlights / "what you get"- card grid */

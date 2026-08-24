@@ -251,8 +251,8 @@ function hvac_theme_options_footer_fields() {
 					'label'         => esc_html__( 'Heading', 'hvac' ),
 					'name'          => 'footer_heading',
 					'type'          => 'text',
-					'instructions'  => esc_html__( 'Large heading under the logo, e.g. "ensure your cooling system".', 'hvac' ),
-					'default_value' => esc_html__( 'ensure your cooling system', 'hvac' ),
+					'instructions'  => esc_html__( 'Large heading under the logo, e.g. "Reliable Heating & Cooling, Every Season".', 'hvac' ),
+					'default_value' => esc_html__( 'Reliable Heating & Cooling, Every Season', 'hvac' ),
 				),
 				array(
 					'key'          => 'field_hvac_footer_contact_items',
@@ -388,7 +388,7 @@ function hvac_theme_options_footer_fields() {
 					'label'         => esc_html__( 'Heading', 'hvac' ),
 					'name'          => 'footer_subscribe_heading',
 					'type'          => 'text',
-					'default_value' => esc_html__( 'Get Up to $100 Off Your First Stay When You Sign Up for Emails!', 'hvac' ),
+					'default_value' => esc_html__( 'Sign Up for HVAC Tips, Seasonal Offers & Maintenance Reminders', 'hvac' ),
 				),
 				array(
 					'key'           => 'field_hvac_footer_subscribe_placeholder',

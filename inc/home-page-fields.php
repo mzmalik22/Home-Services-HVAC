@@ -38,22 +38,22 @@ function hvac_home_page_fields()
 					'label'         => esc_html__('Eyebrow', 'hvac'),
 					'name'          => 'hero_eyebrow',
 					'type'          => 'text',
-					'default_value' => 'Stay Cool, Worry-Free',
+					'default_value' => 'Reliable Heating & Cooling',
 				),
 				array(
 					'key'           => 'field_home_hero_heading',
 					'label'         => esc_html__('Heading', 'hvac'),
 					'name'          => 'hero_heading',
 					'type'          => 'text',
-					'default_value' => 'Reliable AC Service Anytime, Anywhere',
+					'default_value' => 'Reliable HVAC Services for Homes & Businesses',
 				),
 				array(
 					'key'           => 'field_home_hero_tagline',
 					'label'         => esc_html__('Tagline', 'hvac'),
 					'name'          => 'hero_tagline',
 					'type'          => 'text',
-					'instructions'  => esc_html__('The bold line under the heading, e.g. "Expert Repairs | Quick Maintenance | Hassle-Free Cooling".', 'hvac'),
-					'default_value' => 'Expert Repairs | Quick Maintenance | Hassle-Free Cooling',
+					'instructions'  => esc_html__('The bold line under the heading, e.g. "Installation | Replacement | Repair".', 'hvac'),
+					'default_value' => 'Installation | Replacement | Repair',
 				),
 				array(
 					'key'           => 'field_home_hero_subtext',
@@ -61,7 +61,7 @@ function hvac_home_page_fields()
 					'name'          => 'hero_subtext',
 					'type'          => 'textarea',
 					'rows'          => 3,
-					'default_value' => 'Keep your home cool and comfortable with fast, professional AC repair, maintenance, and installation you can rely on.',
+					'default_value' => 'Keep your home or business comfortable with professional heating and cooling services. From new system installations and HVAC replacements to emergency repairs, our experienced technicians provide dependable solutions tailored to your property.',
 				),
 				array(
 					'key'           => 'field_home_hero_button',
@@ -162,6 +162,23 @@ function hvac_home_page_fields()
 						),
 					),
 				),
+				array(
+					'key'          => 'field_home_hero_checklist',
+					'label'        => esc_html__('Checklist', 'hvac'),
+					'name'         => 'hero_checklist',
+					'type'         => 'repeater',
+					'layout'       => 'table',
+					'button_label' => esc_html__('Add Checklist Item', 'hvac'),
+					'instructions' => esc_html__('Short trust-signal bullets shown under the hero content, e.g. "Licensed & Certified HVAC Professionals".', 'hvac'),
+					'sub_fields'   => array(
+						array(
+							'key'  => 'field_home_hero_checklist_text',
+							'label' => esc_html__('Text', 'hvac'),
+							'name' => 'text',
+							'type' => 'text',
+						),
+					),
+				),
 
 				/* ---------------- ABOUT ---------------- */
 				array(
@@ -189,7 +206,7 @@ function hvac_home_page_fields()
 					'label'         => esc_html__('Heading', 'hvac'),
 					'name'          => 'about_heading',
 					'type'          => 'text',
-					'default_value' => 'Trusted Partner for Reliable AC Service & Maintenance',
+					'default_value' => 'Trusted Heating & Cooling Professionals',
 				),
 				array(
 					'key'   => 'field_home_about_text',
@@ -225,7 +242,7 @@ function hvac_home_page_fields()
 					'label'         => esc_html__('Heading', 'hvac'),
 					'name'          => 'services_heading',
 					'type'          => 'text',
-					'default_value' => 'Professional AC Services for Ultimate Comfort',
+					'default_value' => 'Our HVAC Services',
 				),
 				array(
 					'key'           => 'field_home_services_subtext',
@@ -254,6 +271,57 @@ function hvac_home_page_fields()
 					'instructions'  => esc_html__('How many services to show when none are selected above.', 'hvac'),
 				),
 
+				/* ---------------- WHY CHOOSE US ---------------- */
+				array(
+					'key'   => 'field_home_whyus_tab',
+					'label' => esc_html__('Why Choose Us', 'hvac'),
+					'type'  => 'tab',
+				),
+				array(
+					'key'           => 'field_home_whyus_eyebrow',
+					'label'         => esc_html__('Eyebrow', 'hvac'),
+					'name'          => 'whyus_eyebrow',
+					'type'          => 'text',
+					'default_value' => 'Why Choose Us',
+				),
+				array(
+					'key'           => 'field_home_whyus_heading',
+					'label'         => esc_html__('Heading', 'hvac'),
+					'name'          => 'whyus_heading',
+					'type'          => 'text',
+					'default_value' => 'Why Choose HVAC Reliable Pros?',
+				),
+				array(
+					'key'   => 'field_home_whyus_subtext',
+					'label' => esc_html__('Subtext', 'hvac'),
+					'name'  => 'whyus_subtext',
+					'type'  => 'textarea',
+					'rows'  => 2,
+				),
+				array(
+					'key'          => 'field_home_whyus_items',
+					'label'        => esc_html__('Reasons', 'hvac'),
+					'name'         => 'whyus_items',
+					'type'         => 'repeater',
+					'layout'       => 'block',
+					'button_label' => esc_html__('Add Reason', 'hvac'),
+					'sub_fields'   => array(
+						array(
+							'key'   => 'field_home_whyus_item_title',
+							'label' => esc_html__('Title', 'hvac'),
+							'name'  => 'title',
+							'type'  => 'text',
+						),
+						array(
+							'key'   => 'field_home_whyus_item_text',
+							'label' => esc_html__('Text', 'hvac'),
+							'name'  => 'text',
+							'type'  => 'textarea',
+							'rows'  => 2,
+						),
+					),
+				),
+
 				/* ---------------- HOW IT WORKS ---------------- */
 				array(
 					'key'   => 'field_home_how_tab',
@@ -280,7 +348,7 @@ function hvac_home_page_fields()
 					'label'         => esc_html__('Heading', 'hvac'),
 					'name'          => 'how_heading',
 					'type'          => 'text',
-					'default_value' => 'Simple, Fast, and Reliable Service for Your AC',
+					'default_value' => 'Our HVAC Process',
 				),
 				array(
 					'key'           => 'field_home_how_subtext',
@@ -494,6 +562,225 @@ function hvac_home_page_fields()
 					),
 				),
 
+				/* ---------------- WHY IT MATTERS ---------------- */
+				array(
+					'key'   => 'field_home_matters_tab',
+					'label' => esc_html__('Why It Matters', 'hvac'),
+					'type'  => 'tab',
+				),
+				array(
+					'key'           => 'field_home_matters_eyebrow',
+					'label'         => esc_html__('Eyebrow', 'hvac'),
+					'name'          => 'matters_eyebrow',
+					'type'          => 'text',
+					'default_value' => 'Why It Matters',
+				),
+				array(
+					'key'           => 'field_home_matters_heading',
+					'label'         => esc_html__('Heading', 'hvac'),
+					'name'          => 'matters_heading',
+					'type'          => 'text',
+					'default_value' => 'Why Professional HVAC Service Matters',
+				),
+				array(
+					'key'   => 'field_home_matters_subtext',
+					'label' => esc_html__('Subtext', 'hvac'),
+					'name'  => 'matters_subtext',
+					'type'  => 'textarea',
+					'rows'  => 2,
+				),
+				array(
+					'key'          => 'field_home_matters_items',
+					'label'        => esc_html__('Points', 'hvac'),
+					'name'         => 'matters_items',
+					'type'         => 'repeater',
+					'layout'       => 'block',
+					'button_label' => esc_html__('Add Point', 'hvac'),
+					'sub_fields'   => array(
+						array(
+							'key'   => 'field_home_matters_item_title',
+							'label' => esc_html__('Title', 'hvac'),
+							'name'  => 'title',
+							'type'  => 'text',
+						),
+						array(
+							'key'   => 'field_home_matters_item_text',
+							'label' => esc_html__('Text', 'hvac'),
+							'name'  => 'text',
+							'type'  => 'textarea',
+							'rows'  => 2,
+						),
+					),
+				),
+
+				/* ---------------- SYSTEM OPTIONS ---------------- */
+				array(
+					'key'   => 'field_home_options_tab',
+					'label' => esc_html__('System Options', 'hvac'),
+					'type'  => 'tab',
+				),
+				array(
+					'key'           => 'field_home_options_eyebrow',
+					'label'         => esc_html__('Eyebrow', 'hvac'),
+					'name'          => 'options_eyebrow',
+					'type'          => 'text',
+					'default_value' => 'System Options',
+				),
+				array(
+					'key'           => 'field_home_options_heading',
+					'label'         => esc_html__('Heading', 'hvac'),
+					'name'          => 'options_heading',
+					'type'          => 'text',
+					'default_value' => 'Heating & Cooling System Options',
+				),
+				array(
+					'key'   => 'field_home_options_subtext',
+					'label' => esc_html__('Subtext', 'hvac'),
+					'name'  => 'options_subtext',
+					'type'  => 'textarea',
+					'rows'  => 2,
+				),
+				array(
+					'key'          => 'field_home_options_items',
+					'label'        => esc_html__('Systems', 'hvac'),
+					'name'         => 'options_items',
+					'type'         => 'repeater',
+					'layout'       => 'block',
+					'button_label' => esc_html__('Add System', 'hvac'),
+					'sub_fields'   => array(
+						array(
+							'key'   => 'field_home_options_item_title',
+							'label' => esc_html__('Title', 'hvac'),
+							'name'  => 'title',
+							'type'  => 'text',
+						),
+						array(
+							'key'   => 'field_home_options_item_text',
+							'label' => esc_html__('Text', 'hvac'),
+							'name'  => 'text',
+							'type'  => 'textarea',
+							'rows'  => 2,
+						),
+					),
+				),
+
+				/* ---------------- RECENT PROJECTS ---------------- */
+				array(
+					'key'   => 'field_home_projects_tab',
+					'label' => esc_html__('Recent Projects', 'hvac'),
+					'type'  => 'tab',
+				),
+				array(
+					'key'           => 'field_home_projects_eyebrow',
+					'label'         => esc_html__('Eyebrow', 'hvac'),
+					'name'          => 'projects_eyebrow',
+					'type'          => 'text',
+					'default_value' => 'Our Work',
+				),
+				array(
+					'key'           => 'field_home_projects_heading',
+					'label'         => esc_html__('Heading', 'hvac'),
+					'name'          => 'projects_heading',
+					'type'          => 'text',
+					'default_value' => 'Recent HVAC Projects',
+				),
+				array(
+					'key'   => 'field_home_projects_subtext',
+					'label' => esc_html__('Subtext', 'hvac'),
+					'name'  => 'projects_subtext',
+					'type'  => 'textarea',
+					'rows'  => 2,
+				),
+				array(
+					'key'          => 'field_home_projects_items',
+					'label'        => esc_html__('Projects', 'hvac'),
+					'name'         => 'projects_items',
+					'type'         => 'repeater',
+					'layout'       => 'block',
+					'button_label' => esc_html__('Add Project', 'hvac'),
+					'sub_fields'   => array(
+						array(
+							'key'           => 'field_home_projects_item_image',
+							'label'         => esc_html__('Image', 'hvac'),
+							'name'          => 'image',
+							'type'          => 'image',
+							'return_format' => 'array',
+							'preview_size'  => 'medium',
+						),
+						array(
+							'key'   => 'field_home_projects_item_title',
+							'label' => esc_html__('Title', 'hvac'),
+							'name'  => 'title',
+							'type'  => 'text',
+						),
+						array(
+							'key'   => 'field_home_projects_item_text',
+							'label' => esc_html__('Text', 'hvac'),
+							'name'  => 'text',
+							'type'  => 'textarea',
+							'rows'  => 2,
+						),
+					),
+				),
+
+				/* ---------------- AREAS WE SERVE ---------------- */
+				array(
+					'key'   => 'field_home_areas_tab',
+					'label' => esc_html__('Areas We Serve', 'hvac'),
+					'type'  => 'tab',
+				),
+				array(
+					'key'           => 'field_home_areas_eyebrow',
+					'label'         => esc_html__('Eyebrow', 'hvac'),
+					'name'          => 'areas_eyebrow',
+					'type'          => 'text',
+					'default_value' => 'Service Areas',
+				),
+				array(
+					'key'           => 'field_home_areas_heading',
+					'label'         => esc_html__('Heading', 'hvac'),
+					'name'          => 'areas_heading',
+					'type'          => 'text',
+					'default_value' => 'Areas We Serve',
+				),
+				array(
+					'key'   => 'field_home_areas_subtext',
+					'label' => esc_html__('Subtext', 'hvac'),
+					'name'  => 'areas_subtext',
+					'type'  => 'textarea',
+					'rows'  => 2,
+				),
+				array(
+					'key'          => 'field_home_areas_items',
+					'label'        => esc_html__('Areas', 'hvac'),
+					'name'         => 'areas_items',
+					'type'         => 'repeater',
+					'layout'       => 'block',
+					'button_label' => esc_html__('Add Area', 'hvac'),
+					'sub_fields'   => array(
+						array(
+							'key'   => 'field_home_areas_item_title',
+							'label' => esc_html__('Title', 'hvac'),
+							'name'  => 'title',
+							'type'  => 'text',
+						),
+						array(
+							'key'   => 'field_home_areas_item_text',
+							'label' => esc_html__('Text', 'hvac'),
+							'name'  => 'text',
+							'type'  => 'textarea',
+							'rows'  => 2,
+						),
+						array(
+							'key'           => 'field_home_areas_item_link',
+							'label'         => esc_html__('Link', 'hvac'),
+							'name'          => 'link',
+							'type'          => 'link',
+							'return_format' => 'array',
+						),
+					),
+				),
+
 				/* ---------------- CTA BANNER ---------------- */
 				array(
 					'key'   => 'field_home_cta_tab',
@@ -506,7 +793,30 @@ function hvac_home_page_fields()
 					'name'          => 'cta_heading',
 					'type'          => 'textarea',
 					'rows'          => 3,
-					'default_value' => "Experience Unmatched Comfort With Frost Flow's Expert AC Services- Your Professional Air Conditioning Care",
+					'default_value' => 'Ready for Reliable Heating & Cooling?',
+				),
+				array(
+					'key'   => 'field_home_cta_subtext',
+					'label' => esc_html__('Subtext', 'hvac'),
+					'name'  => 'cta_subtext',
+					'type'  => 'textarea',
+					'rows'  => 2,
+				),
+				array(
+					'key'          => 'field_home_cta_checklist',
+					'label'        => esc_html__('Checklist', 'hvac'),
+					'name'         => 'cta_checklist',
+					'type'         => 'repeater',
+					'layout'       => 'table',
+					'button_label' => esc_html__('Add Checklist Item', 'hvac'),
+					'sub_fields'   => array(
+						array(
+							'key'  => 'field_home_cta_checklist_text',
+							'label' => esc_html__('Text', 'hvac'),
+							'name' => 'text',
+							'type' => 'text',
+						),
+					),
 				),
 				array(
 					'key'           => 'field_home_cta_button',

@@ -70,10 +70,10 @@ $hvac_sub_button      = $hvac_acf ? get_field('footer_subscribe_button', 'option
 $hvac_sub_action      = $hvac_acf ? get_field('footer_subscribe_action', 'option') : '';
 
 if (! $hvac_footer_heading) {
-	$hvac_footer_heading = __('ensure your cooling system', 'hvac');
+	$hvac_footer_heading = __('Reliable Heating & Cooling, Every Season', 'hvac');
 }
 if (! $hvac_footer_tagline) {
-	$hvac_footer_tagline = __("Stay comfortable and worry-free with Frost Flow's fast, professional service at your convenience.", 'hvac');
+	$hvac_footer_tagline = __('Professional HVAC installation, replacement, and repair services for reliable heating and cooling in homes and businesses.', 'hvac');
 }
 // Normalise contact items (repeater rows) into a render-ready list.
 $hvac_contact_items = array();
@@ -104,29 +104,19 @@ if (empty($hvac_contact_items)) {
 	$hvac_svg_open  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
 	$hvac_contact_items = array(
 		array(
-			'icon_html' => $hvac_svg_open . '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
-			'text'      => '+62 864 6444 2222',
-			'link'      => 'tel:+6286464442222',
-		),
-		array(
-			'icon_html' => $hvac_svg_open . '<path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>',
-			'text'      => 'support@hvacreliablepro.com',
-			'link'      => 'mailto:support@hvacreliablepro.com',
-		),
-		array(
 			'icon_html' => $hvac_svg_open . '<path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>',
 			'text'      => __('24/7 Customer Support', 'hvac'),
 			'link'      => '',
 		),
 		array(
 			'icon_html' => $hvac_svg_open . '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
-			'text'      => __('United States', 'hvac'),
+			'text'      => __('Serving California, Ohio, Washington & Florida', 'hvac'),
 			'link'      => '',
 		),
 	);
 }
 if (! $hvac_sub_heading) {
-	$hvac_sub_heading = __('Get Up to $100 Off Your First Stay When You Sign Up for Emails!', 'hvac');
+	$hvac_sub_heading = __('Sign Up for HVAC Tips, Seasonal Offers & Maintenance Reminders', 'hvac');
 }
 if (! $hvac_sub_placeholder) {
 	$hvac_sub_placeholder = __('Enter your email', 'hvac');
@@ -163,40 +153,69 @@ if ($hvac_acf && have_rows('footer_columns', 'option')) {
 }
 
 if (empty($hvac_columns)) {
-	$hvac_make_links = function ($labels) {
+	$hvac_make_links = function ($pairs) {
 		return array_map(
-			function ($label) {
+			function ($pair) {
 				return array(
-					'label'  => $label,
-					'url'    => '#',
+					'label'  => $pair[0],
+					'url'    => ! empty($pair[1]) ? $pair[1] : '#',
 					'target' => '',
 				);
 			},
-			$labels
+			$pairs
 		);
 	};
+	$hvac_services_archive = get_post_type_archive_link('service');
+	$hvac_service_url      = function ($slug) {
+		$svc = get_page_by_path($slug, OBJECT, 'service');
+		return $svc ? get_permalink($svc) : '#';
+	};
+	$hvac_ac_url       = $hvac_service_url('ac-repair-troubleshooting');
+	$hvac_furnace_url  = $hvac_service_url('furnace-replacement');
+	$hvac_heatpump_url = $hvac_service_url('heat-pump-installation-replacement');
+	$hvac_ductless_url = $hvac_service_url('ductless-mini-split-installation');
+	$hvac_comm_url     = $hvac_service_url('commercial-hvac');
+	$hvac_emerg_url    = $hvac_service_url('emergency-hvac-repair');
+	$hvac_california   = get_page_by_path('california');
+
 	$hvac_columns = array(
 		array(
-			'title' => __('Menu', 'hvac'),
+			'title' => __('HVAC Services', 'hvac'),
 			'links' => $hvac_make_links(
 				array(
-					__('About Us', 'hvac'),
-					__('Careers', 'hvac'),
-					__('News & Article', 'hvac'),
-					__('Legal Notice', 'hvac'),
-					__('Global Network', 'hvac'),
+					array(__('AC Installation', 'hvac'), $hvac_ac_url),
+					array(__('AC Replacement', 'hvac'), $hvac_ac_url),
+					array(__('Furnace Replacement', 'hvac'), $hvac_furnace_url),
+					array(__('Heat Pump Installation & Replacement', 'hvac'), $hvac_heatpump_url),
+					array(__('Ductless / Mini-Split Installation', 'hvac'), $hvac_ductless_url),
+					array(__('Commercial HVAC', 'hvac'), $hvac_comm_url),
+					array(__('HVAC Repair', 'hvac'), $hvac_services_archive),
+					array(__('Emergency HVAC Repair', 'hvac'), $hvac_emerg_url),
 				)
 			),
 		),
 		array(
-			'title' => __('Services', 'hvac'),
+			'title' => __('Service Areas', 'hvac'),
 			'links' => $hvac_make_links(
 				array(
-					__('AC Repair', 'hvac'),
-					__('AC Installation', 'hvac'),
-					__('AC Maintenance', 'hvac'),
-					__('Indoor Air Quality', 'hvac'),
-					__('Furnace Installation', 'hvac'),
+					array(__('California', 'hvac'), $hvac_california ? get_permalink($hvac_california) : '#'),
+					array(__('Ohio', 'hvac'), '#'),
+					array(__('Washington', 'hvac'), '#'),
+					array(__('Florida', 'hvac'), '#'),
+				)
+			),
+		),
+		array(
+			'title' => __('Company', 'hvac'),
+			'links' => $hvac_make_links(
+				array(
+					array(__('About Us', 'hvac'), get_permalink(87)),
+					array(__('Services', 'hvac'), $hvac_services_archive),
+					array(__('Our Locations', 'hvac'), home_url('/#areas-we-serve')),
+					array(__('Reviews', 'hvac'), home_url('/#reviews')),
+					array(__('Project Gallery', 'hvac'), home_url('/#project-gallery')),
+					array(__('Blog', 'hvac'), get_permalink(83)),
+					array(__('Contact Us', 'hvac'), get_permalink(74)),
 				)
 			),
 		),
@@ -207,7 +226,7 @@ if (empty($hvac_columns)) {
 $hvac_copyright = $hvac_acf ? get_field('footer_copyright', 'option') : '';
 if (! $hvac_copyright) {
 	/* translators: default footer copyright line. */
-	$hvac_copyright = __('{year} © HVAC Reliable Pro. All Rights Reserved.', 'hvac');
+	$hvac_copyright = __('© {year} HVAC Reliable Pros. All Rights Reserved.', 'hvac');
 }
 $hvac_copyright = str_replace('{year}', gmdate('Y'), $hvac_copyright);
 
@@ -230,16 +249,16 @@ if (empty($hvac_bottom_links)) {
 	$hvac_bottom_links = array(
 		array(
 			'label'  => __('Privacy Policy', 'hvac'),
+			'url'    => get_permalink(79) ? get_permalink(79) : '#',
+			'target' => '',
+		),
+		array(
+			'label'  => __('Terms & Conditions', 'hvac'),
 			'url'    => '#',
 			'target' => '',
 		),
 		array(
-			'label'  => __('Terms & Condition', 'hvac'),
-			'url'    => '#',
-			'target' => '',
-		),
-		array(
-			'label'  => __('Do not share or sell my information', 'hvac'),
+			'label'  => __('Accessibility', 'hvac'),
 			'url'    => '#',
 			'target' => '',
 		),

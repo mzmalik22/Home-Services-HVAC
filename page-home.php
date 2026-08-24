@@ -92,13 +92,18 @@ $hero_form_services = hvac_hf('hero_form_services', "AC Repair\nAC Installation\
 $hero_service_opts  = array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', (string) $hero_form_services)));
 
 $hero_features = ($hvac_acf && have_rows('hero_features')) ? get_field('hero_features') : array();
-if (empty($hero_features)) {
-	$hero_features = array(
-		array('title' => __('Fast & Reliable Repairs', 'hvac'), 'text' => __('Certified experts ensure quick and efficient AC repairs.', 'hvac')),
-		array('title' => __('Regular Maintenance', 'hvac'), 'text' => __('Prevent breakdowns with routine servicing and cleaning.', 'hvac')),
-		array('title' => __('Easy Online Booking', 'hvac'), 'text' => __('Book AC services anytime with a simple tap.', 'hvac')),
+
+$hero_checklist = ($hvac_acf && have_rows('hero_checklist')) ? get_field('hero_checklist') : array();
+if (empty($hero_checklist)) {
+	$hero_checklist = array(
+		array('text' => __('Licensed & Certified HVAC Professionals', 'hvac')),
+		array('text' => __('Free Estimates on Eligible HVAC Projects', 'hvac')),
+		array('text' => __('Heating & Cooling Installation, Replacement & Repair', 'hvac')),
+		array('text' => __('Residential & Commercial HVAC Services', 'hvac')),
+		array('text' => __('Reliable Workmanship & Professional Service', 'hvac')),
 	);
 }
+
 $hero_feature_icons = array(
 	'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
 	'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2.1-2.1 2.8-2.8z"/></svg>',
@@ -122,6 +127,19 @@ $hero_feature_icons = array(
 			?>
 			<a class="btn hero-btn" href="<?php echo esc_url($hero_btn_url); ?>" <?php echo hvac_link_target_attrs($hero_btn_tgt); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
 																					?>><?php echo esc_html($hero_btn_txt); ?></a>
+
+			<?php if (! empty($hero_checklist)) : ?>
+				<ul class="location-checklist hero-checklist">
+					<?php foreach ($hero_checklist as $hc) : ?>
+						<?php if (empty($hc['text'])) : continue;
+						endif; ?>
+						<li>
+							<span class="location-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg></span>
+							<?php echo esc_html($hc['text']); ?>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
 
 			<?php if (! empty($hero_features)) : ?>
 				<div class="hero-features-wrapper">
@@ -198,11 +216,11 @@ $hero_feature_icons = array(
 /* =============================== ABOUT =============================== */
 $about_image   = $hvac_acf ? get_field('about_image') : false;
 $about_eyebrow = hvac_hf('about_eyebrow', 'About Us');
-$about_heading = hvac_hf('about_heading', 'Trusted Partner for Reliable AC Service & Maintenance');
+$about_heading = hvac_hf('about_heading', 'Trusted Heating & Cooling Professionals');
 $about_text    = hvac_hf('about_text', '');
 $about_button  = $hvac_acf ? get_field('about_button') : false;
 if (! $about_text) {
-	$about_text = wpautop(__('Whether it\'s a fast repair, routine maintenance, or a complete system installation, our certified professionals keep your home cool and comfortable all year round. We deliver dependable, high-quality service with quick response times and honest, upfront pricing you can trust.', 'hvac'));
+	$about_text = wpautop(__('Your HVAC system plays an important role in keeping your home or business comfortable throughout the year. When equipment stops working or reaches the end of its service life, choosing the right HVAC contractor can make a significant difference in comfort, reliability, and long-term performance. We provide professional heating and cooling solutions designed around the needs of your property- from replacing an aging furnace or air conditioner to installing a new heat pump or ductless system- with a focus on proper system selection, professional installation, dependable repairs, and quality workmanship.', 'hvac'));
 }
 ?>
 <section class="home-about">
@@ -226,8 +244,8 @@ if (! $about_text) {
 <?php
 /* =============================== SERVICES =============================== */
 $services_eyebrow = hvac_hf('services_eyebrow', 'Our Services');
-$services_heading = hvac_hf('services_heading', 'Professional AC Services for Ultimate Comfort');
-$services_subtext = hvac_hf('services_subtext', 'At Frost Flow, we provide expert AC repair, maintenance, and installation services to ensure your home or business stays cool and comfortable all year round.');
+$services_heading = hvac_hf('services_heading', 'Our HVAC Services');
+$services_subtext = hvac_hf('services_subtext', 'Every property has different heating and cooling requirements. We provide a range of HVAC installation, replacement, and repair services to help keep your property comfortable and your systems operating reliably.');
 
 // Services now come from the "Service" CPT. An optional relationship curates
 // which services show (and their order); otherwise the latest N are shown.
@@ -276,12 +294,12 @@ $hvac_badge_icon = '<svg width="40" height="40" viewBox="0 0 40 40" fill="none" 
 
 // Fallback demo cards shown only when no Service posts exist yet.
 $svc_fallback = array(
-	array('badge' => __('Professional Setup', 'hvac'), 'title' => __('AC Repair & Troubleshooting', 'hvac'), 'text' => __('Get fast and reliable repairs for any AC issue, from cooling problems to unusual noises.', 'hvac')),
-	array('badge' => __('24/7 Support', 'hvac'), 'title' => __('Emergency AC Services', 'hvac'), 'text' => __('24/7 fast-response service to fix urgent AC problems and restore comfort.', 'hvac')),
-	array('badge' => __('Eco-Friendly Cooling', 'hvac'), 'title' => __('Energy Efficiency Optimization', 'hvac'), 'text' => __('Reduce energy costs with expert adjustments to enhance your AC\'s efficiency.', 'hvac')),
-	array('badge' => __('Prolonged Life', 'hvac'), 'title' => __('AC Installation & Replacement', 'hvac'), 'text' => __('Professional installation of new AC units with expert guidance for maximum efficiency.', 'hvac')),
-	array('badge' => __('Clean Air Guarantee', 'hvac'), 'title' => __('Air Duct Cleaning & Sanitization', 'hvac'), 'text' => __('Improve air quality and AC performance with deep cleaning and sanitization of air ducts.', 'hvac')),
-	array('badge' => __('Fast & Reliable', 'hvac'), 'title' => __('Preventive AC Maintenance', 'hvac'), 'text' => __('Extend the lifespan of your AC with regular check-ups, cleaning, and tune-ups.', 'hvac')),
+	array('badge' => __('Cooling Systems', 'hvac'), 'title' => __('AC Installation & Replacement', 'hvac'), 'text' => __('Upgrade your property\'s cooling system with professional AC installation and replacement, properly sized for your space.', 'hvac')),
+	array('badge' => __('Heating Systems', 'hvac'), 'title' => __('Furnace Replacement', 'hvac'), 'text' => __('Replace an aging or failing furnace with a properly selected system for dependable, restored indoor comfort.', 'hvac')),
+	array('badge' => __('Year-Round Comfort', 'hvac'), 'title' => __('Heat Pump Installation & Replacement', 'hvac'), 'text' => __('Heat pumps provide both heating and cooling from one system for efficient year-round comfort.', 'hvac')),
+	array('badge' => __('No Ductwork Needed', 'hvac'), 'title' => __('Ductless / Mini-Split Installation', 'hvac'), 'text' => __('Flexible heating and cooling without traditional ductwork- ideal for additions, garages, and individual rooms.', 'hvac')),
+	array('badge' => __('Business Solutions', 'hvac'), 'title' => __('Commercial HVAC', 'hvac'), 'text' => __('Dependable HVAC installation, replacement, and repair for offices, retail spaces, and other commercial properties.', 'hvac')),
+	array('badge' => __('24/7 Response', 'hvac'), 'title' => __('Emergency HVAC Repair', 'hvac'), 'text' => __('Fast diagnosis and repair when your heating or cooling system stops working unexpectedly.', 'hvac')),
 );
 ?>
 <section class="home-services">
@@ -344,17 +362,66 @@ $svc_fallback = array(
 </section>
 
 <?php
+/* =============================== WHY CHOOSE US =============================== */
+$whyus_eyebrow = hvac_hf('whyus_eyebrow', 'Why Choose Us');
+$whyus_heading = hvac_hf('whyus_heading', 'Why Choose HVAC Reliable Pros?');
+$whyus_subtext = hvac_hf('whyus_subtext', 'Choosing the right HVAC contractor can affect your system\'s performance, reliability, and lifespan. We combine professional HVAC knowledge, quality workmanship, and dependable service to help customers make informed decisions.');
+$whyus_items = ($hvac_acf && have_rows('whyus_items')) ? get_field('whyus_items') : array();
+if (empty($whyus_items)) {
+	$whyus_items = array(
+		array('title' => __('Experienced HVAC Professionals', 'hvac'), 'text' => __('Our technicians have the knowledge and experience needed to work with residential and commercial heating and cooling systems.', 'hvac')),
+		array('title' => __('Professional System Installation', 'hvac'), 'text' => __('We focus on correct equipment selection, installation, and system setup based on your property\'s requirements.', 'hvac')),
+		array('title' => __('Heating & Cooling Expertise', 'hvac'), 'text' => __('Our services cover both heating and cooling, including air conditioners, furnaces, heat pumps, and ductless systems.', 'hvac')),
+		array('title' => __('Residential & Commercial Service', 'hvac'), 'text' => __('HVAC solutions designed around the size, use, and requirements of each property, from homes to commercial buildings.', 'hvac')),
+		array('title' => __('Clear Communication', 'hvac'), 'text' => __('Clear information about your HVAC options, project requirements, and next steps from inquiry through completion.', 'hvac')),
+		array('title' => __('Quality Workmanship', 'hvac'), 'text' => __('Careful installation, replacement, and repair work for dependable HVAC solutions and long-lasting comfort.', 'hvac')),
+	);
+}
+$whyus_icons = array(
+	'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>',
+	'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>',
+	'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2.1-2.1 2.8-2.8z"/></svg>',
+	'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>',
+	'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+	'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>',
+);
+?>
+<section class="service-whyus">
+	<div class="container">
+		<div class="section-head section-head-center">
+			<?php if ($whyus_eyebrow) : ?><span class="section-eyebrow"><?php echo hvac_wave_icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html($whyus_eyebrow); ?></span><?php endif; ?>
+			<h2 class="section-heading"><?php echo esc_html($whyus_heading); ?></h2>
+			<?php if ($whyus_subtext) : ?><p class="section-subtext whyus-lead"><?php echo esc_html($whyus_subtext); ?></p><?php endif; ?>
+		</div>
+		<div class="whyus-grid">
+			<?php $wu_i = 0; ?>
+			<?php foreach ($whyus_items as $wu) : ?>
+				<?php if (empty($wu['title']) && empty($wu['text'])) : continue;
+				endif; ?>
+				<article class="whyus-card">
+					<span class="whyus-card-icon" aria-hidden="true"><?php echo $whyus_icons[$wu_i % 6]; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+					<?php if (! empty($wu['title'])) : ?><h3 class="whyus-card-title"><?php echo esc_html($wu['title']); ?></h3><?php endif; ?>
+					<?php if (! empty($wu['text'])) : ?><p class="whyus-card-text"><?php echo esc_html($wu['text']); ?></p><?php endif; ?>
+				</article>
+				<?php $wu_i++; ?>
+			<?php endforeach; ?>
+		</div>
+	</div>
+</section>
+
+<?php
 /* =============================== HOW IT WORKS =============================== */
 $how_image   = $hvac_acf ? get_field('how_image') : false;
-$how_eyebrow = hvac_hf('how_eyebrow', 'How It Works');
-$how_heading = hvac_hf('how_heading', 'Simple, Fast, and Reliable Service for Your AC');
-$how_subtext = hvac_hf('how_subtext', 'From energy-efficient solutions to auto temperature control, our features ensure you enjoy a perfect indoor climate with minimal effort. Experience quiet operation.');
+$how_eyebrow = hvac_hf('how_eyebrow', 'Our Process');
+$how_heading = hvac_hf('how_heading', 'Our HVAC Process');
+$how_subtext = hvac_hf('how_subtext', 'A successful HVAC project starts with understanding your property\'s needs and choosing the right solution- from consultation to completion.');
 $how_steps = ($hvac_acf && have_rows('how_steps')) ? get_field('how_steps') : array();
 if (empty($how_steps)) {
 	$how_steps = array(
-		array('title' => __('Schedule Your Service', 'hvac'), 'text' => __('Book an appointment easily through our website or mobile app. Choose the service you need and select the best time for your convenience.', 'hvac')),
-		array('title' => __('Expert Technicians Arrive', 'hvac'), 'text' => __('Our certified professionals arrive promptly at your location, equipped with all the tools and expertise to handle any AC issue, ensuring minimal disruption.', 'hvac')),
-		array('title' => __('Enjoy Efficient Cooling', 'hvac'), 'text' => __('Once the service is complete, your AC will be running at peak performance, keeping your home comfortable and cool with no worries about the future.', 'hvac')),
+		array('title' => __('Consultation & Estimate', 'hvac'), 'text' => __('We learn about your heating or cooling needs, assess your property\'s requirements, and provide an estimate based on the project.', 'hvac')),
+		array('title' => __('System Assessment & Recommendations', 'hvac'), 'text' => __('Our team evaluates your existing HVAC system or installation requirements and recommends an appropriate solution.', 'hvac')),
+		array('title' => __('Professional Installation or Repair', 'hvac'), 'text' => __('Once you approve the work, our technicians complete the installation, replacement, or repair using professional techniques and equipment.', 'hvac')),
+		array('title' => __('System Check & Completion', 'hvac'), 'text' => __('We check the system and confirm the project is properly completed so you can get back to reliable heating and cooling.', 'hvac')),
 	);
 }
 ?>
@@ -389,20 +456,141 @@ if (empty($how_steps)) {
 </section>
 
 <?php
-/* =============================== TESTIMONIALS =============================== */
-$testi_eyebrow = hvac_hf('testi_eyebrow', 'What Our Customers Are Saying');
-$testi_heading = hvac_hf('testi_heading', 'Hear From Our Happy Customers');
-$testi_subtext = hvac_hf('testi_subtext', 'Hear from homeowners who trust Frost Flow to keep their homes cool and comfortable.');
-$testimonials = ($hvac_acf && have_rows('testimonials')) ? get_field('testimonials') : array();
-if (empty($testimonials)) {
-	$testimonials = array(
-		array('name' => __('Sarah Thompson', 'hvac'), 'role' => __('Interior Designer', 'hvac'), 'rating' => 5, 'quote' => __('Frost Flow\'s team is fantastic! They fixed my AC during the summer heatwave, and the service was fast and efficient. Highly recommend them to anyone looking for reliable cooling solutions.', 'hvac')),
-		array('name' => __('Rachel Lee', 'hvac'), 'role' => __('Marketing Manager', 'hvac'), 'rating' => 5, 'quote' => __('I\'ve had Frost Flow service my AC multiple times, and every experience has been seamless. The technicians are professional, and the booking process is so easy. Couldn\'t ask for better service!', 'hvac')),
-		array('name' => __('James Brown', 'hvac'), 'role' => __('Business Owner', 'hvac'), 'rating' => 5, 'quote' => __('We rely on our AC system daily, and Frost Flow has been a lifesaver. They\'ve kept everything running smoothly with quick repairs and maintenance. I trust them to take care of all our cooling needs.', 'hvac')),
+/* =============================== WHY IT MATTERS =============================== */
+$matters_eyebrow = hvac_hf('matters_eyebrow', 'Why It Matters');
+$matters_heading = hvac_hf('matters_heading', 'Why Professional HVAC Service Matters');
+$matters_subtext = hvac_hf('matters_subtext', 'Your HVAC system is responsible for maintaining indoor comfort throughout changing seasons. Professional installation, replacement, and repair help ensure your system is properly suited to your property.');
+$matters_items = ($hvac_acf && have_rows('matters_items')) ? get_field('matters_items') : array();
+if (empty($matters_items)) {
+	$matters_items = array(
+		array('title' => __('Improve Indoor Comfort', 'hvac'), 'text' => __('A properly selected and professionally installed HVAC system provides consistent heating and cooling throughout your property.', 'hvac')),
+		array('title' => __('Replace Aging Equipment', 'hvac'), 'text' => __('Older HVAC systems can become increasingly unreliable- replacing outdated equipment restores dependable performance.', 'hvac')),
+		array('title' => __('Address HVAC Problems', 'hvac'), 'text' => __('When a system stops working properly, professional diagnosis and repair helps identify the cause and the right solution.', 'hvac')),
+		array('title' => __('Support System Performance', 'hvac'), 'text' => __('Proper installation and repair help ensure your HVAC equipment is correctly set up and operating as intended.', 'hvac')),
+		array('title' => __('Find the Right HVAC Solution', 'hvac'), 'text' => __('Different properties require different systems- professional guidance helps you select the right solution for your needs.', 'hvac')),
 	);
 }
 ?>
-<section class="home-testimonials">
+<section class="services-benefits">
+	<div class="container">
+		<div class="section-head section-head-center">
+			<?php if ($matters_eyebrow) : ?><span class="section-eyebrow"><?php echo hvac_wave_icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html($matters_eyebrow); ?></span><?php endif; ?>
+			<h2 class="section-heading"><?php echo esc_html($matters_heading); ?></h2>
+			<?php if ($matters_subtext) : ?><p class="section-subtext"><?php echo esc_html($matters_subtext); ?></p><?php endif; ?>
+		</div>
+		<ul class="benefits-grid">
+			<?php foreach ($matters_items as $mi) : ?>
+				<?php if (empty($mi['title']) && empty($mi['text'])) : continue;
+				endif; ?>
+				<li class="benefit-card">
+					<span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 3 2 5 2 8h10c0-3 2-5 2-8a7 7 0 0 0-7-7z"/><line x1="9" y1="21" x2="15" y2="21"/></svg></span>
+					<?php if (! empty($mi['title'])) : ?><h3 class="benefit-title"><?php echo esc_html($mi['title']); ?></h3><?php endif; ?>
+					<?php if (! empty($mi['text'])) : ?><p class="benefit-text"><?php echo esc_html($mi['text']); ?></p><?php endif; ?>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+</section>
+
+<?php
+/* =============================== SYSTEM OPTIONS =============================== */
+$options_eyebrow = hvac_hf('options_eyebrow', 'System Options');
+$options_heading = hvac_hf('options_heading', 'Heating & Cooling System Options');
+$options_subtext = hvac_hf('options_subtext', 'We provide professional services for several types of heating and cooling equipment.');
+$options_items = ($hvac_acf && have_rows('options_items')) ? get_field('options_items') : array();
+if (empty($options_items)) {
+	$options_items = array(
+		array('title' => __('Central Air Conditioning', 'hvac'), 'text' => __('Central AC systems cool your property through a connected air distribution system. We install, replace, and repair central air conditioning systems.', 'hvac')),
+		array('title' => __('Furnaces', 'hvac'), 'text' => __('Furnaces provide heating during colder weather. When an existing furnace reaches the end of its life, professional replacement restores dependable heating.', 'hvac')),
+		array('title' => __('Heat Pumps', 'hvac'), 'text' => __('Heat pumps provide heating and cooling from one system, making them a flexible option for year-round comfort.', 'hvac')),
+		array('title' => __('Ductless Mini-Splits', 'hvac'), 'text' => __('Ductless systems provide targeted heating and cooling without traditional ductwork- suitable for certain rooms, additions, and garages.', 'hvac')),
+	);
+}
+$options_icons = array(
+	'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+	'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="4"/></svg>',
+	'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2.1-2.1 2.8-2.8z"/></svg>',
+	'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="14" height="10" rx="1"/><path d="M16 10l6-3v10l-6-3"/></svg>',
+);
+?>
+<section class="service-whyus">
+	<div class="container">
+		<div class="section-head section-head-center">
+			<?php if ($options_eyebrow) : ?><span class="section-eyebrow"><?php echo hvac_wave_icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html($options_eyebrow); ?></span><?php endif; ?>
+			<h2 class="section-heading"><?php echo esc_html($options_heading); ?></h2>
+			<?php if ($options_subtext) : ?><p class="section-subtext whyus-lead"><?php echo esc_html($options_subtext); ?></p><?php endif; ?>
+		</div>
+		<div class="whyus-grid">
+			<?php $op_i = 0; ?>
+			<?php foreach ($options_items as $op) : ?>
+				<?php if (empty($op['title']) && empty($op['text'])) : continue;
+				endif; ?>
+				<article class="whyus-card">
+					<span class="whyus-card-icon" aria-hidden="true"><?php echo $options_icons[$op_i % 4]; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+					<?php if (! empty($op['title'])) : ?><h3 class="whyus-card-title"><?php echo esc_html($op['title']); ?></h3><?php endif; ?>
+					<?php if (! empty($op['text'])) : ?><p class="whyus-card-text"><?php echo esc_html($op['text']); ?></p><?php endif; ?>
+				</article>
+				<?php $op_i++; ?>
+			<?php endforeach; ?>
+		</div>
+	</div>
+</section>
+
+<?php
+/* =============================== RECENT PROJECTS =============================== */
+$projects_eyebrow = hvac_hf('projects_eyebrow', 'Our Work');
+$projects_heading = hvac_hf('projects_heading', 'Recent HVAC Projects');
+$projects_subtext = hvac_hf('projects_subtext', 'Our completed HVAC projects demonstrate the quality, attention to detail, and professional workmanship customers can expect from HVAC Reliable Pros.');
+$projects_items = ($hvac_acf && have_rows('projects_items')) ? get_field('projects_items') : array();
+if (empty($projects_items)) {
+	$projects_items = array(
+		array('title' => __('Residential AC Replacement', 'hvac'), 'text' => __('We replaced an aging residential air conditioning system with a properly selected replacement designed around the property\'s cooling requirements.', 'hvac')),
+		array('title' => __('Furnace Replacement', 'hvac'), 'text' => __('We replaced an outdated furnace with a new heating system to provide dependable heating and improved comfort.', 'hvac')),
+		array('title' => __('Heat Pump Installation', 'hvac'), 'text' => __('Our team installed a new heat pump system designed to provide heating and cooling for year-round residential comfort.', 'hvac')),
+		array('title' => __('Commercial HVAC Installation', 'hvac'), 'text' => __('We completed a commercial HVAC installation designed around the property\'s heating and cooling requirements and day-to-day use.', 'hvac')),
+	);
+}
+?>
+<section id="project-gallery" class="home-projects">
+	<div class="container">
+		<div class="section-head section-head-center">
+			<?php if ($projects_eyebrow) : ?><span class="section-eyebrow"><?php echo hvac_wave_icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html($projects_eyebrow); ?></span><?php endif; ?>
+			<h2 class="section-heading"><?php echo esc_html($projects_heading); ?></h2>
+			<?php if ($projects_subtext) : ?><p class="section-subtext"><?php echo esc_html($projects_subtext); ?></p><?php endif; ?>
+		</div>
+		<div class="services-grid">
+			<?php foreach ($projects_items as $pj) : ?>
+				<?php if (empty($pj['title']) && empty($pj['text'])) : continue;
+				endif; ?>
+				<article class="service-card">
+					<div class="service-card-media">
+						<?php hvac_acf_image(isset($pj['image']) ? $pj['image'] : false, 'large', 'service-card-image'); ?>
+					</div>
+					<div class="service-card-body">
+						<?php if (! empty($pj['title'])) : ?><h3 class="service-card-title"><?php echo esc_html($pj['title']); ?></h3><?php endif; ?>
+						<?php if (! empty($pj['text'])) : ?><p class="service-card-text"><?php echo esc_html($pj['text']); ?></p><?php endif; ?>
+					</div>
+				</article>
+			<?php endforeach; ?>
+		</div>
+	</div>
+</section>
+
+<?php
+/* =============================== TESTIMONIALS =============================== */
+$testi_eyebrow = hvac_hf('testi_eyebrow', 'Reviews');
+$testi_heading = hvac_hf('testi_heading', 'What Our Customers Say');
+$testi_subtext = hvac_hf('testi_subtext', 'Customers choose HVAC Reliable Pros for professional heating and cooling installation, replacement, and repair services.');
+$testimonials = ($hvac_acf && have_rows('testimonials')) ? get_field('testimonials') : array();
+if (empty($testimonials)) {
+	$testimonials = array(
+		array('name' => __('Homeowner', 'hvac'), 'role' => __('California', 'hvac'), 'rating' => 5, 'quote' => __('The team was professional from the first estimate through the final walkthrough, and our new system has kept the house comfortable ever since.', 'hvac')),
+		array('name' => __('Homeowner', 'hvac'), 'role' => __('Ohio', 'hvac'), 'rating' => 5, 'quote' => __('Our furnace went out in the middle of winter and they responded quickly with a clear plan and honest pricing.', 'hvac')),
+		array('name' => __('Business Owner', 'hvac'), 'role' => __('Washington', 'hvac'), 'rating' => 5, 'quote' => __('Reliable, communicative, and thorough- exactly what we needed for our commercial HVAC installation.', 'hvac')),
+	);
+}
+?>
+<section id="reviews" class="home-testimonials">
 	<div class="container">
 		<div class="section-head section-head-center">
 			<?php if ($testi_eyebrow) : ?><span class="section-eyebrow"><?php echo hvac_wave_icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
@@ -458,8 +646,8 @@ if (empty($testimonials)) {
 <?php
 /* =============================== NEWS / INSIGHTS =============================== */
 $news_eyebrow = hvac_hf('news_eyebrow', 'Blog & News');
-$news_heading = hvac_hf('news_heading', 'Updates, Tips, And Insights');
-$news_subtext = hvac_hf('newsnews_subtext_heading', 'Updates, Tips, And Insights');
+$news_heading = hvac_hf('news_heading', 'HVAC Tips & Resources');
+$news_subtext = hvac_hf('news_subtext', 'Explore our latest resources to help you understand your heating and cooling options and make informed decisions.');
 $news_source  = $hvac_acf ? get_field('news_source') : 'latest';
 
 $news_cards = array();
@@ -498,9 +686,9 @@ if ('manual' === $news_source) {
 
 if (empty($news_cards)) {
 	$news_cards = array(
-		array('category' => __('Healthy', 'hvac'), 'date' => __('January 15, 2025', 'hvac'), 'title' => __('Keep Your Air Conditioner Running Smoothly All Year Long', 'hvac'), 'excerpt' => __('Learn how regular maintenance can extend your AC\'s lifespan and improve its efficiency. Discover expert tips for cleaning, servicing, and troubleshooting.', 'hvac'), 'url' => '#', 'target' => ''),
-		array('category' => __('Performance', 'hvac'), 'date' => __('January 24, 2025', 'hvac'), 'title' => __('Why You Should Ensure Peak Performance with Expert Care', 'hvac'), 'excerpt' => '', 'url' => '#', 'target' => ''),
-		array('category' => __('Efficiency', 'hvac'), 'date' => __('January 24, 2025', 'hvac'), 'title' => __('Reduce Your Carbon Footprint with Energy-Efficient AC Options', 'hvac'), 'excerpt' => '', 'url' => '#', 'target' => ''),
+		array('category' => __('Cost Guide', 'hvac'), 'date' => '', 'title' => __('How Much Does HVAC Replacement Cost?', 'hvac'), 'excerpt' => __('Learn about the factors that can affect HVAC replacement costs, including system type, property size, equipment requirements, and installation complexity.', 'hvac'), 'url' => '#', 'target' => ''),
+		array('category' => __('Maintenance', 'hvac'), 'date' => '', 'title' => __('When Should You Replace Your HVAC System?', 'hvac'), 'excerpt' => __('Learn about common signs that an aging heating or cooling system may be approaching the end of its useful life and when replacement may make sense.', 'hvac'), 'url' => '#', 'target' => ''),
+		array('category' => __('Heat Pumps', 'hvac'), 'date' => '', 'title' => __('Heat Pump vs. Traditional HVAC Systems', 'hvac'), 'excerpt' => __('Understand how heat pumps compare with traditional heating and cooling systems and what factors to consider when choosing a system.', 'hvac'), 'url' => '#', 'target' => ''),
 	);
 }
 
@@ -571,19 +759,92 @@ if (! function_exists('hvac_news_image')) {
 </section>
 
 <?php
+/* =============================== AREAS WE SERVE =============================== */
+$areas_eyebrow = hvac_hf('areas_eyebrow', 'Service Areas');
+$areas_heading = hvac_hf('areas_heading', 'Areas We Serve');
+$areas_subtext = hvac_hf('areas_subtext', 'HVAC Reliable Pros provides professional heating and cooling installation, replacement, and repair services throughout California, Ohio, Washington, and Florida.');
+$areas_items = ($hvac_acf && have_rows('areas_items')) ? get_field('areas_items') : array();
+if (empty($areas_items)) {
+	$areas_items = array(
+		array('title' => __('California', 'hvac'), 'text' => __('Professional HVAC solutions for residential and commercial properties, including AC installation and replacement, HVAC repair, heat pumps, and ductless systems.', 'hvac'), 'link' => array()),
+		array('title' => __('Ohio', 'hvac'), 'text' => __('Heating and cooling services including furnace replacement, AC installation and replacement, heat pump solutions, and HVAC repair.', 'hvac'), 'link' => array()),
+		array('title' => __('Washington', 'hvac'), 'text' => __('Professional heating and cooling solutions including heat pump installation, furnace replacement, AC services, ductless systems, and HVAC repair.', 'hvac'), 'link' => array()),
+		array('title' => __('Florida', 'hvac'), 'text' => __('HVAC services for Florida homes and businesses, including AC installation and replacement, HVAC repair, heat pump solutions, and other heating and cooling services.', 'hvac'), 'link' => array()),
+	);
+}
+?>
+<section id="areas-we-serve" class="services-benefits home-areas">
+	<div class="container">
+		<div class="section-head section-head-center">
+			<?php if ($areas_eyebrow) : ?><span class="section-eyebrow"><?php echo hvac_wave_icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html($areas_eyebrow); ?></span><?php endif; ?>
+			<h2 class="section-heading"><?php echo esc_html($areas_heading); ?></h2>
+			<?php if ($areas_subtext) : ?><p class="section-subtext"><?php echo esc_html($areas_subtext); ?></p><?php endif; ?>
+		</div>
+		<ul class="benefits-grid">
+			<?php foreach ($areas_items as $ar) : ?>
+				<?php if (empty($ar['title']) && empty($ar['text'])) : continue;
+				endif; ?>
+				<?php
+				$ar_link = isset($ar['link']) ? $ar['link'] : array();
+				$ar_url  = ! empty($ar_link['url']) ? $ar_link['url'] : '#';
+				$ar_tgt  = ! empty($ar_link['target']) ? $ar_link['target'] : '';
+				?>
+				<li class="benefit-card">
+					<span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+					<?php if (! empty($ar['title'])) : ?><h3 class="benefit-title"><?php echo esc_html($ar['title']); ?></h3><?php endif; ?>
+					<?php if (! empty($ar['text'])) : ?><p class="benefit-text"><?php echo esc_html($ar['text']); ?></p><?php endif; ?>
+					<a class="service-card-link" href="<?php echo esc_url($ar_url); ?>" <?php echo hvac_link_target_attrs($ar_tgt); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+						<?php echo esc_html(sprintf(__('Explore HVAC Services in %s', 'hvac'), ! empty($ar['title']) ? $ar['title'] : '')); ?>
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+					</a>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+</section>
+
+<?php
 /* =============================== CTA BANNER =============================== */
-$cta_heading = hvac_hf('cta_heading', 'Experience Unmatched Comfort With Frost Flow\'s Expert AC Services- Your Professional Air Conditioning Care');
+$cta_heading  = hvac_hf('cta_heading', 'Ready for Reliable Heating & Cooling?');
+$cta_subtext  = hvac_hf('cta_subtext', 'Whether your property needs a new HVAC system, replacement equipment, or professional repair, HVAC Reliable Pros provides dependable heating and cooling solutions for homes and businesses. Schedule your estimate today and take the next step toward reliable year-round comfort.');
+$cta_checklist = ($hvac_acf && have_rows('cta_checklist')) ? get_field('cta_checklist') : array();
+if (empty($cta_checklist)) {
+	$cta_checklist = array(
+		array('text' => __('Free Estimates on Eligible HVAC Projects', 'hvac')),
+		array('text' => __('Licensed & Certified HVAC Professionals', 'hvac')),
+		array('text' => __('Heating & Cooling Services', 'hvac')),
+		array('text' => __('Residential & Commercial HVAC', 'hvac')),
+		array('text' => __('Installation, Replacement & Repair', 'hvac')),
+		array('text' => __('Professional Workmanship', 'hvac')),
+		array('text' => __('Reliable Customer Service', 'hvac')),
+	);
+}
 $cta_button  = $hvac_acf ? get_field('cta_button') : false;
 $cta_bg      = $hvac_acf ? get_field('cta_background_image') : false;
 $cta_btn_url = ! empty($cta_button['url']) ? $cta_button['url'] : '#';
-$cta_btn_txt = ! empty($cta_button['title']) ? $cta_button['title'] : __('Get Started', 'hvac');
+$cta_btn_txt = ! empty($cta_button['title']) ? $cta_button['title'] : __('Get Your Free HVAC Estimate', 'hvac');
 $cta_btn_tgt = ! empty($cta_button['target']) ? $cta_button['target'] : '';
 ?>
 <section class="home-cta">
 	<div class="container">
 		<div class="home-cta-banner" <?php echo (is_array($cta_bg) && ! empty($cta_bg['url'])) ? ' style="background-image:url(' . esc_url($cta_bg['url']) . ')"' : ''; ?>>
-			<?php if ($cta_heading) : ?><h2 class="home-cta-heading"><?php echo esc_html($cta_heading); ?></h2><?php endif; ?>
-			<a class="btn-accent home-cta-btn" href="<?php echo esc_url($cta_btn_url); ?>" <?php echo hvac_link_target_attrs($cta_btn_tgt); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+			<div class="location-cta-text">
+				<?php if ($cta_heading) : ?><h2 class="home-cta-heading"><?php echo esc_html($cta_heading); ?></h2><?php endif; ?>
+				<?php if ($cta_subtext) : ?><p class="location-cta-sub"><?php echo esc_html($cta_subtext); ?></p><?php endif; ?>
+				<?php if (! empty($cta_checklist)) : ?>
+					<ul class="location-checklist">
+						<?php foreach ($cta_checklist as $cc) : ?>
+							<?php if (empty($cc['text'])) : continue;
+							endif; ?>
+							<li>
+								<span class="location-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg></span>
+								<?php echo esc_html($cc['text']); ?>
+							</li>
+						<?php endforeach; ?>
+					</ul>
+				<?php endif; ?>
+			</div>
+			<a class="btn-accent home-cta-btn" href="<?php echo esc_url($cta_btn_url); ?>" <?php echo hvac_link_target_attrs($cta_btn_tgt); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 																							?>><?php echo esc_html($cta_btn_txt); ?></a>
 		</div>
 	</div>
