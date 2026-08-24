@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Disallow direct access.
 }
 
-define( 'HVAC_VERSION', '1.21.0' );
+define( 'HVAC_VERSION', '1.22.0' );
 
 /**
  * Theme setup.
