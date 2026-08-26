@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Disallow direct access.
 }
 
-define( 'HVAC_VERSION', '1.22.0' );
+define( 'HVAC_VERSION', '1.23.0' );
 
 /**
  * Theme setup.
@@ -226,3 +226,27 @@ require get_template_directory() . '/inc/blog-fields.php';
  * About Us page template fields.
  */
 require get_template_directory() . '/inc/about-fields.php';
+
+/**
+ * Flexible Content "page builder" fields (Pages using that template, and
+ * every standard blog Post automatically- see hvac_use_flexible_content_for_posts()
+ * below).
+ */
+require get_template_directory() . '/inc/flexible-content-fields.php';
+
+/**
+ * Automatically serve every standard blog Post with the Flexible Content
+ * template, so editors get the page-builder sections without having to pick
+ * a template by hand (the "post" post type has no template picker by
+ * default). Pages still choose this template manually in the usual way.
+ */
+function hvac_use_flexible_content_for_posts( $template ) {
+	if ( is_singular( 'post' ) ) {
+		$flexible = locate_template( 'page-flexible-content.php' );
+		if ( $flexible ) {
+			return $flexible;
+		}
+	}
+	return $template;
+}
+add_filter( 'template_include', 'hvac_use_flexible_content_for_posts' );
