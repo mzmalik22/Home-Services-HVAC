@@ -4,7 +4,7 @@ Theme URI: https://www.nesl-it.com/
 Author: Nesl IT
 Author URI: https://www.nesl-it.com/
 Description: A basic, easy-to-customize WordPress theme for HVAC and home service businesses. All colors and fonts are controlled via CSS variables in :root for quick rebranding.
-Version: 1.10.0
+Version: 1.11.0
 Requires at least: 6.0
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
@@ -1649,6 +1649,62 @@ textarea {
   width: 1px;
   height: 1px;
   overflow: hidden;
+}
+
+/* ---- Shared: US phone field (fixed +1 country code + live formatting) ---- */
+.hvac-phone-group {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  background: #fff;
+  overflow: hidden;
+}
+.hvac-phone-code {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.6rem 0.7rem;
+  color: var(--color-text-light-dark);
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: var(--color-light);
+  border-right: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+.hvac-phone-group input[type="tel"] {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+}
+.hvac-phone-group input[type="tel"]:focus {
+  outline: none;
+}
+.hvac-phone-group:focus-within {
+  border-color: var(--color-secondary);
+}
+.hvac-form-field-error {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  color: #dc2626;
+}
+/* Pill-shaped context (hero/location booking forms). */
+.booking-form-fields .hvac-phone-group {
+  border-radius: 99px;
+}
+.booking-form-fields .hvac-phone-code {
+  padding-left: 1rem;
+  background: transparent;
+  border-right: 1px solid var(--color-border);
+}
+.booking-form-fields .hvac-phone-group input[type="tel"] {
+  padding: 1.125rem 1rem 1.125rem 0.6rem;
 }
 .booking-form-row {
   display: grid;

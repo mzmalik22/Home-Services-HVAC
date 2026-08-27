@@ -31,6 +31,37 @@
 		}
 	}
 
+	/**
+	 * Format a US phone number as the visitor types: strips anything that
+	 * isn't a digit, caps it at 10 digits, and lays it out as
+	 * "(XXX) XXX-XXXX" so the value always matches the field's pattern.
+	 */
+	function formatUsPhone( value ) {
+		var digits = value.replace( /\D/g, '' ).slice( 0, 10 );
+		if ( digits.length > 6 ) {
+			return '(' + digits.slice( 0, 3 ) + ') ' + digits.slice( 3, 6 ) + '-' + digits.slice( 6 );
+		}
+		if ( digits.length > 3 ) {
+			return '(' + digits.slice( 0, 3 ) + ') ' + digits.slice( 3 );
+		}
+		if ( digits.length > 0 ) {
+			return '(' + digits;
+		}
+		return '';
+	}
+
+	function handlePhoneInput( event ) {
+		var field = event.target;
+		if ( ! field.classList || ! field.classList.contains( 'hvac-phone-input' ) ) {
+			return;
+		}
+		var caretWasAtEnd = field.selectionStart === field.value.length;
+		field.value = formatUsPhone( field.value );
+		if ( caretWasAtEnd ) {
+			field.setSelectionRange( field.value.length, field.value.length );
+		}
+	}
+
 	function handleSubmit( event ) {
 		var form = event.target;
 		if ( ! form.classList.contains( 'hvac-ajax-form' ) ) {
@@ -78,5 +109,6 @@
 			} );
 	}
 
+	document.addEventListener( 'input', handlePhoneInput, true );
 	document.addEventListener( 'submit', handleSubmit, true );
 } )();

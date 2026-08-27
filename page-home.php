@@ -182,7 +182,7 @@ $hero_feature_icons = array(
 					?>
 				<?php else : ?>
 					<?php echo hvac_form_message_html('booking'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-					<form class="booking-form-fields hvac-ajax-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" novalidate>
+					<form class="booking-form-fields hvac-ajax-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
 						<?php wp_nonce_field('hvac_form_submit', 'hvac_nonce'); ?>
 						<input type="hidden" name="action" value="hvac_form_submit">
 						<input type="hidden" name="form_type" value="booking">
@@ -191,7 +191,7 @@ $hero_feature_icons = array(
 						<div class="hvac-hp-field" aria-hidden="true"><input type="text" name="hvac_hp" value="" tabindex="-1" autocomplete="off"></div>
 
 						<label class="screen-reader-text" for="bf-name"><?php esc_html_e('Your Name', 'hvac'); ?></label>
-						<input id="bf-name" type="text" name="name" placeholder="<?php esc_attr_e('Your Name', 'hvac'); ?>">
+						<input id="bf-name" type="text" name="name" placeholder="<?php esc_attr_e('Your Name', 'hvac'); ?>" required minlength="2" maxlength="100" autocomplete="name">
 
 						<label class="screen-reader-text" for="bf-service"><?php esc_html_e('Choose services', 'hvac'); ?></label>
 						<select id="bf-service" name="service">
@@ -203,11 +203,14 @@ $hero_feature_icons = array(
 
 						<div>
 							<label class="screen-reader-text" for="bf-phone"><?php esc_html_e('Phone Number', 'hvac'); ?></label>
-							<input id="bf-phone" type="tel" name="phone" placeholder="<?php esc_attr_e('Phone Number', 'hvac'); ?>">
+							<div class="hvac-phone-group">
+								<span class="hvac-phone-code" aria-hidden="true">&#127482;&#127480; +1</span>
+								<input id="bf-phone" type="tel" name="phone" class="hvac-phone-input" placeholder="(555) 123-4567" required inputmode="numeric" autocomplete="tel-national" maxlength="14" pattern="^\(\d{3}\) \d{3}-\d{4}$" title="<?php esc_attr_e('Enter a 10-digit US phone number, e.g. (555) 123-4567', 'hvac'); ?>">
+							</div>
 						</div>
 						<div>
 							<label class="screen-reader-text" for="bf-email"><?php esc_html_e('Email Address', 'hvac'); ?></label>
-							<input id="bf-email" type="email" name="email" placeholder="<?php esc_attr_e('Email Address', 'hvac'); ?>">
+							<input id="bf-email" type="email" name="email" placeholder="<?php esc_attr_e('Email Address', 'hvac'); ?>" autocomplete="email">
 						</div>
 
 						<button type="submit" class="btn-accent booking-form-submit"><?php echo esc_html($hero_form_button); ?></button>

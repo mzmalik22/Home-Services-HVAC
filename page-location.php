@@ -156,20 +156,26 @@ if (! function_exists('hvac_lc_form')) {
 				<?php echo do_shortcode($shortcode); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			<?php else : ?>
 				<?php echo hvac_form_message_html('booking'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-				<form class="booking-form-fields hvac-ajax-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" novalidate>
+				<form class="booking-form-fields hvac-ajax-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
 					<?php wp_nonce_field('hvac_form_submit', 'hvac_nonce'); ?>
 					<input type="hidden" name="action" value="hvac_form_submit">
 					<input type="hidden" name="form_type" value="booking">
 					<input type="hidden" name="hvac_page_url" value="<?php echo esc_url(get_permalink()); ?>">
 					<input type="hidden" name="hvac_ts" value="<?php echo esc_attr(time()); ?>">
 					<div class="hvac-hp-field" aria-hidden="true"><input type="text" name="hvac_hp" value="" tabindex="-1" autocomplete="off"></div>
-					<input type="text" name="name" placeholder="<?php esc_attr_e('Full Name', 'hvac'); ?>">
-					<input type="tel" name="phone" placeholder="<?php esc_attr_e('Phone Number', 'hvac'); ?>">
+					<label class="screen-reader-text" for="lc-bf-name"><?php esc_html_e('Full Name', 'hvac'); ?></label>
+					<input id="lc-bf-name" type="text" name="name" placeholder="<?php esc_attr_e('Full Name', 'hvac'); ?>" required minlength="2" maxlength="100" autocomplete="name">
+					<label class="screen-reader-text" for="lc-bf-phone"><?php esc_html_e('Phone Number', 'hvac'); ?></label>
+					<div class="hvac-phone-group">
+						<span class="hvac-phone-code" aria-hidden="true">&#127482;&#127480; +1</span>
+						<input id="lc-bf-phone" type="tel" name="phone" class="hvac-phone-input" placeholder="(555) 123-4567" required inputmode="numeric" autocomplete="tel-national" maxlength="14" pattern="^\(\d{3}\) \d{3}-\d{4}$" title="<?php esc_attr_e('Enter a 10-digit US phone number, e.g. (555) 123-4567', 'hvac'); ?>">
+					</div>
 					<select name="service">
 						<option value=""><?php esc_html_e('Service Type', 'hvac'); ?></option>
 						<?php foreach ($options as $opt) : ?><option><?php echo esc_html($opt); ?></option><?php endforeach; ?>
 					</select>
-					<input type="date" name="preferred_date">
+					<label class="screen-reader-text" for="lc-bf-date"><?php esc_html_e('Preferred Date', 'hvac'); ?></label>
+					<input id="lc-bf-date" type="date" name="preferred_date" min="<?php echo esc_attr(wp_date('Y-m-d')); ?>">
 					<button type="submit" class="btn-accent booking-form-submit"><?php echo esc_html($button); ?></button>
 				</form>
 			<?php endif; ?>

@@ -82,6 +82,42 @@ function hvac_form_type_meta($form_type)
 }
 
 /**
+ * Check whether a value is a valid 10-digit US/Canada (NANP) phone number,
+ * regardless of formatting (spaces, dashes, parentheses, a leading "+1" or
+ * "1" are all accepted). The area code and exchange code must not start
+ * with 0 or 1, matching the real NANP numbering rules.
+ *
+ * @param string $value Raw phone input.
+ * @return bool
+ */
+function hvac_is_us_phone($value)
+{
+	$digits = preg_replace('/\D/', '', (string) $value);
+	if (11 === strlen($digits) && '1' === $digits[0]) {
+		$digits = substr($digits, 1);
+	}
+	if (10 !== strlen($digits)) {
+		return false;
+	}
+	return (bool) preg_match('/^[2-9]\d{2}[2-9]\d{6}$/', $digits);
+}
+
+/**
+ * Format a validated 10-digit US phone number as "(XXX) XXX-XXXX".
+ *
+ * @param string $value Raw phone input (must already pass hvac_is_us_phone()).
+ * @return string
+ */
+function hvac_format_us_phone($value)
+{
+	$digits = preg_replace('/\D/', '', (string) $value);
+	if (11 === strlen($digits) && '1' === $digits[0]) {
+		$digits = substr($digits, 1);
+	}
+	return sprintf('(%s) %s-%s', substr($digits, 0, 3), substr($digits, 3, 3), substr($digits, 6, 4));
+}
+
+/**
  * Validate, sanitize, and email one form submission.
  *
  * @param array $data Raw $_POST data.
@@ -129,24 +165,44 @@ function hvac_process_form_submission($data)
 		}
 	}
 
-	// Minimal validation- lenient, since the on-page forms mark nothing as
-	// required, but we still need enough to act on.
-	if ('subscribe' === $form_type) {
-		if (empty($fields['email']) || ! is_email($fields['email'])) {
-			return array('success' => false, 'message' => __('Please enter a valid email address.', 'hvac'));
+	// Per-field validation, matching what each form marks as required on the
+	// page. Re-checked here because client-side validation can be bypassed.
+	if (in_array($form_type, array('booking', 'contact'), true) && empty($fields['name'])) {
+		return array('success' => false, 'message' => __('Please enter your name.', 'hvac'));
+	}
+	if (isset($fields['name']) && mb_strlen($fields['name']) < 2) {
+		return array('success' => false, 'message' => __('Please enter your full name.', 'hvac'));
+	}
+
+	// Email: required for contact + subscribe; optional (but validated if
+	// given) for booking, which requires a phone number instead.
+	$email_required = in_array($form_type, array('contact', 'subscribe'), true);
+	if ($email_required && empty($fields['email'])) {
+		return array('success' => false, 'message' => __('Please enter a valid email address.', 'hvac'));
+	}
+	if (! empty($fields['email']) && ! is_email($fields['email'])) {
+		return array('success' => false, 'message' => __('Please enter a valid email address.', 'hvac'));
+	}
+
+	// Phone: required for booking; optional (but validated if given) for
+	// contact. Only US numbers are accepted, matching the on-page +1 field.
+	$phone_required = ('booking' === $form_type);
+	if ($phone_required && empty($fields['phone'])) {
+		return array('success' => false, 'message' => __('Please enter your phone number.', 'hvac'));
+	}
+	if (! empty($fields['phone'])) {
+		if (! hvac_is_us_phone($fields['phone'])) {
+			return array('success' => false, 'message' => __('Please enter a valid 10-digit US phone number, e.g. (555) 123-4567.', 'hvac'));
 		}
-	} else {
-		if (empty($fields['name'])) {
-			return array('success' => false, 'message' => __('Please enter your name.', 'hvac'));
-		}
-		if (empty($fields['phone']) && empty($fields['email'])) {
-			return array('success' => false, 'message' => __('Please provide a phone number or email so we can reach you.', 'hvac'));
-		}
-		if (! empty($fields['email']) && ! is_email($fields['email'])) {
-			return array('success' => false, 'message' => __('Please enter a valid email address.', 'hvac'));
-		}
-		if ('contact' === $form_type && empty($fields['message'])) {
+		$fields['phone'] = hvac_format_us_phone($fields['phone']);
+	}
+
+	if ('contact' === $form_type) {
+		if (empty($fields['message'])) {
 			return array('success' => false, 'message' => __('Please enter a message.', 'hvac'));
+		}
+		if (mb_strlen($fields['message']) < 10) {
+			return array('success' => false, 'message' => __('Please enter a message of at least 10 characters.', 'hvac'));
 		}
 	}
 

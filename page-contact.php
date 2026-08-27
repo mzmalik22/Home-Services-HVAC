@@ -153,7 +153,7 @@ $ct_cta_btn   = $hvac_acf ? get_field('contact_cta_button') : false;
 				<?php echo do_shortcode($ct_form_sc); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			<?php else : ?>
 				<?php echo hvac_form_message_html('contact'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-				<form class="contact-form hvac-ajax-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" novalidate>
+				<form class="contact-form hvac-ajax-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
 					<?php wp_nonce_field('hvac_form_submit', 'hvac_nonce'); ?>
 					<input type="hidden" name="action" value="hvac_form_submit">
 					<input type="hidden" name="form_type" value="contact">
@@ -163,25 +163,28 @@ $ct_cta_btn   = $hvac_acf ? get_field('contact_cta_button') : false;
 					<div class="contact-form-row">
 						<div>
 							<label class="screen-reader-text" for="ct-name"><?php esc_html_e('Your Name', 'hvac'); ?></label>
-							<input id="ct-name" type="text" name="name" placeholder="<?php esc_attr_e('Your Name', 'hvac'); ?>">
+							<input id="ct-name" type="text" name="name" placeholder="<?php esc_attr_e('Your Name', 'hvac'); ?>" required minlength="2" maxlength="100" autocomplete="name">
 						</div>
 						<div>
 							<label class="screen-reader-text" for="ct-email"><?php esc_html_e('Email Address', 'hvac'); ?></label>
-							<input id="ct-email" type="email" name="email" placeholder="<?php esc_attr_e('Email Address', 'hvac'); ?>">
+							<input id="ct-email" type="email" name="email" placeholder="<?php esc_attr_e('Email Address', 'hvac'); ?>" required autocomplete="email">
 						</div>
 					</div>
 					<div class="contact-form-row">
 						<div>
 							<label class="screen-reader-text" for="ct-phone"><?php esc_html_e('Phone Number', 'hvac'); ?></label>
-							<input id="ct-phone" type="tel" name="phone" placeholder="<?php esc_attr_e('Phone Number', 'hvac'); ?>">
+							<div class="hvac-phone-group">
+								<span class="hvac-phone-code" aria-hidden="true">&#127482;&#127480; +1</span>
+								<input id="ct-phone" type="tel" name="phone" class="hvac-phone-input" placeholder="(555) 123-4567" inputmode="numeric" autocomplete="tel-national" maxlength="14" pattern="^\(\d{3}\) \d{3}-\d{4}$" title="<?php esc_attr_e('Enter a 10-digit US phone number, e.g. (555) 123-4567', 'hvac'); ?>">
+							</div>
 						</div>
 						<div>
 							<label class="screen-reader-text" for="ct-subject"><?php esc_html_e('Subject', 'hvac'); ?></label>
-							<input id="ct-subject" type="text" name="subject" placeholder="<?php esc_attr_e('Subject', 'hvac'); ?>">
+							<input id="ct-subject" type="text" name="subject" placeholder="<?php esc_attr_e('Subject', 'hvac'); ?>" maxlength="150">
 						</div>
 					</div>
 					<label class="screen-reader-text" for="ct-message"><?php esc_html_e('Message', 'hvac'); ?></label>
-					<textarea id="ct-message" name="message" placeholder="<?php esc_attr_e('How can we help?', 'hvac'); ?>"></textarea>
+					<textarea id="ct-message" name="message" placeholder="<?php esc_attr_e('How can we help?', 'hvac'); ?>" required minlength="10" maxlength="2000"></textarea>
 					<button type="submit" class="btn-accent"><?php esc_html_e('Send Message', 'hvac'); ?></button>
 				</form>
 			<?php endif; ?>
