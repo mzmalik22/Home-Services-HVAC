@@ -34,13 +34,15 @@ if (! defined('ABSPATH')) {
 		// Top utility bar.
 		$hvac_show_topbar    = $hvac_acf ? get_field('header_show_topbar', 'option') : true;
 		$hvac_topbar_message = $hvac_acf ? get_field('header_topbar_message', 'option') : __('Get a discount of up to 50% for use our service this month!', 'hvac');
-		$hvac_topbar_email   = $hvac_acf ? get_field('header_topbar_email', 'option') : 'support@hvacreliablepro.com';
-		$hvac_topbar_phone   = $hvac_acf ? get_field('header_topbar_phone', 'option') : '+62 864 6444 2222';
-		$hvac_topbar_socials = $hvac_acf ? get_field('header_topbar_socials', 'option') : array();
+		// Phone, email, social links, and hours are global business details-
+		// managed once under Theme Options > Business Info.
+		$hvac_topbar_email   = $hvac_acf ? get_field('business_email', 'option') : 'support@hvacreliablepro.com';
+		$hvac_topbar_phone   = $hvac_acf ? get_field('business_phone', 'option') : '+62 864 6444 2222';
+		$hvac_topbar_socials = $hvac_acf ? get_field('business_socials', 'option') : array();
 
 		// Main navigation actions.
 		$hvac_call_label     = $hvac_acf ? get_field('header_hours_label', 'option') : __('Open Hours', 'hvac');
-		$hvac_header_hours   = $hvac_acf ? get_field('header_hvac_hours', 'option') : 'Monday-Saturday 9AM - 6PM';
+		$hvac_header_hours   = $hvac_acf ? get_field('business_hours', 'option') : 'Monday-Saturday 9AM - 6PM';
 		$hvac_book_label     = $hvac_acf ? get_field('header_book_label', 'option') : __('Book Now', 'hvac');
 		$hvac_book_link      = $hvac_acf ? get_field('header_book_link', 'option') : '';
 

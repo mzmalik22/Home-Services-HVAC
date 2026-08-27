@@ -38,7 +38,7 @@ function hvac_about_page_fields()
 				array('key' => 'field_hvac_ab_heading', 'label' => esc_html__('Heading', 'hvac'), 'name' => 'about_heading', 'type' => 'text', 'default_value' => 'Your Trusted Local Heating & Cooling Experts'),
 				array('key' => 'field_hvac_ab_intro', 'label' => esc_html__('Intro', 'hvac'), 'name' => 'about_intro', 'type' => 'textarea', 'rows' => 3, 'default_value' => 'We are a full-service residential and commercial HVAC company dedicated to honest advice, quality workmanship, and comfort built to last. From repairs and tune-ups to full system installations, homeowners and businesses trust our licensed local technicians to treat every home like our own.'),
 				array('key' => 'field_hvac_ab_btn', 'label' => esc_html__('Button', 'hvac'), 'name' => 'about_btn', 'type' => 'link', 'return_format' => 'array'),
-				array('key' => 'field_hvac_ab_phone', 'label' => esc_html__('Phone', 'hvac'), 'name' => 'about_phone', 'type' => 'text', 'default_value' => '+62 864 6444 2222'),
+				array('key' => 'field_hvac_ab_phone_note', 'label' => esc_html__('Phone', 'hvac'), 'type' => 'message', 'message' => esc_html__('Managed under Theme Options > Business Info.', 'hvac')),
 				array('key' => 'field_hvac_ab_hero_img', 'label' => esc_html__('Hero Image', 'hvac'), 'name' => 'about_hero_image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium'),
 
 				// --- Story ---
@@ -93,18 +93,8 @@ function hvac_about_page_fields()
 				array('key' => 'field_hvac_ab_testi_tab', 'label' => esc_html__('Testimonials', 'hvac'), 'type' => 'tab'),
 				array('key' => 'field_hvac_ab_testi_eyebrow', 'label' => esc_html__('Eyebrow', 'hvac'), 'name' => 'about_testi_eyebrow', 'type' => 'text', 'default_value' => 'Reviews'),
 				array('key' => 'field_hvac_ab_testi_heading', 'label' => esc_html__('Heading', 'hvac'), 'name' => 'about_testi_heading', 'type' => 'text', 'default_value' => 'What Our Customers Say'),
-				array(
-					'key' => 'field_hvac_ab_testimonials', 'label' => esc_html__('Testimonials', 'hvac'), 'name' => 'about_testimonials',
-					'type' => 'repeater', 'layout' => 'block', 'button_label' => esc_html__('Add Testimonial', 'hvac'),
-					'sub_fields' => array(
-						array('key' => 'field_hvac_ab_testi_image', 'label' => esc_html__('Card Image', 'hvac'), 'name' => 'image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium'),
-						array('key' => 'field_hvac_ab_testi_headshot', 'label' => esc_html__('Headshot', 'hvac'), 'name' => 'headshot', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'thumbnail'),
-						array('key' => 'field_hvac_ab_testi_quote', 'label' => esc_html__('Quote', 'hvac'), 'name' => 'quote', 'type' => 'textarea', 'rows' => 4),
-						array('key' => 'field_hvac_ab_testi_name', 'label' => esc_html__('Name', 'hvac'), 'name' => 'name', 'type' => 'text'),
-						array('key' => 'field_hvac_ab_testi_role', 'label' => esc_html__('Role', 'hvac'), 'name' => 'role', 'type' => 'text'),
-						array('key' => 'field_hvac_ab_testi_rating', 'label' => esc_html__('Rating (1-5)', 'hvac'), 'name' => 'rating', 'type' => 'number', 'min' => 1, 'max' => 5, 'default_value' => 5),
-					),
-				),
+				array('key' => 'field_hvac_ab_testimonials_selected', 'label' => esc_html__('Testimonials to Show', 'hvac'), 'name' => 'about_testimonials_selected', 'type' => 'relationship', 'post_type' => array('testimonial'), 'filters' => array('search'), 'return_format' => 'id', 'instructions' => esc_html__('Optional. Leave empty to show every published testimonial.', 'hvac')),
+				array('key' => 'field_hvac_ab_testimonials_count', 'label' => esc_html__('Number to Show', 'hvac'), 'name' => 'about_testimonials_count', 'type' => 'number', 'default_value' => 3, 'min' => 1, 'instructions' => esc_html__('Used when no testimonials are selected above. Leave blank to show all.', 'hvac')),
 
 				// --- CTA ---
 				array('key' => 'field_hvac_ab_cta_tab', 'label' => esc_html__('CTA', 'hvac'), 'type' => 'tab'),

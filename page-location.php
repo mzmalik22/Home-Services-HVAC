@@ -135,14 +135,10 @@ $lc_projects   = hvac_lc_rows('loc_projects');
 
 $lc_rv_eyebrow = hvac_lc('loc_reviews_eyebrow', __('Reviews', 'hvac'));
 $lc_rv_heading = hvac_lc('loc_reviews_heading', __('What California Homeowners Say', 'hvac'));
-$lc_reviews    = hvac_lc_rows('loc_reviews');
-if (empty($lc_reviews)) {
-	$lc_reviews = array(
-		array('name' => __('Michael Torres', 'hvac'), 'role' => __('Homeowner, California', 'hvac'), 'rating' => 5, 'quote' => __('They fixed our AC during a brutal heat wave and handled everything professionally. Punctual, honest, and the system runs better than ever.', 'hvac')),
-		array('name' => __('Rachel Green', 'hvac'), 'role' => __('Homeowner, Los Angeles', 'hvac'), 'rating' => 5, 'quote' => __('Honest inspection, fair pricing, and no pressure at all. The crew was respectful of our home and cleaned up perfectly. Highly recommend.', 'hvac')),
-		array('name' => __('Luis Barrera', 'hvac'), 'role' => __('Business Owner, San Diego', 'hvac'), 'rating' => 5, 'quote' => __('We use them for both our home and commercial building. Same great quality and communication every time. A local company you can trust.', 'hvac')),
-	);
-}
+$lc_reviews    = hvac_get_testimonials(
+	$hvac_acf ? get_field('loc_reviews_selected') : array(),
+	(int) hvac_lc('loc_reviews_count', 3)
+);
 
 $lc_cta_head = hvac_lc('loc_cta_heading', __('Get Your Free California AC Inspection Today', 'hvac'));
 $lc_cta_text = hvac_lc('loc_cta_text', __('Schedule a free, no-obligation inspection with our local California team and get honest recommendations you can trust.', 'hvac'));
@@ -361,6 +357,7 @@ if (! function_exists('hvac_lc_form')) {
 	</section>
 <?php endif; ?>
 
+<?php if (! empty($lc_reviews)) : ?>
 <section class="home-testimonials">
 	<div class="container">
 		<div class="section-head section-head-center">
@@ -406,6 +403,7 @@ if (! function_exists('hvac_lc_form')) {
 		</div>
 	</div>
 </section>
+<?php endif; ?>
 
 <?php
 $lc_cta_url = ! empty($lc_cta_btn['url']) ? $lc_cta_btn['url'] : '#';

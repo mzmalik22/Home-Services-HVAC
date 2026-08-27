@@ -140,6 +140,56 @@ if ( ! function_exists( 'hvac_wave_icon' ) ) {
 }
 
 /**
+ * Fetch testimonials for display, normalised into the shape every
+ * testimonial-card loop expects: name, role, rating, quote, image, headshot.
+ *
+ * @param array $selected_ids Specific Testimonial post IDs to show, in order.
+ *                             Leave empty to show every published testimonial.
+ * @param int   $count        Max number to show when $selected_ids is empty.
+ *                             0 or less means "no limit".
+ * @return array
+ */
+if ( ! function_exists( 'hvac_get_testimonials' ) ) {
+	function hvac_get_testimonials( $selected_ids = array(), $count = 0 ) {
+		$selected_ids = is_array( $selected_ids ) ? array_map( 'intval', array_filter( $selected_ids ) ) : array();
+
+		$args = array(
+			'post_type'           => 'testimonial',
+			'post_status'         => 'publish',
+			'ignore_sticky_posts' => true,
+			'no_found_rows'       => true,
+		);
+
+		if ( ! empty( $selected_ids ) ) {
+			$args['post__in']       = $selected_ids;
+			$args['orderby']        = 'post__in';
+			$args['posts_per_page'] = count( $selected_ids );
+		} else {
+			$args['orderby']        = 'menu_order date';
+			$args['order']          = 'ASC';
+			$args['posts_per_page'] = $count > 0 ? $count : -1;
+		}
+
+		$items = array();
+		$query = new WP_Query( $args );
+		while ( $query->have_posts() ) {
+			$query->the_post();
+			$items[] = array(
+				'name'     => get_the_title(),
+				'role'     => (string) get_field( 'testimonial_role' ),
+				'rating'   => (int) get_field( 'testimonial_rating' ),
+				'quote'    => (string) get_field( 'testimonial_quote' ),
+				'image'    => get_field( 'testimonial_card_image' ),
+				'headshot' => get_field( 'testimonial_headshot' ),
+			);
+		}
+		wp_reset_postdata();
+
+		return $items;
+	}
+}
+
+/**
  * Displays the post thumbnail wrapped in a link, if one exists.
  */
 if ( ! function_exists( 'hvac_post_thumbnail' ) ) {

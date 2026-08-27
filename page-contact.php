@@ -40,11 +40,14 @@ $ct_bg      = $hvac_acf ? get_field('contact_hero_bg') : false;
 
 $ct_info_head = hvac_ct('contact_info_heading', __('Contact Information', 'hvac'));
 $ct_info_text = hvac_ct('contact_info_text', __('Reach us any time- we\'re here to help with repairs, installations, and emergency service.', 'hvac'));
-$ct_phone     = hvac_ct('contact_phone', '+62 864 6444 2222');
-$ct_email     = hvac_ct('contact_email', 'support@hvacreliablepro.com');
-$ct_address   = hvac_ct('contact_address', __('United States', 'hvac'));
-$ct_hours     = hvac_ct('contact_hours', __('Mon-Sun: 24/7 Emergency Service', 'hvac'));
-$ct_socials   = ($hvac_acf && have_rows('contact_socials')) ? get_field('contact_socials') : array();
+
+// Phone, email, address, hours, and social links are global business
+// details- managed once under Theme Options > Business Info.
+$ct_phone     = $hvac_acf ? get_field('business_phone', 'option') : '+62 864 6444 2222';
+$ct_email     = $hvac_acf ? get_field('business_email', 'option') : 'support@hvacreliablepro.com';
+$ct_address   = $hvac_acf ? get_field('business_address', 'option') : '';
+$ct_hours     = $hvac_acf ? get_field('business_hours', 'option') : '';
+$ct_socials   = ($hvac_acf && have_rows('business_socials', 'option')) ? get_field('business_socials', 'option') : array();
 $ct_tel       = $ct_phone ? preg_replace('/[^0-9+]/', '', $ct_phone) : '';
 
 $ct_form_head = hvac_ct('contact_form_heading', __('Send Us a Message', 'hvac'));

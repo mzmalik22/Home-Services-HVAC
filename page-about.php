@@ -42,7 +42,7 @@ $ab_eyebrow = hvac_ab('about_eyebrow', __('About Us', 'hvac'));
 $ab_heading = hvac_ab('about_heading', __('Your Trusted Local Heating & Cooling Experts', 'hvac'));
 $ab_intro   = hvac_ab('about_intro', __('We are a full-service residential and commercial HVAC company dedicated to honest advice, quality workmanship, and comfort built to last. From repairs and tune-ups to full system installations, homeowners and businesses trust our licensed local technicians to treat every home like our own.', 'hvac'));
 $ab_btn     = $hvac_acf ? get_field('about_btn') : false;
-$ab_phone   = hvac_ab('about_phone', '+62 864 6444 2222');
+$ab_phone   = $hvac_acf ? get_field('business_phone', 'option') : '+62 864 6444 2222';
 $ab_tel     = $ab_phone ? preg_replace('/[^0-9+]/', '', $ab_phone) : '';
 $ab_hero_img = $hvac_acf ? get_field('about_hero_image') : false;
 
@@ -119,14 +119,10 @@ $ab_services_q = new WP_Query($ab_s_args);
 /* ---- Testimonials ---- */
 $ab_t_eyebrow = hvac_ab('about_testi_eyebrow', __('Reviews', 'hvac'));
 $ab_t_heading = hvac_ab('about_testi_heading', __('What Our Customers Say', 'hvac'));
-$ab_testimonials = hvac_ab_rows('about_testimonials');
-if (empty($ab_testimonials)) {
-	$ab_testimonials = array(
-		array('name' => __('Sarah Mitchell', 'hvac'), 'role' => __('Homeowner', 'hvac'), 'rating' => 5, 'quote' => __('From the estimate to the final check, the whole team was professional and tidy. Our home has never been more comfortable.', 'hvac')),
-		array('name' => __('David Chen', 'hvac'), 'role' => __('Homeowner', 'hvac'), 'rating' => 5, 'quote' => __('Honest quote, fair pricing, and reliable results. A local company you can genuinely trust.', 'hvac')),
-		array('name' => __('Luis Barrera', 'hvac'), 'role' => __('Business Owner', 'hvac'), 'rating' => 5, 'quote' => __('We have used them for our home and our storefront. Same great quality and communication every time.', 'hvac')),
-	);
-}
+$ab_testimonials = hvac_get_testimonials(
+	$hvac_acf ? get_field('about_testimonials_selected') : array(),
+	(int) hvac_ab('about_testimonials_count', 3)
+);
 
 /* ---- CTA ---- */
 $ab_cta_head = hvac_ab('about_cta_heading', __('Ready to Work With a Team You Can Trust?', 'hvac'));
@@ -279,6 +275,7 @@ $ab_btn_tgt = ! empty($ab_btn['target']) ? $ab_btn['target'] : '';
 	</section>
 <?php endif; ?>
 
+<?php if (! empty($ab_testimonials)) : ?>
 <section class="home-testimonials">
 	<div class="container">
 		<div class="section-head section-head-center">
@@ -324,6 +321,7 @@ $ab_btn_tgt = ! empty($ab_btn['target']) ? $ab_btn['target'] : '';
 		</div>
 	</div>
 </section>
+<?php endif; ?>
 
 <?php
 $ab_cta_url = ! empty($ab_cta_btn['url']) ? $ab_cta_btn['url'] : ($ab_tel ? 'tel:' . $ab_tel : '#');

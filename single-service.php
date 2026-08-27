@@ -45,7 +45,10 @@ while (have_posts()) :
 
 	$sd_rv_head  = $hvac_acf ? get_field('reviews_heading') : '';
 	$sd_rv_sub   = $hvac_acf ? get_field('reviews_subtext') : '';
-	$sd_reviews  = ($hvac_acf && have_rows('reviews')) ? get_field('reviews') : array();
+	$sd_reviews  = hvac_get_testimonials(
+		$hvac_acf ? get_field('reviews_selected') : array(),
+		(int) ($hvac_acf ? get_field('reviews_count') : 3)
+	);
 
 	$sd_faqs    = ($hvac_acf && have_rows('faqs')) ? get_field('faqs') : array();
 
@@ -74,10 +77,10 @@ while (have_posts()) :
 		);
 	}
 	if (! $sd_phone) {
-		$sd_phone = $hvac_acf ? get_field('footer_phone', 'option') : '';
-		if (! $sd_phone && $hvac_acf) {
-			$sd_phone = get_field('header_phone', 'option');
-		}
+		// Global business phone (Theme Options > Business Info); detail_phone
+		// above remains a per-service override for the rare case a specific
+		// service should show a different number.
+		$sd_phone = $hvac_acf ? get_field('business_phone', 'option') : '';
 		if (! $sd_phone) {
 			$sd_phone = '+62 864 6444 2222';
 		}
@@ -132,13 +135,6 @@ while (have_posts()) :
 	}
 	if (! $sd_rv_sub) {
 		$sd_rv_sub = __('Real feedback from homeowners who trust us with their comfort.', 'hvac');
-	}
-	if (empty($sd_reviews)) {
-		$sd_reviews = array(
-			array('name' => __('Sarah Thompson', 'hvac'), 'role' => __('Homeowner', 'hvac'), 'rating' => 5, 'quote' => __('The team was fast, friendly, and fixed our AC the same day. Honest pricing and great communication throughout.', 'hvac')),
-			array('name' => __('Michael Reyes', 'hvac'), 'role' => __('Homeowner', 'hvac'), 'rating' => 5, 'quote' => __('Professional from start to finish. They explained everything clearly and left the place spotless. Highly recommend.', 'hvac')),
-			array('name' => __('Danielle Carter', 'hvac'), 'role' => __('Homeowner', 'hvac'), 'rating' => 5, 'quote' => __('Booked in the morning, fixed by the afternoon. No upselling, just reliable service. I will definitely call them again.', 'hvac')),
-		);
 	}
 
 	// Default icons for the why-choose-us cards (shield, tag, clock, badge).

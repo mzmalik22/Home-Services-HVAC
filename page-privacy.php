@@ -51,8 +51,9 @@ if ($hvac_acf && have_rows('privacy_sections')) {
 	}
 }
 
-$pv_email = ($hvac_acf ? get_field('footer_email', 'option') : '') ?: 'support@hvacreliablepro.com';
-$pv_phone = ($hvac_acf ? get_field('footer_phone', 'option') : '') ?: '+62 864 6444 2222';
+// Global business details (Theme Options > Business Info).
+$pv_email = ($hvac_acf ? get_field('business_email', 'option') : '') ?: 'support@hvacreliablepro.com';
+$pv_phone = ($hvac_acf ? get_field('business_phone', 'option') : '') ?: '+62 864 6444 2222';
 
 if (! $pv_intro) {
 	$pv_intro = __('This Privacy Policy explains how we collect, use, share and protect your information when you visit our website or request our heating and cooling services. Please read it carefully. By using our website, you agree to the practices described below.', 'hvac');

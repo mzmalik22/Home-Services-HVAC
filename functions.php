@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Disallow direct access.
 }
 
-define( 'HVAC_VERSION', '1.23.0' );
+define( 'HVAC_VERSION', '1.24.0' );
 
 /**
  * Theme setup.
@@ -178,6 +178,13 @@ require get_template_directory() . '/inc/coming-soon.php';
 require get_template_directory() . '/inc/theme-options.php';
 
 /**
+ * Global business details (phone, email, address, hours, socials)- the
+ * single source of truth read by the header, footer, and every page that
+ * shows contact info.
+ */
+require get_template_directory() . '/inc/business-info-fields.php';
+
+/**
  * Media support (WebP + admin-only, sanitised SVG uploads).
  */
 require get_template_directory() . '/inc/media-support.php';
@@ -196,6 +203,12 @@ require get_template_directory() . '/inc/page-settings.php';
  * Custom post types (Service) and their fields.
  */
 require get_template_directory() . '/inc/post-types.php';
+
+/**
+ * Custom post type (Testimonial) and its fields- the single source of truth
+ * for customer reviews shown across the theme.
+ */
+require get_template_directory() . '/inc/testimonial-post-type.php';
 
 /**
  * Contact Us page template fields.

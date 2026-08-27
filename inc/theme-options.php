@@ -99,50 +99,10 @@ function hvac_theme_options_header_fields() {
 					'default_value' => esc_html__( 'Get a discount of up to 50% for use our service this month!', 'hvac' ),
 				),
 				array(
-					'key'           => 'field_hvac_header_topbar_email',
-					'label'         => esc_html__( 'Top Bar Email', 'hvac' ),
-					'name'          => 'header_topbar_email',
-					'type'          => 'text',
-					'instructions'  => esc_html__( 'Shown on the right of the top bar. Leave empty to hide.', 'hvac' ),
-					'default_value' => 'support@hvacreliablepro.com',
-				),
-				array(
-					'key'           => 'field_hvac_header_topbar_phone',
-					'label'         => esc_html__( 'Top Bar Phone', 'hvac' ),
-					'name'          => 'header_topbar_phone',
-					'type'          => 'text',
-					'instructions'  => esc_html__( 'Shown on the far right of the top bar. Leave empty to hide.', 'hvac' ),
-					'default_value' => '+62 864 6444 2222',
-				),
-				array(
-					'key'          => 'field_hvac_header_topbar_socials',
-					'label'        => esc_html__( 'Top Bar Social Links', 'hvac' ),
-					'name'         => 'header_topbar_socials',
-					'type'         => 'repeater',
-					'layout'       => 'table',
-					'button_label' => esc_html__( 'Add Social Link', 'hvac' ),
-					'sub_fields'   => array(
-						array(
-							'key'     => 'field_hvac_header_social_network',
-							'label'   => esc_html__( 'Network', 'hvac' ),
-							'name'    => 'network',
-							'type'    => 'select',
-							'choices' => array(
-								'instagram' => 'Instagram',
-								'linkedin'  => 'LinkedIn',
-								'facebook'  => 'Facebook',
-								'x'         => 'X (Twitter)',
-								'youtube'   => 'YouTube',
-							),
-						),
-						array(
-							'key'           => 'field_hvac_header_social_url',
-							'label'         => esc_html__( 'Link', 'hvac' ),
-							'name'          => 'link',
-							'type'          => 'link',
-							'return_format' => 'array',
-						),
-					),
+					'key'     => 'field_hvac_header_topbar_business_note',
+					'label'   => esc_html__( 'Email, Phone & Social Links', 'hvac' ),
+					'type'    => 'message',
+					'message' => esc_html__( 'Managed under Theme Options > Business Info, so the same details stay in sync across the header, footer, and every page that shows contact info.', 'hvac' ),
 				),
 
 				// --- Main nav: call block + Book Now ---
@@ -158,13 +118,6 @@ function hvac_theme_options_header_fields() {
 					'type'          => 'text',
 					'instructions'  => esc_html__( 'Small label shown above the phone number in the main header, e.g. "Call us Now".', 'hvac' ),
 					'default_value' => esc_html__( 'Call us Now', 'hvac' ),
-				),
-				array(
-					'key'           => 'field_hvac_hours',
-					'label'         => esc_html__( 'HVAC Hours', 'hvac' ),
-					'name'          => 'header_hvac_hours',
-					'type'          => 'text',
-					'default_value' => 'Monday-Saturday 9AM - 6PM',
 				),
 				array(
 					'key'           => 'field_hvac_header_book_label',
@@ -297,34 +250,10 @@ function hvac_theme_options_footer_fields() {
 					'instructions' => esc_html__( 'Short description shown at the bottom of the brand column.', 'hvac' ),
 				),
 				array(
-					'key'          => 'field_hvac_footer_socials',
-					'label'        => esc_html__( 'Social Links', 'hvac' ),
-					'name'         => 'footer_socials',
-					'type'         => 'repeater',
-					'layout'       => 'table',
-					'button_label' => esc_html__( 'Add Social Link', 'hvac' ),
-					'sub_fields'   => array(
-						array(
-							'key'     => 'field_hvac_footer_social_network',
-							'label'   => esc_html__( 'Network', 'hvac' ),
-							'name'    => 'network',
-							'type'    => 'select',
-							'choices' => array(
-								'facebook'  => 'Facebook',
-								'instagram' => 'Instagram',
-								'x'         => 'X (Twitter)',
-								'linkedin'  => 'LinkedIn',
-								'youtube'   => 'YouTube',
-							),
-						),
-						array(
-							'key'           => 'field_hvac_footer_social_url',
-							'label'         => esc_html__( 'Link', 'hvac' ),
-							'name'          => 'link',
-							'type'          => 'link',
-							'return_format' => 'array',
-						),
-					),
+					'key'     => 'field_hvac_footer_business_note',
+					'label'   => esc_html__( 'Phone, Email, Address & Social Links', 'hvac' ),
+					'type'    => 'message',
+					'message' => esc_html__( 'Managed under Theme Options > Business Info, so the same details stay in sync across the header, footer, and every page that shows contact info.', 'hvac' ),
 				),
 
 				// --- Link columns ---

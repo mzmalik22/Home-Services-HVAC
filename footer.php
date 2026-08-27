@@ -60,7 +60,15 @@ $hvac_footer_logo     = $hvac_acf ? get_field('footer_logo', 'option') : false;
 $hvac_footer_heading  = $hvac_acf ? get_field('footer_heading', 'option') : '';
 $hvac_footer_tagline  = $hvac_acf ? get_field('footer_tagline', 'option') : '';
 $hvac_contact_raw     = $hvac_acf ? get_field('footer_contact_items', 'option') : array();
-$hvac_footer_socials  = $hvac_acf ? get_field('footer_socials', 'option') : array();
+
+// Phone, email, address, hours, and social links are global business
+// details- managed once under Theme Options > Business Info so they stay in
+// sync with the header, Contact Us page, and every other place they appear.
+$hvac_biz_phone      = $hvac_acf ? get_field('business_phone', 'option') : '';
+$hvac_biz_email      = $hvac_acf ? get_field('business_email', 'option') : '';
+$hvac_biz_address    = $hvac_acf ? get_field('business_address', 'option') : '';
+$hvac_biz_hours      = $hvac_acf ? get_field('business_hours', 'option') : '';
+$hvac_footer_socials = $hvac_acf ? get_field('business_socials', 'option') : array();
 
 // Subscribe / newsletter.
 $hvac_sub_show        = $hvac_acf ? get_field('footer_subscribe_show', 'option') : true;
@@ -75,8 +83,41 @@ if (! $hvac_footer_heading) {
 if (! $hvac_footer_tagline) {
 	$hvac_footer_tagline = __('Professional HVAC installation, replacement, and repair services for reliable heating and cooling in homes and businesses.', 'hvac');
 }
-// Normalise contact items (repeater rows) into a render-ready list.
+// Build the global contact rows (phone, email, address, hours) first, so
+// they always reflect Theme Options > Business Info.
+$hvac_svg_open      = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
 $hvac_contact_items = array();
+if ($hvac_biz_phone) {
+	$hvac_contact_items[] = array(
+		'icon_html' => $hvac_svg_open . '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
+		'text'      => $hvac_biz_phone,
+		'link'      => 'tel:' . preg_replace('/[^0-9+]/', '', $hvac_biz_phone),
+	);
+}
+if ($hvac_biz_email) {
+	$hvac_contact_items[] = array(
+		'icon_html' => $hvac_svg_open . '<path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>',
+		'text'      => $hvac_biz_email,
+		'link'      => 'mailto:' . $hvac_biz_email,
+	);
+}
+if ($hvac_biz_address) {
+	$hvac_contact_items[] = array(
+		'icon_html' => $hvac_svg_open . '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+		'text'      => $hvac_biz_address,
+		'link'      => '',
+	);
+}
+if ($hvac_biz_hours) {
+	$hvac_contact_items[] = array(
+		'icon_html' => $hvac_svg_open . '<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>',
+		'text'      => $hvac_biz_hours,
+		'link'      => '',
+	);
+}
+
+// Append any additional freeform items an editor has added (e.g. "24/7
+// Customer Support"), on top of the global contact rows above.
 if (! empty($hvac_contact_raw) && is_array($hvac_contact_raw)) {
 	foreach ($hvac_contact_raw as $hvac_ci) {
 		$hvac_ci_text = isset($hvac_ci['text']) ? $hvac_ci['text'] : '';
@@ -101,18 +142,10 @@ if (! empty($hvac_contact_raw) && is_array($hvac_contact_raw)) {
 	}
 }
 if (empty($hvac_contact_items)) {
-	$hvac_svg_open  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
-	$hvac_contact_items = array(
-		array(
-			'icon_html' => $hvac_svg_open . '<path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>',
-			'text'      => __('24/7 Customer Support', 'hvac'),
-			'link'      => '',
-		),
-		array(
-			'icon_html' => $hvac_svg_open . '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
-			'text'      => __('Serving California, Ohio, Washington & Florida', 'hvac'),
-			'link'      => '',
-		),
+	$hvac_contact_items[] = array(
+		'icon_html' => $hvac_svg_open . '<path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>',
+		'text'      => __('24/7 Customer Support', 'hvac'),
+		'link'      => '',
 	);
 }
 if (! $hvac_sub_heading) {

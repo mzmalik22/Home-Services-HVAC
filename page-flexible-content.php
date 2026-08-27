@@ -360,7 +360,7 @@ if (! function_exists('hvac_fc_render_sections')) {
 					$eyebrow = get_sub_field('eyebrow');
 					$heading = get_sub_field('heading');
 					$subtext = get_sub_field('subtext');
-					$items   = get_sub_field('items');
+					$items   = hvac_get_testimonials(get_sub_field('selected'), (int) get_sub_field('count'));
 					if (empty($items)) {
 						break;
 					}

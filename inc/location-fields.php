@@ -131,18 +131,8 @@ function hvac_location_page_fields()
 				array('key' => 'field_hvac_lc_reviews_tab', 'label' => esc_html__('Reviews', 'hvac'), 'type' => 'tab'),
 				array('key' => 'field_hvac_lc_reviews_eyebrow', 'label' => esc_html__('Eyebrow', 'hvac'), 'name' => 'loc_reviews_eyebrow', 'type' => 'text', 'default_value' => 'Reviews'),
 				array('key' => 'field_hvac_lc_reviews_heading', 'label' => esc_html__('Heading', 'hvac'), 'name' => 'loc_reviews_heading', 'type' => 'text', 'default_value' => 'What California Homeowners Say'),
-				array(
-					'key' => 'field_hvac_lc_reviews', 'label' => esc_html__('Reviews', 'hvac'), 'name' => 'loc_reviews',
-					'type' => 'repeater', 'layout' => 'block', 'button_label' => esc_html__('Add Review', 'hvac'),
-					'sub_fields' => array(
-						array('key' => 'field_hvac_lc_review_image', 'label' => esc_html__('Card Image', 'hvac'), 'name' => 'image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium'),
-						array('key' => 'field_hvac_lc_review_headshot', 'label' => esc_html__('Headshot', 'hvac'), 'name' => 'headshot', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'thumbnail'),
-						array('key' => 'field_hvac_lc_review_quote', 'label' => esc_html__('Quote', 'hvac'), 'name' => 'quote', 'type' => 'textarea', 'rows' => 4),
-						array('key' => 'field_hvac_lc_review_name', 'label' => esc_html__('Name', 'hvac'), 'name' => 'name', 'type' => 'text'),
-						array('key' => 'field_hvac_lc_review_role', 'label' => esc_html__('Role', 'hvac'), 'name' => 'role', 'type' => 'text'),
-						array('key' => 'field_hvac_lc_review_rating', 'label' => esc_html__('Rating (1-5)', 'hvac'), 'name' => 'rating', 'type' => 'number', 'min' => 1, 'max' => 5, 'default_value' => 5),
-					),
-				),
+				array('key' => 'field_hvac_lc_reviews_selected', 'label' => esc_html__('Testimonials to Show', 'hvac'), 'name' => 'loc_reviews_selected', 'type' => 'relationship', 'post_type' => array('testimonial'), 'filters' => array('search'), 'return_format' => 'id', 'instructions' => esc_html__('Optional. Leave empty to show every published testimonial.', 'hvac')),
+				array('key' => 'field_hvac_lc_reviews_count', 'label' => esc_html__('Number to Show', 'hvac'), 'name' => 'loc_reviews_count', 'type' => 'number', 'default_value' => 3, 'min' => 1, 'instructions' => esc_html__('Used when no testimonials are selected above. Leave blank to show all.', 'hvac')),
 
 				/* -------- CTA -------- */
 				array('key' => 'field_hvac_lc_cta_tab', 'label' => esc_html__('CTA', 'hvac'), 'type' => 'tab'),

@@ -581,19 +581,16 @@ if (empty($projects_items)) {
 $testi_eyebrow = hvac_hf('testi_eyebrow', 'Reviews');
 $testi_heading = hvac_hf('testi_heading', 'What Our Customers Say');
 $testi_subtext = hvac_hf('testi_subtext', 'Customers choose HVAC Reliable Pros for professional heating and cooling installation, replacement, and repair services.');
-$testimonials = ($hvac_acf && have_rows('testimonials')) ? get_field('testimonials') : array();
-if (empty($testimonials)) {
-	$testimonials = array(
-		array('name' => __('Homeowner', 'hvac'), 'role' => __('California', 'hvac'), 'rating' => 5, 'quote' => __('The team was professional from the first estimate through the final walkthrough, and our new system has kept the house comfortable ever since.', 'hvac')),
-		array('name' => __('Homeowner', 'hvac'), 'role' => __('Ohio', 'hvac'), 'rating' => 5, 'quote' => __('Our furnace went out in the middle of winter and they responded quickly with a clear plan and honest pricing.', 'hvac')),
-		array('name' => __('Business Owner', 'hvac'), 'role' => __('Washington', 'hvac'), 'rating' => 5, 'quote' => __('Reliable, communicative, and thorough- exactly what we needed for our commercial HVAC installation.', 'hvac')),
-	);
-}
+$testimonials  = hvac_get_testimonials(
+	$hvac_acf ? get_field('testimonials_selected') : array(),
+	(int) hvac_hf('testimonials_count', 3)
+);
 ?>
+<?php if (! empty($testimonials)) : ?>
 <section id="reviews" class="home-testimonials">
 	<div class="container">
 		<div class="section-head section-head-center">
-			<?php if ($testi_eyebrow) : ?><span class="section-eyebrow"><?php echo hvac_wave_icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+			<?php if ($testi_eyebrow) : ?><span class="section-eyebrow"><?php echo hvac_wave_icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 																		?><?php echo esc_html($testi_eyebrow); ?></span><?php endif; ?>
 			<h2 class="section-heading"><?php echo esc_html($testi_heading); ?></h2>
 			<?php if ($testi_subtext) : ?><p class="section-subtext"><?php echo esc_html($testi_subtext); ?></p><?php endif; ?>
@@ -642,6 +639,7 @@ if (empty($testimonials)) {
 		</div>
 	</div>
 </section>
+<?php endif; ?>
 
 <?php
 /* =============================== NEWS / INSIGHTS =============================== */
