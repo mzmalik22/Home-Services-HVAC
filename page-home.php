@@ -178,10 +178,17 @@ $hero_feature_icons = array(
 				<?php if ($hero_form_subtitle) : ?><p class="booking-form-subtitle"><?php echo esc_html($hero_form_subtitle); ?></p><?php endif; ?>
 
 				<?php if ($hero_form_shortcode) : ?>
-					<?php echo do_shortcode($hero_form_shortcode); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+					<?php echo do_shortcode($hero_form_shortcode); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					?>
 				<?php else : ?>
-					<form class="booking-form-fields" method="post" action="#" novalidate>
+					<?php echo hvac_form_message_html('booking'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<form class="booking-form-fields hvac-ajax-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" novalidate>
+						<?php wp_nonce_field('hvac_form_submit', 'hvac_nonce'); ?>
+						<input type="hidden" name="action" value="hvac_form_submit">
+						<input type="hidden" name="form_type" value="booking">
+						<input type="hidden" name="hvac_page_url" value="<?php echo esc_url(get_permalink()); ?>">
+						<div class="hvac-hp-field" aria-hidden="true"><input type="text" name="hvac_hp" value="" tabindex="-1" autocomplete="off"></div>
+
 						<label class="screen-reader-text" for="bf-name"><?php esc_html_e('Your Name', 'hvac'); ?></label>
 						<input id="bf-name" type="text" name="name" placeholder="<?php esc_attr_e('Your Name', 'hvac'); ?>">
 

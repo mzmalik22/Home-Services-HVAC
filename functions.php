@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Disallow direct access.
 }
 
-define( 'HVAC_VERSION', '1.24.0' );
+define( 'HVAC_VERSION', '1.25.0' );
 
 /**
  * Theme setup.
@@ -183,6 +183,13 @@ require get_template_directory() . '/inc/theme-options.php';
  * shows contact info.
  */
 require get_template_directory() . '/inc/business-info-fields.php';
+
+/**
+ * Handles submissions from the theme's built-in forms (booking widgets,
+ * Contact Us, footer newsletter signup), emailing them to the global
+ * business email and showing a confirmation message on the page.
+ */
+require get_template_directory() . '/inc/form-handler.php';
 
 /**
  * Media support (WebP + admin-only, sanitised SVG uploads).

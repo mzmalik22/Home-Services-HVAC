@@ -155,7 +155,13 @@ if (! function_exists('hvac_lc_form')) {
 			<?php if ($shortcode) : ?>
 				<?php echo do_shortcode($shortcode); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			<?php else : ?>
-				<form class="booking-form-fields" method="post" action="#" novalidate>
+				<?php echo hvac_form_message_html('booking'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<form class="booking-form-fields hvac-ajax-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" novalidate>
+					<?php wp_nonce_field('hvac_form_submit', 'hvac_nonce'); ?>
+					<input type="hidden" name="action" value="hvac_form_submit">
+					<input type="hidden" name="form_type" value="booking">
+					<input type="hidden" name="hvac_page_url" value="<?php echo esc_url(get_permalink()); ?>">
+					<div class="hvac-hp-field" aria-hidden="true"><input type="text" name="hvac_hp" value="" tabindex="-1" autocomplete="off"></div>
 					<input type="text" name="name" placeholder="<?php esc_attr_e('Full Name', 'hvac'); ?>">
 					<input type="tel" name="phone" placeholder="<?php esc_attr_e('Phone Number', 'hvac'); ?>">
 					<select name="service">

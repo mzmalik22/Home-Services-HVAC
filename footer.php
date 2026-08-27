@@ -384,11 +384,28 @@ if (empty($hvac_bottom_links)) {
 							<?php if ($hvac_sub_heading) : ?>
 								<p class="footer-subscribe-title"><?php echo esc_html($hvac_sub_heading); ?></p>
 							<?php endif; ?>
-							<form class="footer-subscribe-form" action="<?php echo esc_url($hvac_sub_action ? $hvac_sub_action : '#'); ?>" method="post">
-								<label class="screen-reader-text" for="footer-subscribe-email"><?php echo esc_html($hvac_sub_placeholder); ?></label>
-								<input type="email" id="footer-subscribe-email" name="email" placeholder="<?php echo esc_attr($hvac_sub_placeholder); ?>" required />
-								<button type="submit" class="btn"><?php echo esc_html($hvac_sub_button); ?></button>
-							</form>
+							<?php if ($hvac_sub_action) : ?>
+								<form class="footer-subscribe-form" action="<?php echo esc_url($hvac_sub_action); ?>" method="post">
+									<label class="screen-reader-text" for="footer-subscribe-email"><?php echo esc_html($hvac_sub_placeholder); ?></label>
+									<input type="email" id="footer-subscribe-email" name="email" placeholder="<?php echo esc_attr($hvac_sub_placeholder); ?>" required />
+									<button type="submit" class="btn"><?php echo esc_html($hvac_sub_button); ?></button>
+								</form>
+							<?php else : ?>
+								<?php echo function_exists('hvac_form_message_html') ? hvac_form_message_html('subscribe') : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								<form class="footer-subscribe-form hvac-ajax-form" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
+									<?php wp_nonce_field('hvac_form_submit', 'hvac_nonce'); ?>
+									<input type="hidden" name="action" value="hvac_form_submit">
+									<input type="hidden" name="form_type" value="subscribe">
+									<?php
+								$hvac_current_url = ( is_ssl() ? 'https://' : 'http://' ) . ( isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '' ) . ( isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '' );
+								?>
+								<input type="hidden" name="hvac_page_url" value="<?php echo esc_url($hvac_current_url); ?>">
+									<div class="hvac-hp-field" aria-hidden="true"><input type="text" name="hvac_hp" value="" tabindex="-1" autocomplete="off"></div>
+									<label class="screen-reader-text" for="footer-subscribe-email"><?php echo esc_html($hvac_sub_placeholder); ?></label>
+									<input type="email" id="footer-subscribe-email" name="email" placeholder="<?php echo esc_attr($hvac_sub_placeholder); ?>" required />
+									<button type="submit" class="btn"><?php echo esc_html($hvac_sub_button); ?></button>
+								</form>
+							<?php endif; ?>
 						</div>
 					<?php endif; ?>
 				</div>

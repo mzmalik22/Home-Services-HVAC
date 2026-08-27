@@ -152,7 +152,13 @@ $ct_cta_btn   = $hvac_acf ? get_field('contact_cta_button') : false;
 			<?php if ($ct_form_sc) : ?>
 				<?php echo do_shortcode($ct_form_sc); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			<?php else : ?>
-				<form class="contact-form" method="post" action="#" novalidate>
+				<?php echo hvac_form_message_html('contact'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<form class="contact-form hvac-ajax-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" novalidate>
+					<?php wp_nonce_field('hvac_form_submit', 'hvac_nonce'); ?>
+					<input type="hidden" name="action" value="hvac_form_submit">
+					<input type="hidden" name="form_type" value="contact">
+					<input type="hidden" name="hvac_page_url" value="<?php echo esc_url(get_permalink()); ?>">
+					<div class="hvac-hp-field" aria-hidden="true"><input type="text" name="hvac_hp" value="" tabindex="-1" autocomplete="off"></div>
 					<div class="contact-form-row">
 						<div>
 							<label class="screen-reader-text" for="ct-name"><?php esc_html_e('Your Name', 'hvac'); ?></label>
