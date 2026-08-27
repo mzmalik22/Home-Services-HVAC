@@ -66,7 +66,7 @@ function hvac_form_type_meta($form_type)
 		case 'contact':
 			return array(
 				'subject' => __('New Contact Message', 'hvac'),
-				'success' => __("Thanks for reaching out- we'll get back to you soon.", 'hvac'),
+				'success' => __("Thanks for reaching out - we'll get back to you soon.", 'hvac'),
 			);
 		case 'subscribe':
 			return array(
