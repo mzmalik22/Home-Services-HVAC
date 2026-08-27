@@ -31,13 +31,13 @@ if (! defined('ABSPATH')) {
 function hvac_form_field_labels($form_type)
 {
 	$common = array(
-		'name'            => esc_html__('Name', 'hvac'),
-		'email'           => esc_html__('Email', 'hvac'),
-		'phone'           => esc_html__('Phone', 'hvac'),
-		'service'         => esc_html__('Service', 'hvac'),
-		'preferred_date'  => esc_html__('Preferred Date', 'hvac'),
-		'subject'         => esc_html__('Subject', 'hvac'),
-		'message'         => esc_html__('Message', 'hvac'),
+		'name'            => __('Name', 'hvac'),
+		'email'           => __('Email', 'hvac'),
+		'phone'           => __('Phone', 'hvac'),
+		'service'         => __('Service', 'hvac'),
+		'preferred_date'  => __('Preferred Date', 'hvac'),
+		'subject'         => __('Subject', 'hvac'),
+		'message'         => __('Message', 'hvac'),
 	);
 
 	switch ($form_type) {
@@ -60,23 +60,23 @@ function hvac_form_type_meta($form_type)
 	switch ($form_type) {
 		case 'booking':
 			return array(
-				'subject' => esc_html__('New Booking Request', 'hvac'),
-				'success' => esc_html__("Thanks- your request has been sent. We'll be in touch shortly.", 'hvac'),
+				'subject' => __('New Booking Request', 'hvac'),
+				'success' => __("Thanks- your request has been sent. We'll be in touch shortly.", 'hvac'),
 			);
 		case 'contact':
 			return array(
-				'subject' => esc_html__('New Contact Message', 'hvac'),
-				'success' => esc_html__("Thanks for reaching out- we'll get back to you soon.", 'hvac'),
+				'subject' => __('New Contact Message', 'hvac'),
+				'success' => __("Thanks for reaching out- we'll get back to you soon.", 'hvac'),
 			);
 		case 'subscribe':
 			return array(
-				'subject' => esc_html__('New Newsletter Signup', 'hvac'),
-				'success' => esc_html__("You're subscribed. Thanks for signing up!", 'hvac'),
+				'subject' => __('New Newsletter Signup', 'hvac'),
+				'success' => __("You're subscribed. Thanks for signing up!", 'hvac'),
 			);
 		default:
 			return array(
-				'subject' => esc_html__('New Website Submission', 'hvac'),
-				'success' => esc_html__('Thanks- your submission has been sent.', 'hvac'),
+				'subject' => __('New Website Submission', 'hvac'),
+				'success' => __('Thanks- your submission has been sent.', 'hvac'),
 			);
 	}
 }
@@ -91,7 +91,7 @@ function hvac_process_form_submission($data)
 {
 	$form_type = isset($data['form_type']) ? sanitize_key($data['form_type']) : '';
 	if (! in_array($form_type, array('booking', 'contact', 'subscribe'), true)) {
-		return array('success' => false, 'message' => esc_html__('Sorry, that form could not be processed.', 'hvac'));
+		return array('success' => false, 'message' => __('Sorry, that form could not be processed.', 'hvac'));
 	}
 
 	// Honeypot: a hidden field real visitors never fill in.
@@ -118,20 +118,20 @@ function hvac_process_form_submission($data)
 	// required, but we still need enough to act on.
 	if ('subscribe' === $form_type) {
 		if (empty($fields['email']) || ! is_email($fields['email'])) {
-			return array('success' => false, 'message' => esc_html__('Please enter a valid email address.', 'hvac'));
+			return array('success' => false, 'message' => __('Please enter a valid email address.', 'hvac'));
 		}
 	} else {
 		if (empty($fields['name'])) {
-			return array('success' => false, 'message' => esc_html__('Please enter your name.', 'hvac'));
+			return array('success' => false, 'message' => __('Please enter your name.', 'hvac'));
 		}
 		if (empty($fields['phone']) && empty($fields['email'])) {
-			return array('success' => false, 'message' => esc_html__('Please provide a phone number or email so we can reach you.', 'hvac'));
+			return array('success' => false, 'message' => __('Please provide a phone number or email so we can reach you.', 'hvac'));
 		}
 		if (! empty($fields['email']) && ! is_email($fields['email'])) {
-			return array('success' => false, 'message' => esc_html__('Please enter a valid email address.', 'hvac'));
+			return array('success' => false, 'message' => __('Please enter a valid email address.', 'hvac'));
 		}
 		if ('contact' === $form_type && empty($fields['message'])) {
-			return array('success' => false, 'message' => esc_html__('Please enter a message.', 'hvac'));
+			return array('success' => false, 'message' => __('Please enter a message.', 'hvac'));
 		}
 	}
 
@@ -145,7 +145,7 @@ function hvac_process_form_submission($data)
 	$subject = sprintf('[%1$s] %2$s', $site, $meta['subject']);
 	if (! empty($fields['name'])) {
 		/* translators: %s: submitter's name. */
-		$subject = sprintf('[%1$s] %2$s %3$s', $site, $meta['subject'], sprintf(esc_html__('from %s', 'hvac'), $fields['name']));
+		$subject = sprintf('[%1$s] %2$s %3$s', $site, $meta['subject'], sprintf(__('from %s', 'hvac'), $fields['name']));
 	}
 
 	$body_lines = array();
@@ -155,10 +155,10 @@ function hvac_process_form_submission($data)
 		}
 	}
 	$body_lines[] = '';
-	$body_lines[] = esc_html__('Sent from the website contact form.', 'hvac');
+	$body_lines[] = __('Sent from the website contact form.', 'hvac');
 	$page_url     = isset($data['hvac_page_url']) ? esc_url_raw(wp_unslash($data['hvac_page_url'])) : '';
 	if ($page_url) {
-		$body_lines[] = sprintf(esc_html__('Page: %s', 'hvac'), $page_url);
+		$body_lines[] = sprintf(__('Page: %s', 'hvac'), $page_url);
 	}
 
 	// WordPress' default From address (wordpress@localhost, or wordpress@<host>
@@ -181,7 +181,7 @@ function hvac_process_form_submission($data)
 	$sent = wp_mail($to, $subject, implode("\n", $body_lines), $headers);
 
 	if (! $sent) {
-		return array('success' => false, 'message' => esc_html__('Sorry, something went wrong sending your message. Please try again or call us directly.', 'hvac'));
+		return array('success' => false, 'message' => __('Sorry, something went wrong sending your message. Please try again or call us directly.', 'hvac'));
 	}
 
 	return array('success' => true, 'message' => $meta['success']);
@@ -193,7 +193,7 @@ function hvac_process_form_submission($data)
 function hvac_ajax_form_submit()
 {
 	if (! isset($_POST['hvac_nonce']) || ! wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['hvac_nonce'])), 'hvac_form_submit')) {
-		wp_send_json_error(array('message' => esc_html__('Your session expired- please refresh the page and try again.', 'hvac')));
+		wp_send_json_error(array('message' => __('Your session expired- please refresh the page and try again.', 'hvac')));
 	}
 
 	$result = hvac_process_form_submission($_POST); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- verified above.
@@ -260,7 +260,7 @@ function hvac_form_message_html($form_type)
 			$meta = hvac_form_type_meta($form_type);
 			$text = $meta['success'];
 		} else {
-			$text = esc_html__('Sorry, something went wrong. Please check your details and try again.', 'hvac');
+			$text = __('Sorry, something went wrong. Please check your details and try again.', 'hvac');
 		}
 	}
 
@@ -284,7 +284,7 @@ function hvac_enqueue_form_script()
 		array(
 			'ajaxUrl'      => admin_url('admin-ajax.php'),
 			'nonce'        => wp_create_nonce('hvac_form_submit'),
-			'genericError' => esc_html__('Sorry, something went wrong. Please try again.', 'hvac'),
+			'genericError' => __('Sorry, something went wrong. Please try again.', 'hvac'),
 		)
 	);
 }
