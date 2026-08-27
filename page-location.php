@@ -161,6 +161,7 @@ if (! function_exists('hvac_lc_form')) {
 					<input type="hidden" name="action" value="hvac_form_submit">
 					<input type="hidden" name="form_type" value="booking">
 					<input type="hidden" name="hvac_page_url" value="<?php echo esc_url(get_permalink()); ?>">
+					<input type="hidden" name="hvac_ts" value="<?php echo esc_attr(time()); ?>">
 					<div class="hvac-hp-field" aria-hidden="true"><input type="text" name="hvac_hp" value="" tabindex="-1" autocomplete="off"></div>
 					<input type="text" name="name" placeholder="<?php esc_attr_e('Full Name', 'hvac'); ?>">
 					<input type="tel" name="phone" placeholder="<?php esc_attr_e('Phone Number', 'hvac'); ?>">

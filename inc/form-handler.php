@@ -94,11 +94,26 @@ function hvac_process_form_submission($data)
 		return array('success' => false, 'message' => __('Sorry, that form could not be processed.', 'hvac'));
 	}
 
-	// Honeypot: a hidden field real visitors never fill in.
-	if (! empty($data['hvac_hp'])) {
+	// Anti-spam: the honeypot field alone is not enough to act on- browser
+	// password managers are known to bulk-fill every empty input on a form,
+	// including hidden ones, which would otherwise silently drop real leads.
+	// Only treat a submission as spam when the honeypot is filled AND the
+	// form was submitted implausibly fast (a real visitor, even with
+	// autofill, still takes at least a couple of seconds to submit).
+	$honeypot_filled = ! empty($data['hvac_hp']);
+	$loaded_at       = isset($data['hvac_ts']) ? (int) $data['hvac_ts'] : 0;
+	$elapsed         = $loaded_at > 0 ? (time() - $loaded_at) : -1;
+	$submitted_fast  = $elapsed >= 0 && $elapsed < 2;
+
+	if ($honeypot_filled && $submitted_fast) {
 		// Pretend success so bots don't learn anything, but send nothing.
 		$meta = hvac_form_type_meta($form_type);
 		return array('success' => true, 'message' => $meta['success']);
+	}
+	if ($honeypot_filled) {
+		// Filled but not suspiciously fast- most likely a password manager,
+		// not a bot. Log it and keep processing normally.
+		error_log(sprintf('HVAC form: honeypot was filled but timing looks human (elapsed=%ds); sending normally. form_type=%s', max($elapsed, 0), $form_type));
 	}
 
 	$labels = hvac_form_field_labels($form_type);

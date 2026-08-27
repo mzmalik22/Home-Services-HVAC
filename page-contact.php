@@ -158,6 +158,7 @@ $ct_cta_btn   = $hvac_acf ? get_field('contact_cta_button') : false;
 					<input type="hidden" name="action" value="hvac_form_submit">
 					<input type="hidden" name="form_type" value="contact">
 					<input type="hidden" name="hvac_page_url" value="<?php echo esc_url(get_permalink()); ?>">
+					<input type="hidden" name="hvac_ts" value="<?php echo esc_attr(time()); ?>">
 					<div class="hvac-hp-field" aria-hidden="true"><input type="text" name="hvac_hp" value="" tabindex="-1" autocomplete="off"></div>
 					<div class="contact-form-row">
 						<div>

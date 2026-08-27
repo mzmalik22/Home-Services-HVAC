@@ -400,6 +400,7 @@ if (empty($hvac_bottom_links)) {
 								$hvac_current_url = ( is_ssl() ? 'https://' : 'http://' ) . ( isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '' ) . ( isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '' );
 								?>
 								<input type="hidden" name="hvac_page_url" value="<?php echo esc_url($hvac_current_url); ?>">
+								<input type="hidden" name="hvac_ts" value="<?php echo esc_attr(time()); ?>">
 									<div class="hvac-hp-field" aria-hidden="true"><input type="text" name="hvac_hp" value="" tabindex="-1" autocomplete="off"></div>
 									<label class="screen-reader-text" for="footer-subscribe-email"><?php echo esc_html($hvac_sub_placeholder); ?></label>
 									<input type="email" id="footer-subscribe-email" name="email" placeholder="<?php echo esc_attr($hvac_sub_placeholder); ?>" required />
