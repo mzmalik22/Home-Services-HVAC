@@ -204,7 +204,6 @@ if (empty($hvac_columns)) {
 		return $svc ? get_permalink($svc) : '#';
 	};
 	$hvac_ac_url       = $hvac_service_url('ac-repair-troubleshooting');
-	$hvac_furnace_url  = $hvac_service_url('furnace-replacement');
 	$hvac_heatpump_url = $hvac_service_url('heat-pump-installation-replacement');
 	$hvac_ductless_url = $hvac_service_url('ductless-mini-split-installation');
 	$hvac_comm_url     = $hvac_service_url('commercial-hvac');
@@ -218,7 +217,6 @@ if (empty($hvac_columns)) {
 				array(
 					array(__('AC Installation', 'hvac'), $hvac_ac_url),
 					array(__('AC Replacement', 'hvac'), $hvac_ac_url),
-					array(__('Furnace Replacement', 'hvac'), $hvac_furnace_url),
 					array(__('Heat Pump Installation & Replacement', 'hvac'), $hvac_heatpump_url),
 					array(__('Ductless / Mini-Split Installation', 'hvac'), $hvac_ductless_url),
 					array(__('Commercial HVAC', 'hvac'), $hvac_comm_url),
