@@ -4,7 +4,7 @@ Theme URI: https://www.nesl-it.com/
 Author: Nesl IT
 Author URI: https://www.nesl-it.com/
 Description: A basic, easy-to-customize WordPress theme for HVAC and home service businesses. All colors and fonts are controlled via CSS variables in :root for quick rebranding.
-Version: 1.13.0
+Version: 1.14.0
 Requires at least: 6.0
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
@@ -1252,7 +1252,8 @@ textarea {
   color: var(--color-dark);
 }
 
-.pagination .page-numbers.current,.pagination .page-numbers:hover {
+.pagination .page-numbers.current,
+.pagination .page-numbers:hover {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
   color: var(--color-white);
@@ -2402,10 +2403,10 @@ textarea {
   text-align: left;
   padding: 3.5rem 0;
 }
-.service-detail-hero-inner{
+.service-detail-hero-inner {
   text-align: center;
 }
-.service-detail-hero-inner .service-detail-actions{
+.service-detail-hero-inner .service-detail-actions {
   justify-content: center;
 }
 /* .service-detail-hero .page-hero-subtext {
@@ -2543,7 +2544,9 @@ textarea {
   padding: 1.1rem 1.35rem;
   font-weight: 600;
   color: var(--color-heading);
-  transition: box-shadow var(--transition-base), transform var(--transition-base);
+  transition:
+    box-shadow var(--transition-base),
+    transform var(--transition-base);
 }
 .highlight-card:hover {
   box-shadow: 0 12px 30px rgba(15, 34, 30, 0.08);
@@ -2600,7 +2603,9 @@ textarea {
   border-radius: var(--radius-lg);
   padding: 2rem 1.5rem;
   text-align: center;
-  transition: box-shadow var(--transition-base), transform var(--transition-base);
+  transition:
+    box-shadow var(--transition-base),
+    transform var(--transition-base);
 }
 .whyus-card:hover {
   box-shadow: 0 20px 45px rgba(15, 34, 30, 0.1);
@@ -2833,7 +2838,10 @@ a.contact-info-value:hover {
   border-radius: 50%;
   border: 1px solid var(--color-border);
   color: var(--color-primary);
-  transition: background-color var(--transition-base), border-color var(--transition-base), color var(--transition-base);
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base);
 }
 .contact-socials a:hover {
   background: var(--color-primary);
@@ -2908,7 +2916,7 @@ a.contact-info-value:hover {
   margin: 0 0 1.25rem;
   padding: 0;
 }
-.location-hero .booking-form{
+.location-hero .booking-form {
   position: relative;
   bottom: unset;
 }
@@ -3127,7 +3135,8 @@ a.contact-info-value:hover {
   color: var(--color-heading);
 }
 
-.legal-content a:hover,.legal-content a:active {
+.legal-content a:hover,
+.legal-content a:active {
   color: var(--color-accent);
 }
 
@@ -3175,7 +3184,7 @@ a.contact-info-value:hover {
   justify-content: center;
   margin-top: 3rem;
 }
-.blog-listing-section .entry-thumbnail img{
+.blog-listing-section .entry-thumbnail img {
   height: 250px;
   object-fit: cover;
 }
@@ -3248,7 +3257,7 @@ a.contact-info-value:hover {
   text-align: left;
   padding: 3.5rem 0 7rem;
 }
-.single-hero .page-hero-inner{
+.single-hero .page-hero-inner {
   text-align: center;
 }
 .single-cat {
@@ -3291,7 +3300,7 @@ a.contact-info-value:hover {
 .single-wrap {
   padding: 1rem 0px;
 }
-.single-post .page-hero{
+.single-post .page-hero {
   margin-bottom: 30px;
 }
 .single-feature {
@@ -3464,6 +3473,10 @@ a.contact-info-value:hover {
   font-size: 1.15rem;
   font-weight: 700;
   font-family: var(--font-family-lato);
+}
+.highlighted_bg_wrapper .pros-cons-head {
+  background: var(--color-accent);
+  color: var(--color-accent-text);
 }
 .pros-cons-body {
   padding: 1.5rem;
