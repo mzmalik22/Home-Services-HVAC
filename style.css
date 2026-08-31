@@ -4,7 +4,7 @@ Theme URI: https://www.nesl-it.com/
 Author: Nesl IT
 Author URI: https://www.nesl-it.com/
 Description: A basic, easy-to-customize WordPress theme for HVAC and home service businesses. All colors and fonts are controlled via CSS variables in :root for quick rebranding.
-Version: 1.12.0
+Version: 1.13.0
 Requires at least: 6.0
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
@@ -3440,4 +3440,66 @@ a.contact-info-value:hover {
 .about-stats {
   max-width: 780px;
   margin: 0 auto;
+}
+
+/* =========================================================
+   PROS / CONS CARDS (comparison articles)
+   ========================================================= */
+.pros-cons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 1.5rem 0 2rem;
+}
+.pros-cons-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  overflow: hidden;
+  background: #fff;
+}
+.pros-cons-head {
+  background: var(--color-primary);
+  color: #fff;
+  padding: 1rem 1.5rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-family: var(--font-family-lato);
+}
+.pros-cons-body {
+  padding: 1.5rem;
+}
+.pros-cons-body ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.pros-cons-body li {
+  position: relative;
+  padding-left: 2rem;
+  color: var(--color-text);
+}
+.pros-cons-body li + li {
+  margin-top: 0.9rem;
+}
+.pros-cons-body li::before {
+  content: "\2713";
+  position: absolute;
+  left: 0;
+  top: 0.05em;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-primary);
+  color: var(--color-primary);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 700px) {
+  .pros-cons-grid {
+    grid-template-columns: 1fr;
+  }
 }
