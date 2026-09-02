@@ -39,17 +39,18 @@ function hvac_register_service_cpt()
 	register_post_type(
 		'service',
 		array(
-			'labels'       => $labels,
-			'public'       => true,
-			'has_archive'  => true,
-			'menu_icon'    => 'dashicons-admin-tools',
+			'labels'        => $labels,
+			'public'        => true,
+			'hierarchical'  => true,
+			'has_archive'   => true,
+			'menu_icon'     => 'dashicons-admin-tools',
 			'menu_position' => 26,
-			'show_in_rest' => true,
-			'rewrite'      => array(
+			'show_in_rest'  => true,
+			'rewrite'       => array(
 				'slug'       => 'services',
 				'with_front' => false,
 			),
-			'supports'     => array('title', 'editor', 'thumbnail', 'excerpt', 'page-attributes'),
+			'supports'      => array('title', 'editor', 'thumbnail', 'excerpt', 'page-attributes'),
 		)
 	);
 }
